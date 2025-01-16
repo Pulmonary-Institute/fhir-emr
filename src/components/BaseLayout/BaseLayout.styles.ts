@@ -17,7 +17,7 @@ const maxWidthStyles = css<{ $maxWidth?: number | string }>`
         }
 
         return css`
-            max-width: 1080px;
+            max-width: none;
         `;
     }}
 `;
@@ -63,7 +63,6 @@ export const S = {
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 32px 0;
         gap: 24px 0;
         width: 100%;
 
