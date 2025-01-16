@@ -3,7 +3,6 @@ import { Trans } from '@lingui/macro';
 import { Button } from 'antd';
 import _ from 'lodash';
 import React, { ReactNode } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { GroupItemProps, QuestionItems } from 'sdc-qrf';
 
 import { useFieldController } from 'src/components/BaseQuestionnaireResponseForm/hooks';
@@ -14,11 +13,6 @@ import s from './RepeatableGroups.module.scss';
 interface RepeatableGroupsProps {
     groupItem: GroupItemProps;
     renderGroup?: (props: RepeatableGroupProps) => ReactNode;
-    buildValue?: (existingItems: Array<any>) => any;
-}
-
-function defaultBuildValue(exisingItems: Array<any>) {
-    return [...exisingItems, {}];
 }
 
 export function RepeatableGroups(props: RepeatableGroupsProps) {
@@ -26,14 +20,8 @@ export function RepeatableGroups(props: RepeatableGroupsProps) {
     const { parentPath, questionItem } = groupItem;
     const { linkId, required } = questionItem;
     const fieldName = [...parentPath, linkId];
-    const { onChange } = useFieldController(fieldName, questionItem);
-
-    const { getValues } = useFormContext();
-
-    const value = _.get(getValues(), fieldName);
-
+    const { value, onChange } = useFieldController(fieldName, questionItem);
     const items = value.items && value.items.length ? value.items : required ? [{}] : [];
-    const buildValue = props.buildValue ?? defaultBuildValue;
 
     return (
         <div className={s.group}>
@@ -68,7 +56,8 @@ export function RepeatableGroups(props: RepeatableGroupsProps) {
                         type="link"
                         className={s.addButton}
                         onClick={() => {
-                            const updatedInput = { items: buildValue(items ?? []) };
+                            const existingItems = items || [];
+                            const updatedInput = { items: [...existingItems, {}] };
                             onChange(updatedInput);
                         }}
                         size="small"

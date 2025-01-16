@@ -7,16 +7,11 @@ import { renderTextWithInput } from 'src/utils/renderTextWithInput';
 
 import { usePatientDocumentPrint } from './hooks';
 import { S } from './styles';
-import { flattenQuestionnaireGroupItems, getQuestionnaireItemValue, qItemIsHidden } from './utils';
+import { flattenQuestionnaireGroupItems, getQuestionnaireItemValue } from './utils';
 
 export function DocumentPrintAnswer(props: { item: QuestionnaireItem; qResponse?: QuestionnaireResponse }) {
     const { item, qResponse } = props;
     const itemValue = qResponse && getQuestionnaireItemValue(item, qResponse);
-
-    if (qItemIsHidden(item)) {
-        return null;
-    }
-
     return (
         <S.P key={item.linkId}>
             {item.text}
@@ -29,11 +24,6 @@ function DocumentPrintTextWithInput(props: { item: QuestionnaireItem; qResponse?
     const { item, qResponse } = props;
     const itemValue = qResponse && getQuestionnaireItemValue(item, qResponse);
     const renderedText = renderTextWithInput(item.text, itemValue);
-
-    if (qItemIsHidden(item)) {
-        return null;
-    }
-
     return <S.P key={item.linkId}>{renderedText}</S.P>;
 }
 

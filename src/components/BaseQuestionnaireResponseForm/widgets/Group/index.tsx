@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import _ from 'lodash';
 import { GroupItemProps, QuestionItems } from 'sdc-qrf';
 
 import { Text } from 'src/components/Typography';
