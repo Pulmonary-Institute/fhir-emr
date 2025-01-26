@@ -9,7 +9,7 @@ export function AppFooter(props: Props) {
 
     return (
         <S.Footer className={`_${type}`}>
-            <S.Content> Ferrer Pulmonary Institute </S.Content>
+            <S.Content> MedConnect </S.Content>
         </S.Footer>
     );
 }
