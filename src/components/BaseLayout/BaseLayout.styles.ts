@@ -77,6 +77,7 @@ export const S = {
         flex: 1;
         display: flex;
         flex-direction: column;
+        gap: 24px 0;
         width: 100%;
 
         ${maxWidthStyles}
