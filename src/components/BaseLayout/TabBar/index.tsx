@@ -21,7 +21,7 @@ export function AppTabBar() {
                 </S.LogoWrapper>
                 <S.Button icon={<MenuIcon />} type="text" onClick={() => toggleMenuOpened((v) => !v)} />
             </S.TabBar>
-            <S.Drawer placement="right" onClose={() => toggleMenuOpened(false)} open={menuOpened} closable={false}>
+            <S.Drawer placement="left" onClose={() => toggleMenuOpened(false)} open={menuOpened} closable={false}>
                 <S.CloseIcon type="text" icon={<CloseOutlined />} onClick={() => toggleMenuOpened(false)} />
                 <SidebarTop collapsed={false} onItemClick={() => toggleMenuOpened(false)} />
                 <SidebarBottom collapsed={false} onItemClick={() => toggleMenuOpened(false)} />
