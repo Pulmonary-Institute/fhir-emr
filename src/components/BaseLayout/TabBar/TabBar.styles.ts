@@ -9,11 +9,17 @@ export const S = {
         left: 0;
         right: 0;
         top: 0;
-        background-color: ${({ theme }) => theme.neutralPalette.gray_1};
         z-index: 11;
-        border-bottom: 1px solid ${({ theme }) => theme.neutralPalette.gray_4};
         display: flex;
+        flex-direction: row-reverse;
         justify-content: space-between;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin: 1vh;
+        
 
         @media screen and (min-width: 768px) {
             display: none;
@@ -59,7 +65,14 @@ export const S = {
         }
     `,
     Drawer: styled(Drawer)`
-        background-color: ${({ theme }) => theme.neutralPalette.gray_1};
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin: 1vh;
+
+
 
         .ant-drawer-body {
             padding: 0;
