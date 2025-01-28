@@ -3,7 +3,7 @@ import { Button, Segmented, Tooltip } from 'antd';
 import { useState } from 'react';
 
 import { AppFooter } from 'src/components/BaseLayout/Footer';
-import logo from 'src/images/logo.svg';
+import logo from 'src/images/vertical-logo.svg';
 import { getAuthorizeUrl, OAuthState } from 'src/services/auth';
 
 import { useAppleAuthentication } from './hooks';
@@ -31,7 +31,7 @@ export function SignIn(props: SignInProps) {
             <S.Form>
                 <div className={s.header}>
                     <S.Text>{t`Welcome to`}</S.Text>
-                    <img src={logo} alt="" />
+                    <img src={logo} alt="" style={{width: "195px", height:"85px"}}/>
                 </div>
                 <Segmented
                     value={signInService}
