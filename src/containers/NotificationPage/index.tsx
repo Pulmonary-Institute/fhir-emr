@@ -1,5 +1,4 @@
 import { AppFooter } from 'src/components/BaseLayout/Footer';
-import { CompanyName } from 'src/icons/brand/CompanyName';
 import { LogoSmall } from 'src/icons/brand/LogoSmall';
 
 import { NotificationPageProps } from './interfaces';
@@ -9,8 +8,7 @@ export function NotificationPage(props: NotificationPageProps) {
     return (
         <S.Container>
             <S.Link to="/">
-                <LogoSmall style={{ width: 25 }} color="#FFF" />
-                <CompanyName color="#FFF" />
+                <LogoSmall width={50} height={50} />
             </S.Link>
             <S.Title>{props.title}</S.Title>
             <S.TextContainer>
