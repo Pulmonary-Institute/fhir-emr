@@ -7,7 +7,7 @@ import { SidebarTop } from './SidebarTop';
 export function AppSidebar() {
     const [collapsed, setCollapsed] = useState(true);
 
-    const collapsedWidth = 80;
+    const collapsedWidth = 90;
     const width = 248;
 
     return (

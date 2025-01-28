@@ -50,7 +50,7 @@ export function SidebarTop(props: Props) {
             {...other}
         >
             <Link to="/" className={s.logoWrapper}>
-            {collapsed ? <LogoSmall width ={50} height={50}/> : <LogoLarge width ={200} height={80}/>}
+            {collapsed ? <LogoSmall width ={90} height={90}/> : <LogoLarge width ={400} height={100}/>}
             </Link>
             <S.Divider />
             <Menu

@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
-import { LogoSmall } from 'src/icons/brand/LogoSmall';
+import { LogoLarge } from 'src/icons/brand/LogoLarge';
 import { MenuIcon } from 'src/icons/general/Menu';
 
 import { S } from './TabBar.styles';
@@ -15,7 +15,7 @@ export function AppTabBar() {
         <>
             <S.TabBar>
                 <S.LogoWrapper to="/">
-                    <LogoSmall width={50} height={50} />
+                    <LogoLarge width ={400} height={100} />
                 </S.LogoWrapper>
                 <S.Button icon={<MenuIcon />} type="text" onClick={() => toggleMenuOpened((v) => !v)} />
             </S.TabBar>

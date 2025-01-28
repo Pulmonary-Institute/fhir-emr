@@ -27,6 +27,7 @@ export const S = {
     `,
     LogoWrapper: styled(Link)`
         height: 50px;
+        width: 350px;
         display: flex;
         align-items: center;
         gap: 7px;
