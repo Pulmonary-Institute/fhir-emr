@@ -1,14 +1,14 @@
 // components/Logo.tsx
 import React from 'react';
 
-import logo from '../../images/sm-logo.svg'
+import logo from '../../images/vertical-logo.svg'
 
 interface LogoProps {
   width: number;
   height: number;
 }
 
-export const LogoSmall: React.FC<LogoProps> = ({ width, height }) => {
+export const LogoLarge: React.FC<LogoProps> = ({ width, height }) => {
   return (
     <div>
       <img
@@ -21,4 +21,4 @@ export const LogoSmall: React.FC<LogoProps> = ({ width, height }) => {
   );
 };
 
-export default LogoSmall;
+export default LogoLarge;

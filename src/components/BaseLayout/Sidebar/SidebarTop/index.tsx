@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { CompanyName } from 'src/icons/brand/CompanyName';
 import { LogoSmall } from 'src/icons/brand/LogoSmall';
+import {LogoLarge} from 'src/icons/brand/LogoLarge';
 import { getToken } from 'src/services/auth';
 
 import { MenuLayout } from './context';
@@ -40,7 +40,7 @@ export function SidebarTop(props: Props) {
         onItemClick?.();
         navigate(path);
     };
-
+    
     return (
         <S.Container
             $collapsed={collapsed}
@@ -50,8 +50,7 @@ export function SidebarTop(props: Props) {
             {...other}
         >
             <Link to="/" className={s.logoWrapper}>
-                <LogoSmall style={{ minWidth: 32 }} />
-                <CompanyName className={s.logoCompanyName} style={{ minWidth: 89 }} />
+            {collapsed ? <LogoSmall width ={50} height={50}/> : <LogoLarge width ={200} height={80}/>}
             </Link>
             <S.Divider />
             <Menu

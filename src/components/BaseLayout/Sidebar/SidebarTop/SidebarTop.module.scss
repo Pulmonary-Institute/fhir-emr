@@ -5,16 +5,15 @@
     height: 68px;
     display: flex;
     align-items: center;
-    gap: 7px;
-    padding: 0 55px;
+    justify-content: center;
     transition: padding 0.2s;
 
     .container:global(._collapsed) & {
-        padding: 0 20px;
+        padding: 0 0px;
     }
 
     @media screen and (max-width: 767px) {
-        padding: 0 12px;
+        padding: 0 0px;
     }
 }
 
