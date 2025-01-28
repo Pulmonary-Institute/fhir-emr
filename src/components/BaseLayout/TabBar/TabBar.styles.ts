@@ -18,7 +18,7 @@ export const S = {
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(5px);
         border: 1px solid rgba(255, 255, 255, 0.3);
-        margin: 1vh;
+        margin: 8px;
         
 
         @media screen and (min-width: 768px) {
@@ -70,7 +70,7 @@ export const S = {
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(5px);
         border: 1px solid rgba(255, 255, 255, 0.3);
-        margin: 1vh;
+        margin: 8px;
 
 
 

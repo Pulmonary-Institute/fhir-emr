@@ -37,13 +37,20 @@ export const S = {
             radial-gradient(at 5% 8%, hsla(273,87%,90%,0.4) 0px, transparent 50%);
 
         @media screen and (max-width: 767px) {
-            padding-top: 50px;
+            padding-top: 80px;
+            padding-bottom:50px;
+            padding-right:15px;
+            padding-left:15px
         }
     `,
     Layout: styled(Layout)`
         background: 0;
         position: relative;
-        padding-bottom: 64px;
+        padding: 30px 30px 50px 30px;
+
+        @media screen and (max-width: 767px) { 
+            padding: 0px 10px 50px 10px;
+        }
     `,
     PageHeaderContainer: styled.div`
        background: rgba(255, 255, 255, 0.2);
@@ -55,7 +62,6 @@ export const S = {
         flex-direction: column;
         padding: 0 24px;
         align-items: center;
-        margin: 3vh;
     `,
     PageHeader: styled.div<{ $maxWidth?: number | string }>`
         flex: 1;
@@ -72,6 +78,10 @@ export const S = {
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        @media screen and (max-width: 767px) { 
+            padding: 0 0px;
+        }
     `,
     PageContent: styled.div<{ $maxWidth?: number | string }>`
         flex: 1;
@@ -79,6 +89,7 @@ export const S = {
         flex-direction: column;
         gap: 24px 0;
         width: 100%;
+        margin-top:30px;
 
         ${maxWidthStyles}
     `,
