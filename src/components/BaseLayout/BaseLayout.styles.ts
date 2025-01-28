@@ -62,6 +62,7 @@ export const S = {
         flex-direction: column;
         padding: 0 24px;
         align-items: center;
+        z-index: 100;
     `,
     PageHeader: styled.div<{ $maxWidth?: number | string }>`
         flex: 1;
