@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useRef
 
 import { S } from './BaseLayout.styles';
 import { AppFooter } from './Footer';
@@ -12,17 +13,46 @@ interface Props {
 }
 
 export function BaseLayout({ children, style, className }: Props) {
+    const [backgroundColor, setBackgroundColor] = useState(() => {
+        return localStorage.getItem('backgroundColor') || 'white';
+    });
+
+    useEffect(() => {
+        localStorage.setItem('backgroundColor', backgroundColor);
+    }, [backgroundColor]);
+
+    const handleBackgroundColorChange = () => {
+        setBackgroundColor(getNextBackgroundColor(backgroundColor));
+    };
+
+    function getNextBackgroundColor(currentColor: string) {
+        switch (currentColor) {
+            case 'white': return 'lightblue';
+            case 'lightblue': return 'lightgreen';
+            case 'lightgreen': return '#ff7875';
+            case '#ff7875': return '#6c757d';
+            case '#6c757d': return '#ffc107';
+            case '#ffc107': return 'white';
+            default: return 'white';
+        }
+    }
+
     return (
-        <S.Container style={style} className={className}>
+        <S.Container style={{ ...style, backgroundColor }} className={className}>
             <AppSidebar />
             <AppTabBar />
             <S.Layout>
                 {children}
-                <AppFooter />
+                {/* Pass handleBackgroundColorChange and the next background color */}
+                <AppFooter 
+                    handleBackgroundColorChange={handleBackgroundColorChange} 
+                    nextBackgroundColor={getNextBackgroundColor(backgroundColor)}
+                />
             </S.Layout>
         </S.Container>
     );
 }
+
 
 export function AnonymousLayout({ children, style, className }: Props) {
     return (
@@ -30,7 +60,9 @@ export function AnonymousLayout({ children, style, className }: Props) {
             <AppSidebar />
             <S.Layout>
                 {children}
-                <AppFooter />
+                <AppFooter handleBackgroundColorChange={function (): void {
+                    throw new Error('Function not implemented.');
+                } } nextBackgroundColor={''} />
             </S.Layout>
         </S.Container>
     );
