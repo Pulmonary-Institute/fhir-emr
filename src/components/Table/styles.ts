@@ -25,6 +25,8 @@ export const S = {
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            table-layout: fixed;
+            width: 100%;
         }
 
         .ant-table-container {
@@ -38,6 +40,14 @@ export const S = {
 
         .ant-table-thead .ant-table-cell {
             background-color: ${({ theme }) => theme.neutralPalette.gray_2};
+        }
+        
+        .ant-table-cell {
+             max-width: 270px;
+             max-height: 10px; 
+             white-space: nowrap;
+             word-break: break-word;
+             overflow-y: auto;
         }
     `,
     Cards: styled.div<{ $showCardsOnMobile?: boolean }>`
