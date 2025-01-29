@@ -9,4 +9,6 @@ export { InvoicesIcon } from './InvoicesIcon';
 export { MedicationsIcon } from './MedicationsIcon';
 export { PrescriptionsIcon } from './PrescriptionsIcon';
 export { OrganizationsIcon } from './OrganizationsIcon';
+export { ReportsIcon } from "./ReportsIcon";
 export { DashboardIcon } from './DashboardIcon';
+export { BillingsIcon } from "./BillingsIcon";
