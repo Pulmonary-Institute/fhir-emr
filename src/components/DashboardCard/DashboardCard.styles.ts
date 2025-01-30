@@ -3,12 +3,15 @@ import styled from 'styled-components';
 export const S = {
     Wrapper: styled.div`
         overflow-x: auto;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     `,
     Card: styled.div`
-        border-radius: 10px;
-        background-color: ${({ theme }) => theme.neutralPalette.gray_1};
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(5px);
         color: ${({ theme }) => theme.neutralPalette.gray_13};
-        border: 1px solid ${({ theme }) => theme.antdTheme?.colorBorderSecondary};
         min-width: fit-content;
 
         &._empty {
@@ -36,7 +39,7 @@ export const S = {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: ${({ theme }) => theme.primary};
+        background-color: #5eaceb;
         width: 48px;
         height: 48px;
         min-width: 48px;

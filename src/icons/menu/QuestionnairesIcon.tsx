@@ -1,6 +1,6 @@
 export function QuestionnairesIcon() {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M3 4C3 2.89543 3.89543 2 5 2H19C20.1046 2 21 2.89543 21 4V22C21 23.1046 20.1046 24 19 24H5C3.89543 24 3 23.1046 3 22V4Z"
                 fill="var(--theme-icon-secondary)"

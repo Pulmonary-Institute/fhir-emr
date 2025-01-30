@@ -3,10 +3,10 @@ export function PractitionersIcon() {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        width="28"
+        width="42"
         zoomAndPan="magnify"
         viewBox="0 0 810 809.999993"
-        height="28"
+        height="42"
         preserveAspectRatio="xMidYMid meet"
         version="1.0"
       >

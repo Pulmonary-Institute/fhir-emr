@@ -1,6 +1,6 @@
 export function InvoicesIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 60 60" fill="none">
             <path
                 d="M3 3.5C3 3.22386 3.22386 3 3.5 3H16.5C16.7761 3 17 3.22386 17 3.5V20.5C17 20.7761 16.7761 21 16.5 21H3.5C3.22386 21 3 20.7761 3 20.5V3.5Z"
                 fill="var(--theme-sidebar-background)"

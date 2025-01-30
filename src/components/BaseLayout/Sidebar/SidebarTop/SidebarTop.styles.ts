@@ -15,16 +15,15 @@ export const S = {
         .ant-menu-item {
             display: flex;
             align-items: center;
+            justify-content: center;
             flex-direction: ${({ $collapsed }) => ($collapsed ? 'column' : 'row')};
             gap: 0 10px;
-            height: 48px !important;
             line-height: 24px !important;
             width: 100% !important;
             margin: 0 !important;
             color: ${({ theme }) => theme.neutral.primaryText} !important;
             border-radius: 6px !important;
             transition: height 0.2s;
-            padding: ${({ $collapsed }) => ($collapsed ? '12px 24px' : '12px 16px')} !important;
             transition: all 0.2s;
         }
 
@@ -44,8 +43,8 @@ export const S = {
         }
 
         .ant-menu-item.ant-menu-item-selected {
-            background-color: ${({ theme }) => theme.neutralPalette.gray_3} !important;
-            color: ${({ theme }) => theme.neutralPalette.gray_13} !important;
+            background-color: hsla(0,0%,100%,0.5)!important;
+            color: #00000 !important;
         }
     `,
     Divider: styled(Divider)`

@@ -4,6 +4,10 @@ import styled, { css } from 'styled-components';
 export const S = {
     Table: styled.div<{ $showCardsOnMobile?: boolean }>`
         overflow: auto;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(5px);  
 
         ${({ $showCardsOnMobile }) =>
             $showCardsOnMobile &&
@@ -20,13 +24,10 @@ export const S = {
 
         .ant-table {
             min-width: fit-content;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
             table-layout: fixed;
             width: 100%;
+            background: none;!important;
+            
         }
 
         .ant-table-container {
@@ -39,7 +40,7 @@ export const S = {
         }
 
         .ant-table-thead .ant-table-cell {
-            background-color: ${({ theme }) => theme.neutralPalette.gray_2};
+            background-color: none;
         }
         
         .ant-table-cell {

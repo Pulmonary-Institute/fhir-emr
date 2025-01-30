@@ -41,7 +41,7 @@
 
 .menuItem {
     .container:global(._collapsed) & {
-        height: 68px !important;
+        height: 60px !important;
     }
 }
 
@@ -58,11 +58,12 @@
 .menuItemLabel {
     opacity: 1;
     transition: opacity 0.6s;
+    font-size: 15px;
 
     &._small {
         opacity: 0;
         height: 0;
-        font-size: 9px;
+        font-size: 13px;
         line-height: 14px;
         font-weight: 500;
         transition: opacity 0s;
