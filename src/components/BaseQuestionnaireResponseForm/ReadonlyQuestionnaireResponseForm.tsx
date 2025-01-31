@@ -39,7 +39,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
     const { watch } = methods;
 
     const formValues = watch();
-
+    
     return (
         <FormProvider {...methods}>
             <form>
