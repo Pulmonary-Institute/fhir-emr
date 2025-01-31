@@ -1,46 +1,44 @@
 {
-    "compilerOptions": {
-      "target": "ES2020",
-      "useDefineForClassFields": true,
-      "lib": ["ES2020", "DOM", "DOM.Iterable"],
-      "module": "ESNext",
-      "skipLibCheck": true,
-      "esModuleInterop": true,
-  
-      "declaration": true,
-      "declarationMap": true,
-      /* Bundler mode */
-      "moduleResolution": "bundler",
-      "allowImportingTsExtensions": true,
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "noEmit": true,
-      "jsx": "react-jsx",
-      "baseUrl": ".",
-      "paths": {
-        "src/*": ["./src/*"],
-        "shared/src/contrib/aidbox": ["contrib/aidbox-types/index.d.ts"]
-      },
-      "types": ["node", "vitest/globals", "jest", "@testing-library/jest-dom"],
-  
-      /* Linting */
-      "strict": true,
-      "noUnusedLocals": true,
-      // "noUnusedParameters": true,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "strictNullChecks": true,
-      "noImplicitThis": true,
-      "allowSyntheticDefaultImports": true,
-      "forceConsistentCasingInFileNames": true,
-      "noUncheckedIndexedAccess": true,
-  
-      // Option 'suppressImplicitAnyIndexErrors' is deprecated and will stop functioning in TypeScript 5.5 
-      "suppressImplicitAnyIndexErrors": true,
-      "ignoreDeprecations": "5.0",
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"],
+      "shared/src/contrib/aidbox": ["contrib/aidbox-types/index.d.ts"]
     },
-    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-    "exclude": ["node_modules", "lib"],
-    "references": [{ "path": "./tsconfig.node.json" }]
-  }
-  
+    "types": ["node", "vitest/globals", "jest", "@testing-library/jest-dom"],
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+
+    "ignoreDeprecations": "5.0"
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "exclude": ["node_modules", "lib"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
