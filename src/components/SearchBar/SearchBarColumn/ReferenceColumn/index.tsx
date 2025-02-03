@@ -8,7 +8,6 @@ export function ReferenceColumn(props: SearchBarColumnReferenceTypeProps) {
     const { columnFilterValue, defaultOpen } = props;
 
     const { debouncedLoadOptions, onOptionChange } = useReferenceColumn(props);
-
     return (
         <AsyncSelect
             onChange={onOptionChange}
@@ -20,7 +19,7 @@ export function ReferenceColumn(props: SearchBarColumnReferenceTypeProps) {
             isMulti={false}
             placeholder={columnFilterValue.column.placeholder}
             defaultMenuIsOpen={defaultOpen}
-            isClearable
+            isClearable={columnFilterValue.column.id!='participant-only'}
         />
     );
 }
