@@ -1,6 +1,6 @@
 export function ScribeIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40" zoomAndPan="magnify" viewBox="0 0 810 809.999993" height="40" preserveAspectRatio="xMidYMid meet" version="1.0">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width={34} height={34} zoomAndPan="magnify" viewBox="0 0 810 809.999993" preserveAspectRatio="xMidYMid meet" version="1.0">
             <defs>
             <clipPath id="5f847b5054">
                 <path d="M 459.183594 153.886719 L 668 153.886719 L 668 338.523438 L 459.183594 338.523438 Z M 459.183594 153.886719 " clip-rule="nonzero" />

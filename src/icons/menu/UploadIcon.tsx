@@ -1,6 +1,6 @@
 export function UploadIcon() {
     return (
-        <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={34} height={34} viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M5 3.5C5 3.22386 5.22386 3 5.5 3H18.5C18.7761 3 19 3.22386 19 3.5V20.5C19 20.7761 18.7761 21 18.5 21H5.5C5.22386 21 5 20.7761 5 20.5V3.5Z"
                 fill="var(--theme-sidebar-background)"

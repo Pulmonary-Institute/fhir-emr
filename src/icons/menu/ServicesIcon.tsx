@@ -1,6 +1,6 @@
 export function ServicesIcon() {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40" zoomAndPan="magnify" viewBox="0 0 810 809.999993" height="40" preserveAspectRatio="xMidYMid meet" version="1.0">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width={34} height={34} zoomAndPan="magnify" viewBox="0 0 810 809.999993" preserveAspectRatio="xMidYMid meet" version="1.0">
         <defs>
           <clipPath id="6e464f72cc">
             <path d="M 174 139.152344 L 602.265625 139.152344 L 602.265625 678 L 174 678 Z M 174 139.152344 " clip-rule="nonzero" />

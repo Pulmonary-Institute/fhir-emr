@@ -3,10 +3,10 @@ export function PatientsIcon() {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
-            width="40"
+            width={34}
+            height={34}
             zoomAndPan="magnify"
             viewBox="0 0 810 809.999993"
-            height="40"
             preserveAspectRatio="xMidYMid meet"
             version="1.0"
             >
