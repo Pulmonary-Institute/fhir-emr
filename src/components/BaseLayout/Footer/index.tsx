@@ -28,8 +28,8 @@ export function AppFooter({ type = 'default', handleBackgroundColorChange, nextB
 
     return (
         <S.Footer className={`_${type}`}>
-            <S.Content 
-                onClick={handleBackgroundColorChange} 
+            <S.Content
+                onClick={handleBackgroundColorChange}
                 style={{
                     cursor: 'pointer',
                     padding: '1px 10px',
@@ -46,7 +46,7 @@ export function AppFooter({ type = 'default', handleBackgroundColorChange, nextB
                     e.currentTarget.style.color = textColor;
                 }}
             >
-                MedConnect
+                MoxieLink
             </S.Content>
         </S.Footer>
     );
