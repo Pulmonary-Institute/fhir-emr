@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { LogoSmall } from 'src/icons/brand/LogoSmall';
-import {LogoLarge} from 'src/icons/brand/LogoLarge';
+import { LogoLarge } from 'src/icons/brand/LogoLarge';
 import { getToken } from 'src/services/auth';
 
 import { MenuLayout } from './context';
@@ -40,7 +40,7 @@ export function SidebarTop(props: Props) {
         onItemClick?.();
         navigate(path);
     };
-    
+
     return (
         <S.Container
             $collapsed={collapsed}
@@ -50,7 +50,7 @@ export function SidebarTop(props: Props) {
             {...other}
         >
             <Link to="/" className={s.logoWrapper}>
-            {collapsed ? <LogoSmall width ={90} height={90}/> : <LogoLarge width ={400} height={100}/>}
+                {collapsed ? <LogoSmall width={90} height={90} /> : <LogoLarge height={100} />}
             </Link>
             <S.Divider />
             <Menu

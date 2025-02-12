@@ -49,7 +49,7 @@ export function AppFooter({ type = 'default', handleBackgroundColorChange, nextB
                 onMouseOver={(e) => (e.currentTarget.style.backgroundColor = nextBackgroundColor)}
                 onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0)')}
             >
-                MedConnect
+                MoxieLink
             </S.Content>
         </S.Footer>
     );

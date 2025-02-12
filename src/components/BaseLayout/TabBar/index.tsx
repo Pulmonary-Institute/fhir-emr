@@ -15,7 +15,7 @@ export function AppTabBar() {
         <>
             <S.TabBar>
                 <S.LogoWrapper to="/">
-                    <LogoLarge width ={400} height={100} />
+                    <LogoLarge height={100} />
                 </S.LogoWrapper>
                 <S.Button icon={<MenuIcon />} type="text" onClick={() => toggleMenuOpened((v) => !v)} />
             </S.TabBar>
