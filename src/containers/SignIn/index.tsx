@@ -18,13 +18,9 @@ export function SignIn(props: SignInProps) {
         <S.Container>
             <S.Form>
                 <div className={s.header}>
-                    <img src={logo} alt="Logo" style={{ width: '400px', height: '100px' }}/>
+                    <img src={logo} alt="Logo" style={{ width: '270px', height: '100px' }} />
                 </div>
-                <Button
-                    type="primary"
-                    onClick={() => authorize({ nextUrl: props.originPathName })}
-                    size="large"
-                >
+                <Button type="primary" onClick={() => authorize({ nextUrl: props.originPathName })} size="large">
                     {t`Log in`}
                 </Button>
             </S.Form>
