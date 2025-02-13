@@ -14,6 +14,9 @@ import { renderHumanName } from 'src/utils/fhir';
 import { Role, matchCurrentUserRole } from 'src/utils/role';
 
 import { MenuItem } from './types';
+import { WithId } from '@beda.software/fhir-react';
+import { Practitioner } from 'fhir/r4b';
+import { JSX } from 'react/jsx-runtime';
 
 export type BottomMenuLayoutValue = (onItemClick?: () => void) => Array<MenuItem>;
 
@@ -33,6 +36,12 @@ export const defaultBottomMenuLayout: BottomMenuLayoutValue = (onItemClick?: () 
                               [Role.Patient]: () => <PatientName />,
                               [Role.Practitioner]: () => <PractitionerName />,
                               [Role.Receptionist]: () => <PractitionerName />,
+                              [Role.Scriber]: function (practitioner: WithId<Practitioner>): JSX.Element {
+                                  throw new Error('Function not implemented.');
+                              },
+                              [Role.Census]: function (practitioner: WithId<Practitioner>): JSX.Element {
+                                  throw new Error('Function not implemented.');
+                              },
                           })
                         : user?.email}
                 </>

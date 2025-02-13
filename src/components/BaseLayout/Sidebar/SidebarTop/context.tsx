@@ -1,6 +1,8 @@
+import { WithId } from '@beda.software/fhir-react';
 import { t } from '@lingui/macro';
-import { Patient } from 'fhir/r4b';
+import { Patient, Practitioner } from 'fhir/r4b';
 import { createContext } from 'react';
+import { JSX } from 'react/jsx-runtime';
 
 import { EncountersIcon } from 'src/icons/menu/EncountersIcon';
 import { InvoicesIcon } from 'src/icons/menu/InvoicesIcon';
@@ -45,6 +47,16 @@ const defaultMenuLayout: MenuLayoutValue = () =>
             { label: t`Medications`, path: '/medications', icon: <MedicationsIcon /> },
             { label: t`Prescriptions`, path: '/prescriptions', icon: <PrescriptionsIcon /> },
         ],
+        [Role.Scriber]: function (
+            practitioner: WithId<Practitioner>,
+        ): { label: string; path: string; icon: JSX.Element }[] {
+            throw new Error('Function not implemented.');
+        },
+        [Role.Census]: function (
+            practitioner: WithId<Practitioner>,
+        ): { label: string; path: string; icon: JSX.Element }[] {
+            throw new Error('Function not implemented.');
+        },
     });
 
 export const MenuLayout = createContext<MenuLayoutValue>(defaultMenuLayout);
