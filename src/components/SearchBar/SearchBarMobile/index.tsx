@@ -48,7 +48,8 @@ export function SearchBarMobile(props: SearchBarData) {
                         <Trans>Show results</Trans>
                     </Button>
                     <Button type="default" onClick={onResetFilters} size="large">
-                        <Trans>{t`Clear filters`}</Trans>
+                        {/* <Trans>Clear filter</Trans> */}
+                        Clear filters
                     </Button>
                 </S.DrawerFooter>
             </S.Drawer>

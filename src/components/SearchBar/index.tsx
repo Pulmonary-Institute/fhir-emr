@@ -32,7 +32,10 @@ export function SearchBar(props: SearchBarProps) {
                     ))}
                 </S.LeftColumn>
 
-                <Button onClick={onResetFilters}>{t`Clear filters`}</Button>
+                <Button onClick={onResetFilters}>
+                    {/* <Trans>Clear filter</Trans> */}
+                    Clear filters
+                </Button>
             </S.SearchBar>
             <S.MobileFilters $showInDrawerOnMobile={showInDrawerOnMobile}>
                 <SearchBarMobile {...props} />
