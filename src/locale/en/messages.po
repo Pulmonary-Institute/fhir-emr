@@ -18,8 +18,8 @@ msgid "{0, plural, one {Selected # item} other {Selected # items}}"
 msgstr ""
 
 #: src/components/SearchBar/SearchBarMobile/index.tsx:51
-msgid "{0}"
-msgstr ""
+#~ msgid "{0}"
+#~ msgstr ""
 
 #: src/containers/PatientDetails/PatientOverviewDynamic/components/PatientNoteListCard/NoteList/index.tsx:55
 msgid "Action"
@@ -267,10 +267,15 @@ msgstr ""
 msgid "Choose gender"
 msgstr ""
 
+#: src/components/SearchBar/index.tsx:36
+#: src/components/SearchBar/SearchBarMobile/index.tsx:51
+msgid "Clear filter"
+msgstr "Clear filter"
+
 #: src/components/SearchBar/index.tsx:35
 #: src/components/SearchBar/SearchBarMobile/index.tsx:51
-msgid "Clear filters"
-msgstr "Clear filters"
+#~ msgid "Clear filters"
+#~ msgstr "Clear filters"
 
 #: src/components/BaseQuestionnaireResponseForm/widgets/UploadFileControl/index.tsx:29
 msgid "Click or drag file to this area to upload"
