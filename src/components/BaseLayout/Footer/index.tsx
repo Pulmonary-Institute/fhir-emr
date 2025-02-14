@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { S } from './Footer.styles';
 
 interface Props {
@@ -24,27 +25,29 @@ function getTextColor(backgroundColor: string): string {
 }
 
 export function AppFooter({ type = 'default', handleBackgroundColorChange, nextBackgroundColor }: Props) {
-    const textColor = getTextColor(nextBackgroundColor); // Get dynamic text color
+    const [isClicked, setIsClicked] = useState(false);
+    const textColor = getTextColor(nextBackgroundColor);
 
     return (
         <S.Footer className={`_${type}`}>
-            <S.Content
-                onClick={handleBackgroundColorChange}
+            <S.Content 
+                onClick={() => {
+                    setIsClicked(true);
+                    handleBackgroundColorChange();
+                }}
                 style={{
                     cursor: 'pointer',
                     padding: '1px 10px',
                     borderRadius: '6px',
-                    backgroundColor: 'rgba(255, 255, 255, 0)',
-                    color: textColor, // Corrected dynamic text color
+                    backgroundColor: isClicked ? nextBackgroundColor : 'rgba(255, 255, 255, 0)',
+                    color: textColor,
                     fontSize: '16px',
                     transition: 'background-color 0.3s ease, color 0.3s ease',
                     display: 'inline-block',
+                    userSelect: 'none',
                 }}
                 onMouseOver={(e) => (e.currentTarget.style.backgroundColor = nextBackgroundColor)}
-                onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0)';
-                    e.currentTarget.style.color = textColor;
-                }}
+                onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0)')}
             >
                 MoxieLink
             </S.Content>
