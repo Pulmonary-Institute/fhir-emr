@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Button } from 'antd';
 
 import { SearchBarColumn } from './SearchBarColumn';
@@ -32,9 +32,7 @@ export function SearchBar(props: SearchBarProps) {
                     ))}
                 </S.LeftColumn>
 
-                <Button onClick={onResetFilters}>
-                    <Trans>Clear filters</Trans>
-                </Button>
+                <Button onClick={onResetFilters}>{t`Clear filters`}</Button>
             </S.SearchBar>
             <S.MobileFilters $showInDrawerOnMobile={showInDrawerOnMobile}>
                 <SearchBarMobile {...props} />

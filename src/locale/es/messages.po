@@ -261,7 +261,7 @@ msgstr "Características"
 #: src/components/SearchBar/index.tsx:36
 #: src/components/SearchBar/SearchBarMobile/index.tsx:51
 msgid "Clear filters"
-msgstr ""
+msgstr "Limpiar filtros"
 
 #: src/components/BaseQuestionnaireResponseForm/widgets/UploadFileControl/index.tsx:29
 msgid "Click or drag file to this area to upload"

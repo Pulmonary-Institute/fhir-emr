@@ -30,9 +30,7 @@ export const setCurrentLocale = (locale: string) => {
 };
 
 export function dynamicActivate(locale: LocaleCode) {
-    console.log('---------------', locale);
     const messages = localMap[locale];
-
     if (messages) {
         i18n.load(locale, messages);
     }
