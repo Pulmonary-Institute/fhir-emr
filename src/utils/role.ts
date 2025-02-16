@@ -16,7 +16,8 @@ export enum Role {
     Practitioner = 'practitioner',
     Receptionist = 'receptionist',
     Scriber = 'scriber',
-    Census = 'census'
+    Census = 'census',
+    Admin1 = 'subAdmin'
 }
 
 export function selectUserRole<T>(user: User, options: { [role in Role]: T }): T {
@@ -32,6 +33,7 @@ export function matchCurrentUserRole<T>(options: {
     [Role.Receptionist]: (practitioner: WithId<Practitioner>) => T;
     [Role.Scriber]: (practitioner: WithId<Practitioner>) => T;
     [Role.Census]: (practitioner: WithId<Practitioner>) => T;
+    [Role.Admin1]: (practitioner: WithId<Practitioner>) => T;
 }): T {
     return selectUserRole(sharedAuthorizedUser.getSharedState()!, {
         [Role.Patient]: () => options[Role.Patient](sharedAuthorizedPatient.getSharedState()!),
@@ -40,6 +42,7 @@ export function matchCurrentUserRole<T>(options: {
         [Role.Receptionist]: () => options[Role.Receptionist](sharedAuthorizedPractitioner.getSharedState()!),
         [Role.Scriber]: () => options[Role.Scriber](sharedAuthorizedPractitioner.getSharedState()!),
         [Role.Census]: () => options[Role.Census](sharedAuthorizedPractitioner.getSharedState()!),
+        [Role.Admin1]: () => options[Role.Admin1](sharedAuthorizedPractitioner.getSharedState()!),
     })();
 }
 
@@ -51,5 +54,6 @@ export function selectCurrentUserRoleResource(): WithId<Patient> | WithId<Practi
         [Role.Receptionist]: (practitioner) => practitioner,
         [Role.Scriber]: (practitioner) => practitioner,
         [Role.Census]: (practitioner) => practitioner,
+        [Role.Admin1]: (practitioner) => practitioner,
     });
 }
