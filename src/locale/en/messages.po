@@ -269,13 +269,8 @@ msgstr ""
 
 #: src/components/SearchBar/index.tsx:36
 #: src/components/SearchBar/SearchBarMobile/index.tsx:51
-msgid "Clear filter"
-msgstr "Clear filter"
-
-#: src/components/SearchBar/index.tsx:35
-#: src/components/SearchBar/SearchBarMobile/index.tsx:51
-#~ msgid "Clear filters"
-#~ msgstr "Clear filters"
+msgid "Clear filters"
+msgstr "Clear filters"
 
 #: src/components/BaseQuestionnaireResponseForm/widgets/UploadFileControl/index.tsx:29
 msgid "Click or drag file to this area to upload"
