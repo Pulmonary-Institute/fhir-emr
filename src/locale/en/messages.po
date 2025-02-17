@@ -639,7 +639,7 @@ msgstr ""
 
 #: src/containers/PractitionerDetails/PractitionerOverview/index.tsx:28
 msgid "First name"
-msgstr ""
+msgstr "First name"
 
 #: src/components/QuestionnaireResponseForm/index.tsx:110
 msgid "Form successfully saved"
@@ -761,7 +761,7 @@ msgstr ""
 
 #: src/containers/PractitionerDetails/PractitionerOverview/index.tsx:32
 msgid "Last name"
-msgstr ""
+msgstr "Last name"
 
 #: src/components/AudioRecorder/index.tsx:68
 msgid "Listen to the audio"
