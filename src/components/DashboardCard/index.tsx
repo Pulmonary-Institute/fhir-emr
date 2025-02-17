@@ -47,7 +47,7 @@ export function DashboardCard(props: Props) {
 
 export function DashboardCardTable(props: TableProps) {
     const { title, data, columns, getKey } = props;
-
+    console.log('dashboard card table:', title);
     return (
         <div>
             <S.TableHeader>

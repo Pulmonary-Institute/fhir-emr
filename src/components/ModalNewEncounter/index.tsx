@@ -1,7 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
+import { WithId } from '@beda.software/fhir-react';
 import { t } from '@lingui/macro';
 import { Button, notification } from 'antd';
-import { ParametersParameter, Patient } from 'fhir/r4b';
+import { ParametersParameter, Patient, Practitioner } from 'fhir/r4b';
 import { useMemo, useState } from 'react';
 
 import { Modal } from 'src/components/Modal';
@@ -24,6 +25,12 @@ export const ModalNewEncounter = ({ patient, launchContextParameters, reloadEnco
                 [Role.Patient]: () => t`Request Appointment`,
                 [Role.Practitioner]: () => t`Create Encounter`,
                 [Role.Receptionist]: () => t`Create Encounter`,
+                [Role.Scriber]: function (practitioner: WithId<Practitioner>): string {
+                    throw new Error('Function not implemented.');
+                },
+                [Role.Census]: function (practitioner: WithId<Practitioner>): string {
+                    throw new Error('Function not implemented.');
+                },
             }),
         [],
     );
