@@ -64,7 +64,6 @@ export function useEncounterList(
                 Practitioner: practitioners,
                 PractitionerRole: practitionerRoles,
             } = sourceMap;
-
             return encounters.map((encounter) => {
                 const patient = patients.find(
                     (patient) => encounter.subject && patient.id === parseFHIRReference(encounter.subject).id,
@@ -77,6 +76,9 @@ export function useEncounterList(
                     status: encounter.status,
                     period: encounter?.period,
                     humanReadableDate: encounter?.period?.start && formatHumanDateTime(encounter?.period?.start),
+                    serviceType: encounter?.serviceType?.coding
+
+
                 };
             });
         });
