@@ -25,7 +25,7 @@ import {
 } from '@beda.software/aidbox-types';
 import config from '@beda.software/emr-config';
 import { formatFHIRDateTime, getReference, useService } from '@beda.software/fhir-react';
-import { RemoteDataResult, isFailure, isSuccess, mapSuccess, success } from '@beda.software/remote-data';
+import { RemoteDataResult, failure, isFailure, isSuccess, mapSuccess, success } from '@beda.software/remote-data';
 
 import { saveFHIRResource, service } from 'src/services/fhir';
 
@@ -208,51 +208,68 @@ export async function handleFormDataSave(
         fromFirstClassExtension(finalFCEQuestionnaireResponse);
     const fhirQuestionnaire: FHIRQuestionnaire = fromFirstClassExtension(questionnaire);
 
-    const constraintRemoteData = await service({
-        ...(config.sdcBackendUrl ? { baseURL: config.sdcBackendUrl } : {}),
-        url: '/QuestionnaireResponse/$constraint-check',
-        method: 'POST',
-        data: {
-            resourceType: 'Parameters',
-            parameter: [
-                { name: 'Questionnaire', resource: fhirQuestionnaire },
-                { name: 'QuestionnaireResponse', resource: finalFHIRQuestionnaireResponse },
-                ...(launchContextParameters || []),
-            ],
-        },
-    });
-    if (isFailure(constraintRemoteData)) {
-        return constraintRemoteData;
+    // Handle the case where questionnaireId is 'visit-encounter-batch-create'
+    const sendData = async () => {
+        const constraintRemoteData = await service({
+            ...(config.sdcBackendUrl ? { baseURL: config.sdcBackendUrl } : {}),
+            url: '/QuestionnaireResponse/$constraint-check',
+            method: 'POST',
+            data: {
+                resourceType: 'Parameters',
+                parameter: [
+                    { name: 'Questionnaire', resource: fhirQuestionnaire },
+                    { name: 'QuestionnaireResponse', resource: finalFHIRQuestionnaireResponse },
+                    ...(launchContextParameters || []),
+                ],
+            },
+        });
+
+        if (isFailure(constraintRemoteData)) {
+            return constraintRemoteData;
+        }
+
+        const saveQRRemoteData = await questionnaireResponseSaveService(finalFHIRQuestionnaireResponse);
+        if (isFailure(saveQRRemoteData)) {
+            return saveQRRemoteData;
+        }
+
+        const extractRemoteData = await service<any>({
+            ...(config.sdcBackendUrl ? { baseURL: config.sdcBackendUrl } : {}),
+            method: 'POST',
+            url: '/Questionnaire/$extract',
+            data: {
+                resourceType: 'Parameters',
+                parameter: [
+                    { name: 'questionnaire', resource: fhirQuestionnaire },
+                    { name: 'questionnaire_response', resource: saveQRRemoteData.data },
+                    ...(launchContextParameters || []),
+                ],
+            },
+        });
+
+        return success({
+            questionnaireResponse: saveQRRemoteData.data,
+            extracted: isSuccess(extractRemoteData),
+            extractedError: isFailure(extractRemoteData) ? extractRemoteData.error : undefined,
+            extractedBundle: isSuccess(extractRemoteData) ? extractRemoteData.data : undefined,
+        });
+    };
+
+    // Safe handling of questionnaireId with optional chaining
+    const questionnaireId = itemContext.questionnaire.mapping?.[0]?.id;
+
+    if (questionnaireId === 'visit-encounter-batch-create-extract') {
+        const resource = itemContext.resource;
+        const patient = launchContextParameters?.[0]?.resource;
+
+        const availableCensus = await availableEncounter(resource, patient);
+        if (!availableCensus.success) {
+            return failure({ error: availableCensus.message });
+        }
+        return sendData();
+    } else {
+        return sendData();
     }
-
-    const saveQRRemoteData = await questionnaireResponseSaveService(finalFHIRQuestionnaireResponse);
-    if (isFailure(saveQRRemoteData)) {
-        return saveQRRemoteData;
-    }
-
-    const extractRemoteData = await service<any>({
-        ...(config.sdcBackendUrl ? { baseURL: config.sdcBackendUrl } : {}),
-        method: 'POST',
-        url: '/Questionnaire/$extract',
-        data: {
-            resourceType: 'Parameters',
-            parameter: [
-                { name: 'questionnaire', resource: fhirQuestionnaire },
-                { name: 'questionnaire_response', resource: saveQRRemoteData.data },
-                ...(launchContextParameters || []),
-            ],
-        },
-    });
-
-    // TODO: save extract result info QuestionnaireResponse.extractedResources and store
-    // TODO: extracted flag
-
-    return success({
-        questionnaireResponse: saveQRRemoteData.data,
-        extracted: isSuccess(extractRemoteData),
-        extractedError: isFailure(extractRemoteData) ? extractRemoteData.error : undefined,
-        extractedBundle: isSuccess(extractRemoteData) ? extractRemoteData.data : undefined,
-    });
 }
 
 export function useQuestionnaireResponseFormData(props: QuestionnaireResponseFormProps, deps: any[] = []) {
@@ -312,4 +329,87 @@ export function usePatientQuestionnaireResponseFormData(
         },
         deps,
     );
+}
+
+/**
+ * Function to check if the patient can have an encounter recorded.
+ * - Ensures patient status is 'in-progress'
+ * - Checks duplicate visit types for the same day
+ * - Prevents conflicting visit types (Pulmonary vs Acute Care Response)
+ * - Updates existing entry if user submits data on a different date
+ */
+async function availableEncounter(resource: any, patient: any) {
+    const patientId = patient?.entry?.[0]?.resource?.id;
+    if (!patientId) return { success: false, message: 'Invalid patient ID.' };
+
+    // Extract patient status
+    const patientStatus = patient?.entry?.[0]?.resource?.status;
+    if (patientStatus !== 'in-progress') {
+        return { success: false, message: 'Only patients with status "in-progress" can have encounters recorded.' };
+    }
+
+    // Extract visit details
+    const newVisitType = resource.item?.[3]?.answer?.[0]?.value?.Coding?.code?.toLowerCase();
+    const newDisplay = resource.item?.[3]?.answer?.[0]?.value?.Coding?.display;
+    const visitDate = resource.item?.[1]?.answer?.[0]?.value?.date;
+
+    // Construct practitioner object
+    const newEntry = {
+        id: patientId,
+        status: patientStatus,
+        visitType: [newVisitType],
+        display: [newDisplay],
+        date: visitDate,
+    };
+
+    // Retrieve existing data from localStorage
+    const storedData = localStorage.getItem(`patient_${patientId}`);
+    let existingEntries: any[] = storedData ? JSON.parse(storedData) : [];
+
+    // Filter existing entries by date
+    const sameDayEntries = existingEntries.filter((entry: any) => entry.date === visitDate);
+
+    // Check for duplicate visit type on the same day
+    if (sameDayEntries.some((entry: any) => entry.visitType.includes(newVisitType))) {
+        return { success: false, message: 'Duplicate visit type for the same patient on the same day is not allowed.' };
+    }
+
+    // Check for conflicting visit types on the same day
+    const visitTypesSet = new Set(sameDayEntries.flatMap((entry: any) => entry.visitType));
+
+    if (
+        (newVisitType === 'pulmonary' && visitTypesSet.has('acute-care-response')) ||
+        (newVisitType === 'acute-care-response' && visitTypesSet.has('pulmonary'))
+    ) {
+        return {
+            success: false,
+            message: "Cannot submit 'Pulmonary' and 'Acute Care Response' for the same patient on the same day.",
+        };
+    }
+
+    // Check for duplicate visit type and display combination
+    if (
+        sameDayEntries.some(
+            (entry: any) => entry.visitType.includes(newVisitType) && entry.display.includes(newDisplay),
+        )
+    ) {
+        return {
+            success: false,
+            message: 'Same visit type and display already exist for this patient on the same day.',
+        };
+    }
+
+    // Update existing entry if patient already exists, otherwise add a new entry
+    const existingPatient = existingEntries.find((entry: any) => entry.date === visitDate);
+    if (existingPatient) {
+        existingPatient.visitType.push(newVisitType);
+        existingPatient.display.push(newDisplay);
+    } else {
+        existingEntries.push(newEntry);
+    }
+
+    // Save updated data back to localStorage
+    localStorage.setItem(`patient_${patientId}`, JSON.stringify(existingEntries));
+
+    return { success: true, message: 'Send to Census successfully.' };
 }

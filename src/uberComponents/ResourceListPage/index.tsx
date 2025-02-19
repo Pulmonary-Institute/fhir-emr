@@ -157,7 +157,7 @@ export function ResourceListPage<R extends Resource>({
     });
     const headerActions = getHeaderActions?.() ?? [];
     const batchActions = getBatchActions?.() ?? [];
-    console.log('--------------', recordResponse, batchActions);
+
     return (
         <PageContainer
             title={title}

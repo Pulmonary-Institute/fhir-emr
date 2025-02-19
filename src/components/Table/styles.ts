@@ -7,7 +7,8 @@ export const S = {
         border-radius: 16px;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(5px);  
+        backdrop-filter: blur(5px);
+        margin-bottom: 30px;
 
         ${({ $showCardsOnMobile }) =>
             $showCardsOnMobile &&
