@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { t, Trans } from '@lingui/macro';
-import { Patient } from 'fhir/r4b';
+import { Patient, Practitioner } from 'fhir/r4b';
 
 import { SearchBarColumnType } from 'src/components/SearchBar/types';
 import { ResourceListPage } from 'src/uberComponents';
@@ -11,6 +11,7 @@ import { matchCurrentUserRole, Role } from 'src/utils/role';
 
 import { getPatientSearchParamsForPractitioner } from './utils';
 import { S } from './styles';
+import { WithId } from '@beda.software/fhir-react';
 
 export function PatientResourceListExample() {
     /*
@@ -28,6 +29,12 @@ export function PatientResourceListExample() {
         },
         [Role.Patient]: () => {
             return {};
+        },
+        [Role.Scriber]: function (practitioner: WithId<Practitioner>): {} {
+            throw new Error('Function not implemented.');
+        },
+        [Role.Census]: function (practitioner: WithId<Practitioner>): {} {
+            throw new Error('Function not implemented.');
         },
     });
 
