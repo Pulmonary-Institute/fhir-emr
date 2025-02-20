@@ -60,30 +60,30 @@ export function useResourceListPage<R extends Resource>(
         return extractPrimaryResources ?? extractPrimaryResourcesFactory(resourceType);
     }, [resourceType, extractPrimaryResources]);
 
-    const recordResponse = mapSuccess(resourceResponse, (bundle) =>
-        extractPrimaryResourcesMemoized(bundle as Bundle).map((resource) => ({
-            resource: resource as R,
-            bundle: bundle as Bundle,
-        })),
-    );
+    // const recordResponse = mapSuccess(resourceResponse, (bundle) =>
+    //     extractPrimaryResourcesMemoized(bundle as Bundle).map((resource) => ({
+    //         resource: resource as R,
+    //         bundle: bundle as Bundle,
+    //     })),
+    // );
 
     // Log the initial resourceResponse before processing
-    // const recordResponse = mapSuccess(resourceResponse, (bundle) => {
-    //     console.log('Processing bundle =>', bundle);
+    const recordResponse = mapSuccess(resourceResponse, (bundle) => {
+        console.log('Processing bundle =>', bundle);
 
-    //     const extractedResources = extractPrimaryResourcesMemoized(bundle as Bundle);
-    //     console.log('Extracted Resources =>', extractedResources);
+        const extractedResources = extractPrimaryResourcesMemoized(bundle as Bundle);
+        console.log('Extracted Resources =>', extractedResources);
 
-    //     const mappedResponse = extractedResources.map((resource) => {
-    //         const record = {
-    //             resource: resource as R,
-    //             bundle: bundle as Bundle,
-    //         };
-    //         return record;
-    //     });
+        const mappedResponse = extractedResources.map((resource) => {
+            const record = {
+                resource: resource as R,
+                bundle: bundle as Bundle,
+            };
+            return record;
+        });
 
-    //     return mappedResponse;
-    // });
+        return mappedResponse;
+    });
 
     const selectedResourcesBundle: Bundle<R> = {
         resourceType: 'Bundle',
