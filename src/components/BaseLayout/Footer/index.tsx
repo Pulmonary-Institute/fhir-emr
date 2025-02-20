@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { S } from './Footer.styles';
+import formbricks from "@formbricks/js";
 
 interface Props {
     type?: 'default' | 'light';
@@ -21,12 +22,20 @@ function getTextColor(backgroundColor: string): string {
     const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
     // If luminance is high, use dark gray (#4A4A4A), otherwise use light gray (#D3D3D3)
-    return luminance > 0.6 ? '#4A4A4A' : '#D3D3D3';
+    return luminance > 0.6? '#4A4A4A': '#D3D3D3';
 }
 
 export function AppFooter({ type = 'default', handleBackgroundColorChange, nextBackgroundColor }: Props) {
     const [isClicked, setIsClicked] = useState(false);
     const textColor = getTextColor(nextBackgroundColor);
+
+    if (typeof window!== "undefined") {
+      formbricks.init({
+        environmentId: "cm7djf3qs0007if03qns84pfc",
+        apiHost: "https://app.formbricks.com",
+        userId: "testUser",
+      });
+    }
 
     return (
         <S.Footer className={`_${type}`}>
@@ -39,7 +48,7 @@ export function AppFooter({ type = 'default', handleBackgroundColorChange, nextB
                     cursor: 'pointer',
                     padding: '1px 10px',
                     borderRadius: '6px',
-                    backgroundColor: isClicked ? nextBackgroundColor : 'rgba(255, 255, 255, 0)',
+                    backgroundColor: isClicked? nextBackgroundColor: 'rgba(255, 255, 255, 0)',
                     color: textColor,
                     fontSize: '16px',
                     transition: 'background-color 0.3s ease, color 0.3s ease',
