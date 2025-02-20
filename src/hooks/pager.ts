@@ -15,6 +15,8 @@ export function usePagerExtended<T extends Resource, F = unknown>(
 ) {
     const [pageSize, setPageSize] = useState(defaultPageSize ?? 10);
 
+    console.log('search params:', searchParams);
+
     const [resourceResponse, pagerManager] = usePager<T>({
         resourceType,
         requestService: service,

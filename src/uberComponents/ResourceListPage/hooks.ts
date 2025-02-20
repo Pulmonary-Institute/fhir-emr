@@ -60,12 +60,31 @@ export function useResourceListPage<R extends Resource>(
         return extractPrimaryResources ?? extractPrimaryResourcesFactory(resourceType);
     }, [resourceType, extractPrimaryResources]);
 
-    const recordResponse = mapSuccess(resourceResponse, (bundle) =>
-        extractPrimaryResourcesMemoized(bundle as Bundle).map((resource) => ({
-            resource: resource as R,
-            bundle: bundle as Bundle,
-        })),
-    );
+    // const recordResponse = mapSuccess(resourceResponse, (bundle) =>
+    //     extractPrimaryResourcesMemoized(bundle as Bundle).map((resource) => ({
+    //         resource: resource as R,
+    //         bundle: bundle as Bundle,
+    //     })),
+    // );
+
+    // Log the initial resourceResponse before processing
+    const recordResponse = mapSuccess(resourceResponse, (bundle) => {
+        console.log('Processing bundle =>', bundle);
+
+        const extractedResources = extractPrimaryResourcesMemoized(bundle as Bundle);
+        console.log('Extracted Resources =>', extractedResources);
+
+        const mappedResponse = extractedResources.map((resource) => {
+            const record = {
+                resource: resource as R,
+                bundle: bundle as Bundle,
+            };
+            return record;
+        });
+
+        return mappedResponse;
+    });
+
     const selectedResourcesBundle: Bundle<R> = {
         resourceType: 'Bundle',
         type: 'collection',
@@ -90,10 +109,24 @@ export function useResourceListPage<R extends Resource>(
     };
 }
 
+// function extractPrimaryResourcesFactory<R extends Resource>(resourceType: R['resourceType']) {
+//     return (bundle: Bundle) => {
+//         return (bundle.entry ?? [])
+//             .filter((entry) => entry.resource?.resourceType === resourceType)
+//             .map((entry) => entry.resource as R);
+//     };
+// }
+
 function extractPrimaryResourcesFactory<R extends Resource>(resourceType: R['resourceType']) {
     return (bundle: Bundle) => {
-        return (bundle.entry ?? [])
-            .filter((entry) => entry.resource?.resourceType === resourceType)
+        const filteredResources = (bundle.entry ?? [])
+            .filter((entry) => {
+                const isMatchingType = entry.resource?.resourceType === resourceType;
+
+                return isMatchingType;
+            })
             .map((entry) => entry.resource as R);
+
+        return filteredResources;
     };
 }
