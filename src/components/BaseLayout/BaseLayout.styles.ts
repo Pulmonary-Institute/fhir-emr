@@ -46,7 +46,7 @@ export const S = {
     Layout: styled(Layout)`
         background: 0;
         position: relative;
-        padding: 30px 30px 50px 30px;
+        padding: 30px 30px 0px 30px;
 
         @media screen and (max-width: 767px) { 
             padding: 0px 10px 50px 10px;
