@@ -60,6 +60,7 @@ export function useResourceListPage<R extends Resource>(
         return extractPrimaryResources ?? extractPrimaryResourcesFactory(resourceType);
     }, [resourceType, extractPrimaryResources]);
 
+    // Original recordReponse
     // const recordResponse = mapSuccess(resourceResponse, (bundle) =>
     //     extractPrimaryResourcesMemoized(bundle as Bundle).map((resource) => ({
     //         resource: resource as R,
@@ -67,12 +68,9 @@ export function useResourceListPage<R extends Resource>(
     //     })),
     // );
 
-    // Log the initial resourceResponse before processing
+    // New recordResponse
     const recordResponse = mapSuccess(resourceResponse, (bundle) => {
-        console.log('Processing bundle =>', bundle);
-
         const extractedResources = extractPrimaryResourcesMemoized(bundle as Bundle);
-        console.log('Extracted Resources =>', extractedResources);
 
         const mappedResponse = extractedResources.map((resource) => {
             const record = {
@@ -109,6 +107,7 @@ export function useResourceListPage<R extends Resource>(
     };
 }
 
+// Original extractPrimaryResourcesFactory
 // function extractPrimaryResourcesFactory<R extends Resource>(resourceType: R['resourceType']) {
 //     return (bundle: Bundle) => {
 //         return (bundle.entry ?? [])
@@ -117,6 +116,7 @@ export function useResourceListPage<R extends Resource>(
 //     };
 // }
 
+// New extractPrimaryResourcesFactory
 function extractPrimaryResourcesFactory<R extends Resource>(resourceType: R['resourceType']) {
     return (bundle: Bundle) => {
         const filteredResources = (bundle.entry ?? [])
