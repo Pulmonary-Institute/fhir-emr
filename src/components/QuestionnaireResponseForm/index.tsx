@@ -154,7 +154,6 @@ export function useQuestionnaireResponseForm(props: QRFProps) {
 
 export function QuestionnaireResponseForm(props: QRFProps) {
     const { response, onSubmit, readOnly, onCancel } = useQuestionnaireResponseForm(props);
-
     return (
         <RenderRemoteData remoteData={response} renderLoading={Spinner}>
             {(formData) => (

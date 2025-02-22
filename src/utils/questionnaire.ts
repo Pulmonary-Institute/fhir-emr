@@ -16,21 +16,29 @@ import { formatHumanDate, formatHumanDateTime } from './date';
 import { getQuestionItemEnableWhenSchema } from './enableWhen';
 import { evaluate } from './fhirpath';
 
-export function getDisplay(
-    value?: QuestionnaireResponseItemAnswerValue,
-    choiceColumn?: QuestionnaireItemChoiceColumn[],
-): string | number | null {
+export function getDisplay(value?: QuestionnaireResponseItemAnswerValue, choiceColumn?: QuestionnaireItemChoiceColumn[],): string | number | null {
     if (!value) {
         return null;
     }
-
     if (value.Coding) {
         if (choiceColumn && choiceColumn.length) {
-            const expression = choiceColumn[0]!.path;
-            if (expression) {
-                const calculatedValue = evaluate(value.Coding, expression)[0];
-                return calculatedValue ?? '';
+            if (choiceColumn.length == 2) {
+                const code = choiceColumn[0]!.path;
+                const display = choiceColumn[1]!.path;
+                if (code && display) {
+                    const calculatedValueCode = evaluate(value.Coding, code)[0];
+                    const calculatedValueDisplay = evaluate(value.Coding, display)[0];
+                    return calculatedValueCode + '  ' + calculatedValueDisplay
+                }
             }
+            else {
+                const expression = choiceColumn[0]!.path;
+                if (expression) {
+                    const calculatedValue = evaluate(value.Coding, expression)[0];
+                    return calculatedValue ?? '';
+                }
+            }
+
         }
         return value.Coding.display ?? '';
     }
@@ -118,7 +126,6 @@ export function questionnaireItemsToValidationSchema(questionnaireItems: Questio
             }
         }
     });
-
     return yup.object(validationSchema).required() as yup.AnyObjectSchema;
 }
 

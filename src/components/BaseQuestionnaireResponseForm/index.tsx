@@ -77,14 +77,11 @@ export function BaseQuestionnaireResponseForm(props: BaseQuestionnaireResponseFo
         ItemWrapper,
         GroupWrapper,
     } = props;
-
     const questionnaireId = formData.context.questionnaire.assembledFrom;
-
     const schema: yup.AnyObjectSchema = useMemo(
         () => questionnaireToValidationSchema(formData.context.questionnaire),
         [formData.context.questionnaire],
     );
-
     const methods = useForm<FormItems>({
         defaultValues: formData.formValues,
         resolver: yupResolver(schema),
@@ -97,7 +94,6 @@ export function BaseQuestionnaireResponseForm(props: BaseQuestionnaireResponseFo
     const [isLoading, setIsLoading] = useState(false);
 
     const previousFormValuesRef = useRef<FormItems | null>(null);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedSaveDraft = useCallback(
         _.debounce(async (currentFormValues: FormItems) => {
