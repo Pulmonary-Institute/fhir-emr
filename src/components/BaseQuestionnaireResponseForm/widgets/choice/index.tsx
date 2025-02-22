@@ -51,9 +51,7 @@ export function ChoiceQuestionSelect(props: ChoiceQuestionSelectProps) {
 export function QuestionChoice({ parentPath, questionItem }: QuestionItemProps) {
     const { linkId, answerOption, repeats, answerValueSet, choiceColumn } = questionItem;
     const fieldName = [...parentPath, linkId];
-
     const { value, formItem, onSelect, placeholder = t`Select...` } = useFieldController(fieldName, questionItem);
-
     if (answerValueSet) {
         return (
             <Form.Item {...formItem} data-testid="question-choice">
@@ -95,18 +93,15 @@ interface ChoiceQuestionValueSetProps {
 export function ChoiceQuestionValueSet(props: ChoiceQuestionValueSetProps) {
     const { answerValueSet, value, onChange, repeats = false, placeholder, choiceColumn } = props;
     const expand = useContext(ValueSetExpandProvider);
-
     const loadOptions = useCallback(
         async (searchText: string) => {
             return expand(answerValueSet, searchText);
         },
         [answerValueSet, expand],
     );
-
     const debouncedLoadOptions = debounce((searchText, callback) => {
         (async () => callback(await loadOptions(searchText)))();
     }, 500);
-
     return (
         <AsyncSelect
             loadOptions={debouncedLoadOptions}

@@ -66,7 +66,7 @@ export function CreatinineDashboard({ observationsRemoteData, patient, reload }:
                                     value: valueQuantity?.value,
                                 }));
                                 data.sort((o1, o2) => o1.effective - o2.effective);
-                                console.log(data);
+
                                 const references = {
                                     female: { min: 0.59, max: 1.04 },
                                     male: { min: 0.74, max: 1.35 },
