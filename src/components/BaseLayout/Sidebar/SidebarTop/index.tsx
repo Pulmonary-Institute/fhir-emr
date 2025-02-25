@@ -56,7 +56,7 @@ export function SidebarTop(props: Props) {
                 selectedKeys={[activeMenu!]}
                 items={renderTopMenu(menuItems, onMenuItemClick, collapsed)}
                 className={s.menu}
-                inlineCollapsed={collapsed} // Ensure correct behavior when collapsed
+                inlineCollapsed={collapsed}
             />
         </S.Container>
     );
@@ -67,18 +67,20 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 function renderTopMenu(menuRoutes: RouteItem[], onItemClick: (path?: string) => void, collapsed: boolean): MenuItem[] {
     return menuRoutes.map((route) => {
+        const menuItemLabel = collapsed ? (
+            <>{route.label}</>
+        ) : (
+            <div className={s.menuLink}>
+                <span className={s.menuItemLabel}>{route.label}</span>
+                <span className={classNames(s.menuItemLabel, s._small)}>{route.label}</span>
+            </div>
+        );
+
         if (route.children && route.children.length > 0) {
             return {
-                key: route.label,
+                key: route.path ?? route.label,
                 icon: route.icon,
-                label: collapsed ? (
-                    route.label
-                ) : (
-                    <div className={s.menuLink}>
-                        <span className={s.menuItemLabel}>{route.label}</span>
-                        <span className={classNames(s.menuItemLabel, s._small)}>{route.label}</span>
-                    </div>
-                ),
+                label: menuItemLabel,
                 className: s.menuItem,
                 children: renderTopMenu(route.children, onItemClick, collapsed),
             };
@@ -87,14 +89,7 @@ function renderTopMenu(menuRoutes: RouteItem[], onItemClick: (path?: string) => 
         return {
             key: route.path!,
             icon: route.icon,
-            label: collapsed ? (
-                route.label
-            ) : (
-                <div className={s.menuLink}>
-                    <span className={s.menuItemLabel}>{route.label}</span>
-                    <span className={classNames(s.menuItemLabel, s._small)}>{route.label}</span>
-                </div>
-            ),
+            label: menuItemLabel,
             className: s.menuItem,
             onClick: () => onItemClick(route.path),
         };
