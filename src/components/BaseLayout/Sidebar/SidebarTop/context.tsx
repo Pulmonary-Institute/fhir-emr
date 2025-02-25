@@ -57,6 +57,6 @@ const defaultMenuLayout: MenuLayoutValue = () =>
         ): { label: string; path: string; icon: JSX.Element }[] {
             throw new Error('Function not implemented.');
         },
-    });
+    } as any);
 
 export const MenuLayout = createContext<MenuLayoutValue>(defaultMenuLayout);
