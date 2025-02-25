@@ -26,8 +26,9 @@ import {
     RecordQuestionnaireAction,
     HeaderQuestionnaireAction,
     isCustomAction,
+    HeaderExportAction,
 } from './actions';
-export { navigationAction, customAction, questionnaireAction } from './actions';
+export { navigationAction, customAction, questionnaireAction, exportAction } from './actions';
 import { useResourceListPage } from './hooks';
 import { SearchBarColumn } from '../../components/SearchBar/types';
 import { S } from './styles';
@@ -157,18 +158,21 @@ export function ResourceListPage<R extends Resource>({
     });
     const headerActions = getHeaderActions?.() ?? [];
     const batchActions = getBatchActions?.() ?? [];
-
     return (
         <PageContainer
             title={title}
             maxWidth={maxWidth}
             headerRightColumn={headerActions.map((action, index) => (
                 <React.Fragment key={index}>
-                    <HeaderQuestionnaireAction
-                        action={action}
-                        reload={reload}
-                        defaultLaunchContext={defaultLaunchContext ?? []}
-                    />
+                    {action.type === "questionnaire" ? (
+                        <HeaderQuestionnaireAction
+                            action={action}
+                            reload={reload}
+                            defaultLaunchContext={defaultLaunchContext ?? []}
+                        />
+                    ) : action.type === "export" ? (
+                        <HeaderExportAction icon={action.icon} data={recordResponse} action={action?.action} title={action.title} />
+                    ) : null}
                 </React.Fragment>
             ))}
             header={{
@@ -221,12 +225,12 @@ export function ResourceListPage<R extends Resource>({
                     ...tableColumns,
                     ...(getRecordActions
                         ? [
-                              getRecordActionsColumn({
-                                  getRecordActions,
-                                  reload,
-                                  defaultLaunchContext: defaultLaunchContext ?? [],
-                              }),
-                          ]
+                            getRecordActionsColumn({
+                                getRecordActions,
+                                reload,
+                                defaultLaunchContext: defaultLaunchContext ?? [],
+                            }),
+                        ]
                         : []),
                 ]}
                 loading={isLoading(recordResponse) && { indicator: SpinIndicator }}
