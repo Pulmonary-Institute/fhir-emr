@@ -43,9 +43,29 @@ export const S = {
         }
 
         .ant-menu-item.ant-menu-item-selected {
-            background-color: hsla(0,0%,100%,0.5)!important;
+            background-color: hsla(0, 0%, 100%, 0.5) !important;
             color: #00000 !important;
         }
+
+        ${({ $collapsed }) =>
+            $collapsed
+                ? `
+                .ant-menu-submenu-title {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    height: 79px !important;
+                    line-height: 22px !important
+                }
+                `
+                : `
+                .ant-menu-submenu-title {
+                    padding-left: 19px !important;
+                    gap: 12px !important;
+                }
+            `}
     `,
     Divider: styled(Divider)`
         margin: 0;
