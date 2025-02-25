@@ -7,6 +7,7 @@ import { ModalTrigger } from 'src/components/ModalTrigger';
 import { QuestionnaireResponseForm, QRFProps } from 'src/components/QuestionnaireResponseForm';
 import { questionnaireIdLoader } from 'src/hooks/questionnaire-response-form-data';
 import { S } from './styles';
+import { RemoteData } from 'aidbox-react';
 
 export interface NavigationActionType {
     type: 'navigation';
@@ -27,6 +28,15 @@ export interface QuestionnaireActionType {
     icon?: React.ReactNode;
     qrfProps?: Partial<QRFProps>;
 }
+export interface ExportActionType {
+    type: 'export';
+    title: React.ReactNode;
+    questionnaireId: string;
+    action: void
+    icon?: React.ReactNode;
+    qrfProps?: Partial<QRFProps>;
+}
+
 
 export function navigationAction(
     title: React.ReactNode,
@@ -52,6 +62,22 @@ export function questionnaireAction(
         icon: options?.icon,
         qrfProps: options?.qrfProps,
         questionnaireId,
+    };
+}
+
+export function exportAction(
+    title: React.ReactNode,
+    questionnaireId: string,
+    action: void,
+    options?: { icon?: React.ReactNode; qrfProps?: Partial<QRFProps> },
+): ExportActionType {
+    return {
+        type: 'export',
+        title,
+        icon: options?.icon,
+        qrfProps: options?.qrfProps,
+        questionnaireId,
+        action,
     };
 }
 
@@ -108,6 +134,12 @@ interface HeaderQuestionnaireActionProps {
     defaultLaunchContext: ParametersParameter[];
 }
 
+interface HeaderExportAction {
+    icon: React.ReactNode;
+    data: RemoteData,
+    title: string
+    action: (data: any) => void
+}
 export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext }: HeaderQuestionnaireActionProps) {
     return (
         <ModalTrigger
@@ -134,6 +166,12 @@ export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext
             )}
         </ModalTrigger>
     );
+}
+
+export function HeaderExportAction({ icon, data, title, action }: HeaderExportAction) {
+    return (<Button style={{ backgroundColor: '#52c41a', color: 'white' }} icon={icon} onClick={() => action(data)}>
+        {title}
+    </Button>)
 }
 
 export function BatchQuestionnaireAction<R extends Resource>({
