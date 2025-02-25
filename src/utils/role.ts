@@ -18,11 +18,11 @@ export enum Role {
     Scriber = 'scriber',
     Census = 'census',
     Admin1 = 'subAdmin',
-    Prm = 'PRM'
+    Prm = 'PRM',
 }
 
 export function selectUserRole<T>(user: User, options: { [role in Role]: T }): T {
-    const userRole = user.role![0]!.name;
+    const userRole = user.role![0]!.name as Role;
     return options[userRole];
 }
 export function matchCurrentUserRole<T>(options: {
