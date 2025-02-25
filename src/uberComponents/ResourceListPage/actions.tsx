@@ -32,7 +32,7 @@ export interface ExportActionType {
     type: 'export';
     title: React.ReactNode;
     questionnaireId: string;
-    action: void
+    action: (data: RemoteData) => void
     icon?: React.ReactNode;
     qrfProps?: Partial<QRFProps>;
 }
@@ -68,7 +68,7 @@ export function questionnaireAction(
 export function exportAction(
     title: React.ReactNode,
     questionnaireId: string,
-    action: void,
+    action: (data: RemoteData) => void,
     options?: { icon?: React.ReactNode; qrfProps?: Partial<QRFProps> },
 ): ExportActionType {
     return {
@@ -137,8 +137,8 @@ interface HeaderQuestionnaireActionProps {
 interface HeaderExportAction {
     icon: React.ReactNode;
     data: RemoteData,
-    title: string
-    action: (data: any) => void
+    title: React.ReactNode
+    action: (data: RemoteData) => void
 }
 export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext }: HeaderQuestionnaireActionProps) {
     return (

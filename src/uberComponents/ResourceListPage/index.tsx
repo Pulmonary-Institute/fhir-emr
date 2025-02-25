@@ -20,6 +20,7 @@ import {
     NavigationActionType,
     CustomActionType,
     QuestionnaireActionType,
+    ExportActionType,
     isNavigationAction,
     isQuestionnaireAction,
     NavigationAction,
@@ -87,7 +88,7 @@ interface ResourceListPageProps<R extends Resource> {
      *
      * NOTE: Theoretically getHeaderActions can accept all resources Bundle
      */
-    getHeaderActions?: () => Array<QuestionnaireActionType>;
+    getHeaderActions?: () => Array<QuestionnaireActionType> | Array<ExportActionType>;
 
     /**
      * Batch actions that are available when rows are selected
@@ -171,7 +172,7 @@ export function ResourceListPage<R extends Resource>({
                             defaultLaunchContext={defaultLaunchContext ?? []}
                         />
                     ) : action.type === "export" ? (
-                        <HeaderExportAction icon={action.icon} data={recordResponse} action={action?.action} title={action.title} />
+                        <HeaderExportAction icon={action.icon} data={recordResponse} title={action.title} action={action.action} />
                     ) : null}
                 </React.Fragment>
             ))}
