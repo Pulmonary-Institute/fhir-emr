@@ -67,7 +67,7 @@ export function PatientQuestionnaire({ onSuccess }: { onSuccess?: () => void }) 
     }, [isAnonymousUser]);
 
     return (
-        <PageContainer title={<Trans>Questionnaire</Trans>} content={{ style: { alignItems: 'center' } }}>
+        <PageContainer title={<Trans>Questionnaire</Trans>}>
             {isLoading ? <Spinner /> : <PatientQuestionnaireForm onSuccess={onSuccess} />}
         </PageContainer>
     );

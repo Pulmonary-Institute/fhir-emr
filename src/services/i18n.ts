@@ -1,4 +1,7 @@
 import { i18n } from '@lingui/core';
+import type { Locale } from 'antd/es/locale';
+import enAntdLocale from 'antd/es/locale/en_US';
+import esAntdLocale from 'antd/es/locale/es_ES';
 import { en, es } from 'make-plural/plurals';
 
 import { messages as enMessages } from 'src/locale/en/messages';
@@ -37,3 +40,9 @@ export function dynamicActivate(locale: LocaleCode) {
 
     i18n.activate(locale);
 }
+
+export const antdLocaleMap: { [localeCode in LocaleCode]: Locale } = {
+    en: enAntdLocale,
+    es: esAntdLocale,
+    ru: ruAntdLocale,
+};

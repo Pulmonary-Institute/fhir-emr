@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans } from '@lingui/macro';
 import { Button } from 'antd';
 
 import { SearchBarColumn } from '../SearchBarColumn';
@@ -18,7 +18,7 @@ export function SearchBarMobile(props: SearchBarData) {
         <S.Container>
             <S.FiltersButton>
                 <Button type="default" icon={<FilterFilled />} onClick={() => toggleFiltersOpened(true)} />
-                {appliedFiltersCount ? <S.Badge count={appliedFiltersCount} size="small" /> : null}
+                {appliedFiltersCount ? <S.Badge count={appliedFiltersCount} size='small' /> : null}
             </S.FiltersButton>
             <S.Drawer
                 placement="bottom"

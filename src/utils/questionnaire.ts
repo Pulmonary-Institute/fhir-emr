@@ -80,7 +80,10 @@ export function getDisplay(value?: QuestionnaireResponseItemAnswerValue, choiceC
     return '';
 }
 
-export function getArrayDisplay(options?: QuestionnaireResponseItemAnswer[], choiceColumn?: QuestionnaireItemChoiceColumn[]): string | null {
+export function getArrayDisplay(
+    options?: QuestionnaireResponseItemAnswer[],
+    choiceColumn?: QuestionnaireItemChoiceColumn[],
+): string | null {
     if (!options) {
         return null;
     }
@@ -99,13 +102,21 @@ export function questionnaireItemsToValidationSchema(questionnaireItems: Questio
             if (item.maxLength && item.maxLength > 0) schema = (schema as yup.StringSchema).max(item.maxLength);
             schema = createSchemaArrayOfValues(yup.object({ string: schema })).required();
         } else if (item.type === 'integer') {
-            schema = yup.number();
+            schema = yup.number().integer();
             if (item.required) schema = schema.required();
             schema = createSchemaArrayOfValues(yup.object({ integer: schema })).required();
         } else if (item.type === 'date') {
             schema = yup.date();
             if (item.required) schema = schema.required();
             schema = createSchemaArrayOfValues(yup.object({ date: schema })).required();
+        } else if (item.item) {
+            schema = yup
+                .object({
+                    items: item.repeats
+                        ? yup.array().of(questionnaireItemsToValidationSchema(item.item))
+                        : questionnaireItemsToValidationSchema(item.item),
+                })
+                .required();
         } else {
             schema = item.required ? yup.array().of(yup.mixed()).min(1).required() : yup.mixed().nullable();
         }
@@ -118,12 +129,6 @@ export function questionnaireItemsToValidationSchema(questionnaireItems: Questio
             });
         } else {
             validationSchema[item.linkId] = schema;
-
-            if (item.item && !item.repeats) {
-                validationSchema[item.linkId] = yup
-                    .object({ items: questionnaireItemsToValidationSchema(item.item) })
-                    .required();
-            }
         }
     });
     return yup.object(validationSchema).required() as yup.AnyObjectSchema;

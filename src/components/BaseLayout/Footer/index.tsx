@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { S } from './Footer.styles';
+import { t } from '@lingui/macro';
 
 interface Props {
   type?: 'default' | 'light';

@@ -36,6 +36,8 @@ import { OrganizationScheduling } from '../OrganizationScheduling';
 import { DocumentPrint } from '../PatientDetails/DocumentPrint';
 import { Prescriptions } from '../Prescriptions';
 import { SetPassword } from '../SetPassword';
+import { PatientResourceListExample } from '../PatientResourceListExample';
+import { DefaultUserWithNoRoles } from './DefaultUserWithNoRoles';
 
 interface AppProps {
     authenticatedRoutes?: ReactElement;
@@ -157,6 +159,7 @@ function AuthenticatedUserApp({ defaultRoute, extra }: RouteProps) {
                             <Route path="/invoices" element={<InvoiceList />} />
                             <Route path="/invoices/:id" element={<InvoiceDetails />} />
                             <Route path="/patients" element={<PatientList />} />
+                            <Route path="/patients-uber" element={<PatientResourceListExample />} />
                             <Route path="/patients/:id/*" element={<PatientDetails />} />
                             <Route path="/questionnaire" element={<PatientQuestionnaire />} />
                             <Route path="/documents/:id/edit" element={<div>documents/:id/edit</div>} />

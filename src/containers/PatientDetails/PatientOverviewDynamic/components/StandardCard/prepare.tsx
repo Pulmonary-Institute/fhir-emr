@@ -19,8 +19,8 @@ import { extractExtension } from 'sdc-qrf';
 
 import { WithId, extractBundleResources, formatFHIRDate, parseFHIRDateTime } from '@beda.software/fhir-react';
 
+import { LinkToEdit } from 'src/components/LinkToEdit';
 import { PatientActivitySummary } from 'src/containers/PatientDetails/PatientActivitySummary';
-import { LinkToEdit } from 'src/containers/PatientDetails/PatientOverviewDynamic/components/LinkToEdit';
 import { OverviewCard } from 'src/containers/PatientDetails/PatientOverviewDynamic/components/StandardCard/types';
 import medicationIcon from 'src/containers/PatientDetails/PatientOverviewDynamic/images/medication.svg';
 import { formatHumanDate } from 'src/utils/date';
@@ -44,7 +44,7 @@ export function prepareAllergies(
                 key: 'name',
                 render: (resource: AllergyIntolerance) => (
                     <LinkToEdit
-                        name={resource.code?.coding?.[0]?.display}
+                        name={resource.code?.coding?.[0]?.display ?? resource.code?.text}
                         resource={resource}
                         provenanceList={provenanceList}
                         to={to}
@@ -205,7 +205,7 @@ export function prepareImmunizations(
                 key: 'name',
                 render: (resource: Immunization) => (
                     <LinkToEdit
-                        name={resource.vaccineCode.coding?.[0]?.display}
+                        name={resource.vaccineCode.coding?.[0]?.display ?? resource.vaccineCode.text}
                         resource={resource}
                         provenanceList={provenanceList}
                         to={to}
@@ -241,7 +241,10 @@ export function prepareMedications(
                 key: 'name',
                 render: (resource: MedicationStatement) => (
                     <LinkToEdit
-                        name={resource.medicationCodeableConcept?.coding?.[0]?.display}
+                        name={
+                            resource.medicationCodeableConcept?.coding?.[0]?.display ??
+                            resource.medicationCodeableConcept?.text
+                        }
                         resource={resource}
                         provenanceList={provenanceList}
                         to={to}

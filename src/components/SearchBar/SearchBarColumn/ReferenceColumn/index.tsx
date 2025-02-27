@@ -19,7 +19,7 @@ export function ReferenceColumn(props: SearchBarColumnReferenceTypeProps) {
             isMulti={false}
             placeholder={columnFilterValue.column.placeholder}
             defaultMenuIsOpen={defaultOpen}
-            isClearable={columnFilterValue.column.id!='participant-only'}
+            isClearable
         />
     );
 }

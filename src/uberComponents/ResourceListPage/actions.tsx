@@ -4,93 +4,18 @@ import { Bundle, ParametersParameter, Resource } from 'fhir/r4b';
 import { useNavigate } from 'react-router-dom';
 
 import { ModalTrigger } from 'src/components/ModalTrigger';
-import { QuestionnaireResponseForm, QRFProps } from 'src/components/QuestionnaireResponseForm';
+import { QRFProps, QuestionnaireResponseForm } from 'src/components/QuestionnaireResponseForm';
 import { questionnaireIdLoader } from 'src/hooks/questionnaire-response-form-data';
+
 import { S } from './styles';
-import { RemoteData } from 'aidbox-react';
+import { QuestionnaireActionType as QAT, questionnaireAction as qa, NavigationActionType } from './types';
 
-export interface NavigationActionType {
-    type: 'navigation';
-    title: React.ReactNode;
-    link: string;
-    icon?: React.ReactNode;
-}
+export type QuestionnaireActionType = QAT<QRFProps>;
 
-export interface CustomActionType {
-    type: 'custom';
-    control: React.ReactNode;
-}
+export const questionnaireAction = qa<QRFProps>;
 
-export interface QuestionnaireActionType {
-    type: 'questionnaire';
-    title: React.ReactNode;
-    questionnaireId: string;
-    icon?: React.ReactNode;
-    qrfProps?: Partial<QRFProps>;
-}
-export interface ExportActionType {
-    type: 'export';
-    title: React.ReactNode;
-    questionnaireId: string;
-    action: (data: RemoteData) => void
-    icon?: React.ReactNode;
-    qrfProps?: Partial<QRFProps>;
-}
-
-
-export function navigationAction(
-    title: React.ReactNode,
-    link: string,
-    options?: { icon?: React.ReactNode },
-): NavigationActionType {
-    return { type: 'navigation', title, link, icon: options?.icon };
-}
-export function customAction(control: React.ReactNode): CustomActionType {
-    return {
-        type: 'custom',
-        control,
-    };
-}
-export function questionnaireAction(
-    title: React.ReactNode,
-    questionnaireId: string,
-    options?: { icon?: React.ReactNode; qrfProps?: Partial<QRFProps> },
-): QuestionnaireActionType {
-    return {
-        type: 'questionnaire',
-        title,
-        icon: options?.icon,
-        qrfProps: options?.qrfProps,
-        questionnaireId,
-    };
-}
-
-export function exportAction(
-    title: React.ReactNode,
-    questionnaireId: string,
-    action: (data: RemoteData) => void,
-    options?: { icon?: React.ReactNode; qrfProps?: Partial<QRFProps> },
-): ExportActionType {
-    return {
-        type: 'export',
-        title,
-        icon: options?.icon,
-        qrfProps: options?.qrfProps,
-        questionnaireId,
-        action,
-    };
-}
-
-export type ActionType = QuestionnaireActionType | NavigationActionType | CustomActionType;
-export function isQuestionnaireAction(action: ActionType): action is QuestionnaireActionType {
-    return action.type === 'questionnaire';
-}
-export function isNavigationAction(action: ActionType): action is NavigationActionType {
-    return action.type === 'navigation';
-}
-export function isCustomAction(action: ActionType): action is CustomActionType {
-    return action.type === 'custom';
-}
+export type { NavigationActionType, CustomActionType } from './types';
+export { navigationAction, customAction, isCustomAction, isNavigationAction, isQuestionnaireAction } from './types';
 
 export function RecordQuestionnaireAction<R extends Resource>({
     action,
@@ -134,12 +59,6 @@ interface HeaderQuestionnaireActionProps {
     defaultLaunchContext: ParametersParameter[];
 }
 
-interface HeaderExportAction {
-    icon: React.ReactNode;
-    data: RemoteData,
-    title: React.ReactNode
-    action: (data: RemoteData) => void
-}
 export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext }: HeaderQuestionnaireActionProps) {
     return (
         <ModalTrigger
@@ -166,12 +85,6 @@ export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext
             )}
         </ModalTrigger>
     );
-}
-
-export function HeaderExportAction({ icon, data, title, action }: HeaderExportAction) {
-    return (<Button style={{ backgroundColor: '#52c41a', color: 'white' }} icon={icon} onClick={() => action(data)}>
-        {title}
-    </Button>)
 }
 
 export function BatchQuestionnaireAction<R extends Resource>({

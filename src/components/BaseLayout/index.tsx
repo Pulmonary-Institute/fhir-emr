@@ -68,12 +68,13 @@ export function AnonymousLayout({ children, style, className }: Props) {
     );
 }
 
-export type BasePageHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
-    maxWidth?: number | string;
-};
-
-export function BasePageHeader(props: BasePageHeaderProps) {
-    const { maxWidth, ...rest } = props;
+/**
+ * @deprecated
+ */
+export function BasePageHeader(props: React.HTMLAttributes<HTMLDivElement>) {
+    const { className, ...rest } = props;
+    console.warn('DEPRECATED: Do not use BasePageHeader component. It will be removed in future versions of the EMR.');
+    console.warn('Use PageContainer or PageContainerHeader instead.');
 
     return (
         <S.PageHeaderContainer>
@@ -82,12 +83,13 @@ export function BasePageHeader(props: BasePageHeaderProps) {
     );
 }
 
-export type BasePageContentProps = React.HTMLAttributes<HTMLDivElement> & {
-    maxWidth?: number | string;
-};
-
-export function BasePageContent(props: BasePageContentProps) {
-    const { maxWidth, ...rest } = props;
+/**
+ * @deprecated
+ */
+export function BasePageContent(props: React.HTMLAttributes<HTMLDivElement>) {
+    const { className, ...rest } = props;
+    console.warn('DEPRECATED: Do not use BasePageContent component. It will be removed in future versions of the EMR.');
+    console.warn('Use PageContainer or PageContainerContent instead.');
 
     return (
         <S.PageContentContainer>

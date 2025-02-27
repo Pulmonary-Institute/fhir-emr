@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { QuestionItemProps } from 'sdc-qrf';
 
 import { useFieldController } from '../hooks';
+import _ from 'lodash';
 
 const inputStyle = { width: '100%' };
 
@@ -27,6 +28,7 @@ export function QuestionInteger({ parentPath, questionItem }: QuestionItemProps)
                 value={value}
                 required={required}
                 placeholder={placeholder}
+                parser={(displayValue) => _.toInteger(displayValue)}
             />
         </Form.Item>
     );
@@ -58,7 +60,7 @@ export function QuestionQuantity(props: QuestionItemProps) {
     const fieldName = [...parentPath, linkId, 0, 'value', 'Quantity'];
     const { value, onChange, disabled, formItem, placeholder } = useFieldController(fieldName, questionItem);
 
-    const [numericValue, setNumericValue] = useState<number | undefined>(value);
+    const [numericValue, setNumericValue] = useState<number | undefined>(value?.value);
     const [selectedUnit, setSelectedUnit] = useState(unitOption?.[0]);
 
     const onUnitChange = (unitDisplay: string) => {
@@ -94,6 +96,7 @@ export function QuestionQuantity(props: QuestionItemProps) {
                             onChange={onUnitChange}
                             style={{ minWidth: 70 }}
                             disabled={disabled}
+                            popupMatchSelectWidth={false}
                         >
                             {unitOption.map((option) => (
                                 <Select.Option key={option.code} value={option.display}>
