@@ -33,13 +33,16 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
         itemControlGroupItemComponents,
         ...other
     } = props;
+
+    console.log('formData:', formData);
+
     const methods = useForm<FormItems>({
         defaultValues: formData.formValues,
     });
     const { watch } = methods;
 
     const formValues = watch();
-    
+
     return (
         <FormProvider {...methods}>
             <form>
