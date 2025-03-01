@@ -92,7 +92,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                             context={calcInitialContext(formData.context, formValues)}
                         />
                         {/* AI Summary Section */}
-                        {!aiSummary && (
+                        {aiSummary && (
                             <div
                                 className="markdown-container"
                                 style={{
@@ -109,7 +109,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                                         paddingBottom: '8px',
                                     }}
                                 >
-                                    {t`AI Summary`}
+                                    AI Summary
                                 </h3>
                                 <div className="markdown-content">
                                     <ReactMarkdown>{aiSummary}</ReactMarkdown>
