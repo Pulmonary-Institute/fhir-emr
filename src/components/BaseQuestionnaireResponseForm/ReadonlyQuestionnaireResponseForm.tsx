@@ -1,10 +1,11 @@
+﻿import { t } from '@lingui/macro';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
     calcInitialContext,
     FormItems,
     QRFContextData,
     QuestionItems,
-    QuestionnaireResponseFormData,
+    // QuestionnaireResponseFormData,
     QuestionnaireResponseFormProvider,
 } from 'sdc-qrf';
 
@@ -20,9 +21,10 @@ import { QuestionText, TextWithInput } from './readonly-widgets/string';
 import { TimeRangePickerControl } from './readonly-widgets/TimeRangePickerControl';
 import { UploadFile } from './readonly-widgets/UploadFile';
 import { AudioAttachment } from './readonly-widgets/AudioAttachment';
+import ReactMarkdown from 'react-markdown';
 
 interface Props extends Partial<QRFContextData> {
-    formData: QuestionnaireResponseFormData;
+    formData: any;
 }
 
 export function ReadonlyQuestionnaireResponseForm(props: Props) {
@@ -34,8 +36,6 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
         ...other
     } = props;
 
-    console.log('formData:', formData);
-
     const methods = useForm<FormItems>({
         defaultValues: formData.formValues,
     });
@@ -43,13 +43,15 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
 
     const formValues = watch();
 
+    // Extract AI Summary Value
+    const aiSummary = formData?.formValues?.AISummary?.[0]?.value?.string || '';
+
     return (
         <FormProvider {...methods}>
             <form>
                 <QuestionnaireResponseFormProvider
                     {...other}
                     formValues={formValues}
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
                     setFormValues={() => {}}
                     groupItemComponent={Group}
                     itemControlGroupItemComponents={{
@@ -83,11 +85,37 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                     }}
                 >
                     <>
+                        {/* Render Question Items */}
                         <QuestionItems
                             questionItems={formData.context.questionnaire.item!}
                             parentPath={[]}
                             context={calcInitialContext(formData.context, formValues)}
                         />
+                        {/* AI Summary Section */}
+                        {!aiSummary && (
+                            <div
+                                className="markdown-container"
+                                style={{
+                                    margin: '20px 0',
+                                    padding: '15px',
+                                    border: '1px solid #e8e8e8',
+                                    borderRadius: '4px',
+                                }}
+                            >
+                                <h3
+                                    style={{
+                                        marginBottom: '10px',
+                                        borderBottom: '1px solid #f0f0f0',
+                                        paddingBottom: '8px',
+                                    }}
+                                >
+                                    {t`AI Summary`}
+                                </h3>
+                                <div className="markdown-content">
+                                    <ReactMarkdown>{aiSummary}</ReactMarkdown>
+                                </div>
+                            </div>
+                        )}
                     </>
                 </QuestionnaireResponseFormProvider>
             </form>
