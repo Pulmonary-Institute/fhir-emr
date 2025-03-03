@@ -47,7 +47,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
     console.log('aiSummary', aiSummary);
     // Remove AI Summary from formValues
     const { AISummary, ...filteredFormValues } = formData.formValues || {};
-
+    console.log('filter Item', filteredFormValues);
     const formValues = watch();
 
     return (
@@ -96,7 +96,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                             context={calcInitialContext(formData.context, formValues)}
                         />
                         {/* AI Summary Section */}
-                        {!aiSummary && (
+                        {aiSummary && (
                             <div
                                 className="markdown-container"
                                 style={{
