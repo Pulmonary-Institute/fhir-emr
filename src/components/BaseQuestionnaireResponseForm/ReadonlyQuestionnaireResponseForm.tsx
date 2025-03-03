@@ -1,5 +1,4 @@
-﻿import { t } from '@lingui/macro';
-import { FormProvider, useForm } from 'react-hook-form';
+﻿import { FormProvider, useForm } from 'react-hook-form';
 import {
     calcInitialContext,
     FormItems,
