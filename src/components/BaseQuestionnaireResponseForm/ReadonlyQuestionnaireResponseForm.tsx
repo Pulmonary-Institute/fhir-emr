@@ -40,17 +40,22 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
     });
     const { watch } = methods;
 
-    const formValues = watch();
-    console.log('formValues in Readonly=>', formValues);
+    // const formValues = watch();
+    // console.log('formValues in Readonly=>', formValues);
     // Extract AI Summary Value
     const aiSummary = formData?.formValues?.AISummary?.[0]?.value?.string || '';
+    console.log('aiSummary', aiSummary);
+    // Remove AI Summary from formValues
+    const { AISummary, ...filteredFormValues } = formData.formValues || {};
+
+    const formValues = watch();
 
     return (
         <FormProvider {...methods}>
             <form>
                 <QuestionnaireResponseFormProvider
                     {...other}
-                    formValues={formValues}
+                    formValues={filteredFormValues}
                     setFormValues={() => {}}
                     groupItemComponent={Group}
                     itemControlGroupItemComponents={{
@@ -91,7 +96,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                             context={calcInitialContext(formData.context, formValues)}
                         />
                         {/* AI Summary Section */}
-                        {aiSummary && (
+                        {!aiSummary && (
                             <div
                                 className="markdown-container"
                                 style={{
@@ -101,15 +106,16 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                                     borderRadius: '4px',
                                 }}
                             >
-                                <h3
+                                <h6
                                     style={{
                                         marginBottom: '10px',
                                         borderBottom: '1px solid #f0f0f0',
                                         paddingBottom: '8px',
+                                        fontSize: '18px',
                                     }}
                                 >
                                     AI Summary
-                                </h3>
+                                </h6>
                                 <div className="markdown-content">
                                     <ReactMarkdown>{aiSummary}</ReactMarkdown>
                                 </div>
