@@ -42,7 +42,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
     const { watch } = methods;
 
     const formValues = watch();
-
+    console.log('formValues in Readonly=>', formValues);
     // Extract AI Summary Value
     const aiSummary = formData?.formValues?.AISummary?.[0]?.value?.string || '';
 
