@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro';
-import { Empty } from 'antd';
+import { Typography, Empty } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { Bundle, ParametersParameter, Resource } from 'fhir/r4b';
 import React, { useMemo } from 'react';
@@ -14,7 +14,7 @@ import { isTableFilter } from 'src/components/SearchBar/utils';
 import { SpinIndicator } from 'src/components/Spinner';
 import { Table } from 'src/components/Table';
 import { populateTableColumnsWithFiltersAndSorts } from 'src/components/Table/utils';
-import { Text } from 'src/components/Typography';
+// import { Text } from 'src/components/Typography';
 
 import {
     NavigationActionType,
@@ -35,6 +35,8 @@ import { SearchBarColumn } from '../../components/SearchBar/types';
 import { S } from './styles';
 import { Report } from 'src/components/Report';
 import { BatchActions } from './BatchActions';
+
+const { Text } = Typography;
 
 type RecordType<R extends Resource> = { resource: R; bundle: Bundle };
 
@@ -165,14 +167,19 @@ export function ResourceListPage<R extends Resource>({
             maxWidth={maxWidth}
             headerRightColumn={headerActions.map((action, index) => (
                 <React.Fragment key={index}>
-                    {action.type === "questionnaire" ? (
+                    {action.type === 'questionnaire' ? (
                         <HeaderQuestionnaireAction
                             action={action}
                             reload={reload}
                             defaultLaunchContext={defaultLaunchContext ?? []}
                         />
-                    ) : action.type === "export" ? (
-                        <HeaderExportAction icon={action.icon} data={recordResponse} title={action.title} action={action.action} />
+                    ) : action.type === 'export' ? (
+                        <HeaderExportAction
+                            icon={action.icon}
+                            data={recordResponse}
+                            title={action.title}
+                            action={action.action}
+                        />
                     ) : null}
                 </React.Fragment>
             ))}
@@ -226,12 +233,12 @@ export function ResourceListPage<R extends Resource>({
                     ...tableColumns,
                     ...(getRecordActions
                         ? [
-                            getRecordActionsColumn({
-                                getRecordActions,
-                                reload,
-                                defaultLaunchContext: defaultLaunchContext ?? [],
-                            }),
-                        ]
+                              getRecordActionsColumn({
+                                  getRecordActions,
+                                  reload,
+                                  defaultLaunchContext: defaultLaunchContext ?? [],
+                              }),
+                          ]
                         : []),
                 ]}
                 loading={isLoading(recordResponse) && { indicator: SpinIndicator }}
