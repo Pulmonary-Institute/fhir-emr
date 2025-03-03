@@ -38,17 +38,15 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
     const methods = useForm<FormItems>({
         defaultValues: formData.formValues,
     });
-    const { watch } = methods;
+    // const { watch } = methods;
 
     // const formValues = watch();
-    // console.log('formValues in Readonly=>', formValues);
     // Extract AI Summary Value
     const aiSummary = formData?.formValues?.AISummary?.[0]?.value?.string || '';
-    console.log('aiSummary', aiSummary);
+    console.log('aiSummary', formData.context.questionnaire.item);
     // Remove AI Summary from formValues
     const { AISummary, ...filteredFormValues } = formData.formValues || {};
     console.log('filter Item', filteredFormValues);
-    const formValues = watch();
 
     return (
         <FormProvider {...methods}>
@@ -93,7 +91,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                         <QuestionItems
                             questionItems={formData.context.questionnaire.item!}
                             parentPath={[]}
-                            context={calcInitialContext(formData.context, formValues)}
+                            context={calcInitialContext(formData.context, filteredFormValues)}
                         />
                         {/* AI Summary Section */}
                         {aiSummary && (
