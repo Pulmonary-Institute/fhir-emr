@@ -95,7 +95,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                             context={calcInitialContext(formData.context, filteredFormValues)}
                         />
                         {/* AI Summary Section */}
-                        {!aiSummary && (
+                        {aiSummary && (
                             <div className="markdown-container">
                                 <h6
                                     style={{
