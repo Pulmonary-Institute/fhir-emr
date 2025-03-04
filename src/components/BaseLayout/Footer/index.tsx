@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { S } from './Footer.styles';
 
 interface Props {
@@ -14,7 +14,7 @@ function getTextColor(backgroundColor: string): string {
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return luminance > 0.6? '#4A4A4A': '#D3D3D3';
+  return luminance > 0.6 ? '#4A4A4A' : '#D3D3D3';
 }
 
 export function AppFooter({
@@ -24,24 +24,14 @@ export function AppFooter({
 }: Props) {
   const [isClicked, setIsClicked] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
-  const textColor = getTextColor(nextBackgroundColor);
-
+  
   const handleCloseSurvey = () => {
     setShowSurvey(false);
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Math.random() < 0.5) {
-        setShowSurvey(true);
-      }
-    }, 60000); // Check every 60 seconds (adjust as needed)
-
-    return () => clearInterval(interval);
-  },);
-
   return (
     <S.Footer className={`_${type}`} style={{ position: 'relative' }}>
+      {/* Button that changes the background color */}
       <S.Content
         onClick={() => {
           setIsClicked(true);
@@ -51,10 +41,8 @@ export function AppFooter({
           cursor: 'pointer',
           padding: '1px 10px',
           borderRadius: '6px',
-          backgroundColor: isClicked
-          ? nextBackgroundColor
-          : 'rgba(255, 255, 255, 0)',
-          color: textColor,
+          backgroundColor: isClicked ? nextBackgroundColor : 'rgba(255, 255, 255, 0)',
+          color: getTextColor(nextBackgroundColor),
           fontSize: '16px',
           transition: 'background-color 0.3s ease, color 0.3s ease',
           display: 'inline-block',
@@ -66,6 +54,7 @@ export function AppFooter({
         MoxieLink
       </S.Content>
 
+      {/* Feedback button that toggles the survey */}
       <div
         style={{
           position: 'fixed',
@@ -79,15 +68,16 @@ export function AppFooter({
           zIndex: 2,
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
           transition: 'background-color 0.3s ease, transform 0.2s ease',
-          userSelect: 'none', // Prevent button text selection
+          userSelect: 'none',
         }}
-        onClick={() => setShowSurvey(!showSurvey)}
+        onClick={() => setShowSurvey((prev) => !prev)}
         onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
         onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
       >
         Feedback
       </div>
 
+      {/* Survey Modal */}
       {showSurvey && (
         <div
           style={{
@@ -102,13 +92,19 @@ export function AppFooter({
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             background: 'white',
             zIndex: 1000,
-            transition: 'opacity 0.3s ease, transform 0.3s ease', // Add transition for survey
-            opacity: showSurvey? 1: 0, // Control opacity for smooth transition
-            transform: showSurvey? 'translateY(0)': 'translateY(20px)', // Add slide-up effect
+            transition: 'opacity 0.3s ease, transform 0.3s ease',
+            opacity: 1,
+            transform: 'translateY(0)',
           }}
         >
           <div
-            style={{ position: 'absolute', top: '5px', right: '5px', cursor: 'pointer', zIndex: 1 }}
+            style={{
+              position: 'absolute',
+              top: '5px',
+              right: '5px',
+              cursor: 'pointer',
+              zIndex: 1,
+            }}
             onClick={handleCloseSurvey}
           >
             <span style={{ fontSize: '20px', color: 'gray' }}>x</span>
