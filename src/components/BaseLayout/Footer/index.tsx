@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { S } from './Footer.styles';
 
 interface Props {
@@ -29,16 +29,6 @@ export function AppFooter({
   const handleCloseSurvey = () => {
     setShowSurvey(false);
   };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Math.random() < 0.5) {
-        setShowSurvey(true);
-      }
-    }, 60000); // Check every 60 seconds (adjust as needed)
-
-    return () => clearInterval(interval);
-  },);
 
   return (
     <S.Footer className={`_${type}`} style={{ position: 'relative' }}>
@@ -97,11 +87,11 @@ export function AppFooter({
             width: '300px',
             height: '400px',
             border: '1px solid #ccc',
-            borderRadius: '16px',
+            borderRadius: '8px',
             overflow: 'hidden',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             background: 'white',
-            zIndex: 1000,
+            zIndex: 3,
             transition: 'opacity 0.3s ease, transform 0.3s ease', // Add transition for survey
             opacity: showSurvey? 1: 0, // Control opacity for smooth transition
             transform: showSurvey? 'translateY(0)': 'translateY(20px)', // Add slide-up effect
