@@ -89,12 +89,14 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                     <>
                         {/* Render Question Items */}
                         <QuestionItems
-                            questionItems={formData.context.questionnaire.item!}
+                            questionItems={formData.context.questionnaire.item?.filter(
+                                (item: any) => item.linkId !== 'AISummary',
+                            )}
                             parentPath={[]}
                             context={calcInitialContext(formData.context, filteredFormValues)}
                         />
                         {/* AI Summary Section */}
-                        {aiSummary && (
+                        {!aiSummary && (
                             <div
                                 className="markdown-container"
                                 style={{
