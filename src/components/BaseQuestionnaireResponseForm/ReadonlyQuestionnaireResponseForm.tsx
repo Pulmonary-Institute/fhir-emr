@@ -102,7 +102,7 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                                         borderBottom: '1px solid #f0f0f0',
                                         paddingBottom: '8px',
                                         fontSize: '14px',
-                                        fontWeight: '600',
+                                        fontWeight: 'bold',
                                     }}
                                 >
                                     {t`AI Summary`}
@@ -110,7 +110,9 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                                 <div className="markdown-content">
                                     <ReactMarkdown
                                         components={{
-                                            h2: ({ node, ...props }) => <h2 style={{ fontSize: '14px' }} {...props} />,
+                                            h2: ({ node, ...props }) => (
+                                                <h2 style={{ fontSize: '14px', fontWeight: 'bold' }} {...props} />
+                                            ),
                                         }}
                                     >
                                         {aiSummary}
