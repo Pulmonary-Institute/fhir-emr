@@ -97,11 +97,11 @@ export function AppFooter({
             width: '300px',
             height: '400px',
             border: '1px solid #ccc',
-            borderRadius: '8px',
+            borderRadius: '16px',
             overflow: 'hidden',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             background: 'white',
-            zIndex: 3,
+            zIndex: 1000,
             transition: 'opacity 0.3s ease, transform 0.3s ease', // Add transition for survey
             opacity: showSurvey? 1: 0, // Control opacity for smooth transition
             transform: showSurvey? 'translateY(0)': 'translateY(20px)', // Add slide-up effect
