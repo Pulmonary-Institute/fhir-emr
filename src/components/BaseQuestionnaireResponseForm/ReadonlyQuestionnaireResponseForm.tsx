@@ -1,4 +1,5 @@
-﻿import { FormProvider, useForm } from 'react-hook-form';
+﻿import { t } from '@lingui/macro';
+import { FormProvider, useForm } from 'react-hook-form';
 import {
     calcInitialContext,
     FormItems,
@@ -94,28 +95,26 @@ export function ReadonlyQuestionnaireResponseForm(props: Props) {
                             context={calcInitialContext(formData.context, filteredFormValues)}
                         />
                         {/* AI Summary Section */}
-                        {aiSummary && (
-                            <div
-                                className="markdown-container"
-                                style={{
-                                    margin: '20px 0',
-                                    padding: '15px',
-                                    border: '1px solid #e8e8e8',
-                                    borderRadius: '4px',
-                                }}
-                            >
+                        {!aiSummary && (
+                            <div className="markdown-container">
                                 <h6
                                     style={{
-                                        marginBottom: '10px',
                                         borderBottom: '1px solid #f0f0f0',
                                         paddingBottom: '8px',
-                                        fontSize: '18px',
+                                        fontSize: '14px',
+                                        fontWeight: '600',
                                     }}
                                 >
-                                    AI Summary
+                                    {t`AI Summary`}
                                 </h6>
                                 <div className="markdown-content">
-                                    <ReactMarkdown>{aiSummary}</ReactMarkdown>
+                                    <ReactMarkdown
+                                        components={{
+                                            h2: ({ node, ...props }) => <h2 style={{ fontSize: '14px' }} {...props} />,
+                                        }}
+                                    >
+                                        {aiSummary}
+                                    </ReactMarkdown>
                                 </div>
                             </div>
                         )}
