@@ -178,6 +178,7 @@ export function ResourceListPage<R extends Resource>({
                             data={recordResponse}
                             title={action.title}
                             action={action.action}
+                            reload={reload}
                         />
                     ) : null}
                 </React.Fragment>

@@ -138,6 +138,7 @@ interface HeaderExportAction {
     icon: React.ReactNode;
     data: RemoteData,
     title: React.ReactNode
+    reload: () => void;
     action: (data: RemoteData) => void
 }
 export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext }: HeaderQuestionnaireActionProps) {
@@ -168,8 +169,8 @@ export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext
     );
 }
 
-export function HeaderExportAction({ icon, data, title, action }: HeaderExportAction) {
-    return (<Button style={{ backgroundColor: '#52c41a', color: 'white' }} icon={icon} onClick={() => action(data)}>
+export function HeaderExportAction({ icon, data, title, action, reload }: HeaderExportAction) {
+    return (<Button style={{ backgroundColor: '#52c41a', color: 'white' }} icon={icon} onClick={() => { action(data); reload() }}>
         {title}
     </Button>)
 }
