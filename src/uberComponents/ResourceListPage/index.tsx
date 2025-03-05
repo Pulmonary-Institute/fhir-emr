@@ -133,7 +133,6 @@ export function ResourceListPage<R extends Resource>({
     getReportColumns,
 }: ResourceListPageProps<R>) {
     const allFilters = getFilters?.() ?? [];
-
     const { columnsFilterValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
         columns: allFilters ?? [],
     });
@@ -233,12 +232,12 @@ export function ResourceListPage<R extends Resource>({
                     ...tableColumns,
                     ...(getRecordActions
                         ? [
-                              getRecordActionsColumn({
-                                  getRecordActions,
-                                  reload,
-                                  defaultLaunchContext: defaultLaunchContext ?? [],
-                              }),
-                          ]
+                            getRecordActionsColumn({
+                                getRecordActions,
+                                reload,
+                                defaultLaunchContext: defaultLaunchContext ?? [],
+                            }),
+                        ]
                         : []),
                 ]}
                 loading={isLoading(recordResponse) && { indicator: SpinIndicator }}

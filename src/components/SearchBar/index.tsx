@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro';
+import { Trans } from '@lingui/macro';
 import { Button } from 'antd';
 
 import { SearchBarColumn } from './SearchBarColumn';
@@ -18,7 +18,6 @@ export function SearchBar(props: SearchBarProps) {
         () => columnsFilterValues.filter((filter) => isSearchBarFilter(filter)),
         [JSON.stringify(columnsFilterValues)],
     );
-
     return (
         <>
             <S.SearchBar $showInDrawerOnMobile={showInDrawerOnMobile}>
