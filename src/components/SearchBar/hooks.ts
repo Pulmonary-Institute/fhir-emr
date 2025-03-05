@@ -28,7 +28,6 @@ import {
 
 export function useSearchBar(props: SearchBarProps): SearchBarData {
     const { columns } = props;
-
     const defaultFiltersValues = useMemo<ColumnFilterValue[]>(() => {
         return columns.map((column) => {
             if (isStringColumn(column)) {
@@ -48,10 +47,10 @@ export function useSearchBar(props: SearchBarProps): SearchBarData {
                     column,
                     value: column.defaultValue
                         ? {
-                              value: {
-                                  Reference: column.defaultValue,
-                              },
-                          }
+                            value: {
+                                Reference: column.defaultValue,
+                            },
+                        }
                         : null,
                 };
             }

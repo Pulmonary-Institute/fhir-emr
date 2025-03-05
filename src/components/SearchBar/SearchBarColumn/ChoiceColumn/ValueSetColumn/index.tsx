@@ -8,7 +8,6 @@ export function ValueSetColumn(props: SearchBarColumnChoiceTypeProps) {
     const { placeholder, repeats } = columnFilterValue.column;
 
     const { onSelect, isOptionSelected, getOptionLabel, debouncedLoadOptions } = useChoiceColumn(props);
-
     return (
         <AsyncSelect
             defaultOptions

@@ -7,9 +7,7 @@ import { useChoiceColumn } from '../hooks';
 export function SelectChoiceColumn(props: SearchBarColumnChoiceTypeProps) {
     const { columnFilterValue, defaultOpen } = props;
     const { options, placeholder, repeats } = columnFilterValue.column;
-
     const { onSelect, getOptionLabel, isOptionSelected } = useChoiceColumn(props);
-
     return (
         <Select<ValueSetOption>
             value={columnFilterValue.value}
@@ -21,7 +19,7 @@ export function SelectChoiceColumn(props: SearchBarColumnChoiceTypeProps) {
             classNamePrefix="react-select"
             placeholder={placeholder}
             defaultMenuIsOpen={defaultOpen}
-            isClearable
+            isClearable={columnFilterValue.column.id != 'status'}
         />
     );
 }
