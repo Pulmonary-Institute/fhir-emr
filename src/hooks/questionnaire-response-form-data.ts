@@ -258,6 +258,13 @@ export async function handleFormDataSave(
     // Safe handling of questionnaireId with optional chaining
     const questionnaireId = itemContext.questionnaire.mapping?.[0]?.id;
 
+    if (questionnaireId === 'visit-encounter-delete-extract') {
+        const patient = launchContextParameters?.[0]?.resource;
+        const resource = itemContext.resource;
+
+        deletePatientLocalStorage(resource, patient);
+    }
+
     if (questionnaireId === 'visit-encounter-batch-create-extract') {
         const resource = itemContext.resource;
         const patient = launchContextParameters?.[0]?.resource;
@@ -340,6 +347,7 @@ export function usePatientQuestionnaireResponseFormData(
  */
 async function availableEncounter(resource: any, patient: any) {
     const patientId = patient?.entry?.[0]?.resource?.id;
+    const type = patient?.entry?.[0]?.resource?.resourceType;
     if (!patientId) return { success: false, message: 'Invalid patient ID.' };
 
     // Extract patient status
@@ -355,7 +363,7 @@ async function availableEncounter(resource: any, patient: any) {
 
     // Construct practitioner object
     const newEntry = {
-        id: patientId,
+        id: type + '/' + patientId,
         status: patientStatus,
         visitType: [newVisitType],
         display: [newDisplay],
@@ -363,7 +371,7 @@ async function availableEncounter(resource: any, patient: any) {
     };
 
     // Retrieve existing data from localStorage
-    const storedData = localStorage.getItem(`patient_${patientId}`);
+    const storedData = localStorage.getItem(`patient_${type + '/' + patientId}`);
     let existingEntries: any[] = storedData ? JSON.parse(storedData) : [];
 
     // Filter existing entries by date
@@ -409,7 +417,32 @@ async function availableEncounter(resource: any, patient: any) {
     }
 
     // Save updated data back to localStorage
-    localStorage.setItem(`patient_${patientId}`, JSON.stringify(existingEntries));
+    localStorage.setItem(`patient_${type + '/' + patientId}`, JSON.stringify(existingEntries));
 
     return { success: true, message: 'Send to Census successfully.' };
+}
+
+// Delete localStorage Patient Data
+function deletePatientLocalStorage(resource: any, patient: any) {
+    const patientId = patient?.partOf?.reference;
+    const serviceDisplay = patient?.serviceType?.coding?.[0]?.display;
+    const serviceType = patient?.serviceType?.coding?.[0]?.code;
+
+    // Retrieve existing patient data from localStorage
+    const existingPatientData = JSON.parse(localStorage.getItem(`patient_${patientId}`) || '[]');
+
+    // Find the patient data by ID
+    const updatedEntries = existingPatientData.map((entry: any) => {
+        if (entry.id === patientId) {
+            // Remove serviceDisplay from the display array
+            entry.display = entry.display.filter((display: string) => display !== serviceDisplay);
+
+            // Remove serviceType from the visitType array
+            entry.visitType = entry.visitType.filter((type: string) => type !== serviceType);
+        }
+        return entry;
+    });
+
+    // If the entries have been updated, save the updated data back to localStorage
+    localStorage.setItem(`patient_${patientId}`, JSON.stringify(updatedEntries));
 }
