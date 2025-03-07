@@ -258,6 +258,11 @@ export async function handleFormDataSave(
     // Safe handling of questionnaireId with optional chaining
     const questionnaireId = itemContext.questionnaire.mapping?.[0]?.id;
 
+    if (questionnaireId === 'visit-encounter-delete-extract') {
+        const patient = launchContextParameters?.[0]?.resource;
+        deletePatientLocalStorage(patient);
+    }
+
     if (questionnaireId === 'visit-encounter-batch-create-extract') {
         const resource = itemContext.resource;
         const patient = launchContextParameters?.[0]?.resource;
@@ -340,6 +345,7 @@ export function usePatientQuestionnaireResponseFormData(
  */
 async function availableEncounter(resource: any, patient: any) {
     const patientId = patient?.entry?.[0]?.resource?.id;
+    const type = patient?.entry?.[0]?.resource?.resourceType;
     if (!patientId) return { success: false, message: 'Invalid patient ID.' };
 
     // Extract patient status
@@ -409,7 +415,17 @@ async function availableEncounter(resource: any, patient: any) {
     }
 
     // Save updated data back to localStorage
-    localStorage.setItem(`patient_${patientId}`, JSON.stringify(existingEntries));
+    localStorage.setItem(`patient_${type + '/' + patientId}`, JSON.stringify(existingEntries));
 
     return { success: true, message: 'Send to Census successfully.' };
+}
+
+// Delete localStorage Patient Data
+function deletePatientLocalStorage(patient: any) {
+    const patientId = patient?.partOf?.reference;
+    if (!patientId) {
+        return { success: false, message: 'Invalid patient ID.' };
+    }
+    // Remove the patient data from localStorage
+    localStorage.removeItem(`patient_${patientId}`);
 }
