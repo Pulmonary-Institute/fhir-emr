@@ -29,6 +29,8 @@ import { RemoteDataResult, failure, isFailure, isSuccess, mapSuccess, success } 
 
 import { saveFHIRResource, service } from 'src/services/fhir';
 
+const baseURL = config.baseURL;
+
 export type { QuestionnaireResponseFormData } from 'sdc-qrf';
 
 export type QuestionnaireResponseFormSaveResponse<R extends Resource = any> = {
@@ -114,15 +116,7 @@ export function toQuestionnaireResponseFormData(
 }
 
 /*
-    Hook uses for:
-    On mount:
-    1. Loads Questionnaire resource: either from service (assembled with subquestionnaires) or from id 
-    2. Populates QuestionnaireResponse for that Questionnaire with passed
-       launch context parameters
-    3. Converts QuestionnaireRespnse data to initial form values and returns back
-
-
-    handleSave:
+   handleSave:
     4. Uploads files attached to QuestionnaireResponse in AWS
     5. Validate questionnaireResponse with constraint operation
     6. Saves or stays in memory updated QuestionnaireResponse data from form values
@@ -233,6 +227,9 @@ export async function handleFormDataSave(
             return saveQRRemoteData;
         }
 
+        console.log('fhirQuestionnaire:', fhirQuestionnaire);
+        console.log('saveQRRemoteData.data:', saveQRRemoteData.data);
+
         const extractRemoteData = await service<any>({
             ...(config.sdcBackendUrl ? { baseURL: config.sdcBackendUrl } : {}),
             method: 'POST',
@@ -258,13 +255,6 @@ export async function handleFormDataSave(
     // Safe handling of questionnaireId with optional chaining
     const questionnaireId = itemContext.questionnaire.mapping?.[0]?.id;
 
-    if (questionnaireId === 'visit-encounter-delete-extract') {
-        const patient = launchContextParameters?.[0]?.resource;
-        const resource = itemContext.resource;
-
-        deletePatientLocalStorage(resource, patient);
-    }
-
     if (questionnaireId === 'visit-encounter-batch-create-extract') {
         const resource = itemContext.resource;
         const patient = launchContextParameters?.[0]?.resource;
@@ -272,6 +262,13 @@ export async function handleFormDataSave(
         const availableCensus = await availableEncounter(resource, patient);
         if (!availableCensus.success) {
             return failure({ error: availableCensus.message });
+        }
+        return sendData();
+    } else if (questionnaireId === 'visit-encounter-delete-extract') {
+        const patient = launchContextParameters?.[0]?.resource;
+        const result = await deletePatientLocalStorage(patient);
+        if (!result.success) {
+            return failure({ error: result.message });
         }
         return sendData();
     } else {
@@ -348,7 +345,23 @@ export function usePatientQuestionnaireResponseFormData(
 async function availableEncounter(resource: any, patient: any) {
     const patientId = patient?.entry?.[0]?.resource?.id;
     const type = patient?.entry?.[0]?.resource?.resourceType;
-    if (!patientId) return { success: false, message: 'Invalid patient ID.' };
+    const reference = type + '/' + patientId;
+
+    const url = new URL(`${baseURL}/fhir/Encounter`);
+    const token = localStorage.getItem('token');
+
+    const response = await fetch(url.toString(), {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const data = await response.json();
+
+    // Filter encounters where partOf.reference matches the generated reference
+    const filteredEncounters = data?.entry?.filter((entry: any) => entry?.resource?.partOf?.reference === reference);
 
     // Extract patient status
     const patientStatus = patient?.entry?.[0]?.resource?.status;
@@ -356,93 +369,95 @@ async function availableEncounter(resource: any, patient: any) {
         return { success: false, message: 'Only patients with status "in-progress" can have encounters recorded.' };
     }
 
-    // Extract visit details
+    // Extract visit details from the new resource
     const newVisitType = resource.item?.[3]?.answer?.[0]?.value?.Coding?.code?.toLowerCase();
     const newDisplay = resource.item?.[3]?.answer?.[0]?.value?.Coding?.display;
     const visitDate = resource.item?.[1]?.answer?.[0]?.value?.date;
 
-    // Construct practitioner object
-    const newEntry = {
-        id: type + '/' + patientId,
-        status: patientStatus,
-        visitType: [newVisitType],
-        display: [newDisplay],
-        date: visitDate,
-    };
-
-    // Retrieve existing data from localStorage
-    const storedData = localStorage.getItem(`patient_${type + '/' + patientId}`);
-    let existingEntries: any[] = storedData ? JSON.parse(storedData) : [];
-
-    // Filter existing entries by date
-    const sameDayEntries = existingEntries.filter((entry: any) => entry.date === visitDate);
-
-    // Check for duplicate visit type on the same day
-    if (sameDayEntries.some((entry: any) => entry.visitType.includes(newVisitType))) {
-        return { success: false, message: 'Duplicate visit type for the same patient on the same day is not allowed.' };
+    if (!newVisitType || !newDisplay || !visitDate) {
+        return { success: false, message: 'Invalid encounter data.' };
     }
 
-    // Check for conflicting visit types on the same day
-    const visitTypesSet = new Set(sameDayEntries.flatMap((entry: any) => entry.visitType));
+    // Define restricted visit types
+    const pulmonaryType = 'pulmonary';
+    const acuteCareType = 'acute-care-response';
 
-    if (
-        (newVisitType === 'pulmonary' && visitTypesSet.has('acute-care-response')) ||
-        (newVisitType === 'acute-care-response' && visitTypesSet.has('pulmonary'))
-    ) {
-        return {
-            success: false,
-            message: "Cannot submit 'Pulmonary' and 'Acute Care Response' for the same patient on the same day.",
-        };
-    }
+    // Find encounters with the same date
+    const sameDayEncounters = filteredEncounters.filter((entry: any) => entry?.resource?.period?.start === visitDate);
 
-    // Check for duplicate visit type and display combination
+    // Rule 1: Can't submit the same Type of visit on the same day
     if (
-        sameDayEntries.some(
-            (entry: any) => entry.visitType.includes(newVisitType) && entry.display.includes(newDisplay),
+        sameDayEncounters.some(
+            (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code.toLowerCase() === newVisitType,
         )
     ) {
         return {
             success: false,
-            message: 'Same visit type and display already exist for this patient on the same day.',
+            message: `You cannot submit the same visit type (${newDisplay}) twice on the same day.`,
         };
     }
 
-    // Update existing entry if patient already exists, otherwise add a new entry
-    const existingPatient = existingEntries.find((entry: any) => entry.date === visitDate);
-    if (existingPatient) {
-        existingPatient.visitType.push(newVisitType);
-        existingPatient.display.push(newDisplay);
-    } else {
-        existingEntries.push(newEntry);
+    // Rule 2: Can't submit "Pulmonary" and "Acute Care Response" together on the same day
+    const hasPulmonary = sameDayEncounters.some(
+        (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code.toLowerCase() === pulmonaryType,
+    );
+    const hasAcuteCare = sameDayEncounters.some(
+        (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code.toLowerCase() === acuteCareType,
+    );
+
+    if ((newVisitType === pulmonaryType && hasAcuteCare) || (newVisitType === acuteCareType && hasPulmonary)) {
+        return {
+            success: false,
+            message: `You cannot submit both "Pulmonary" and "Acute Care Response" on the same day.`,
+        };
     }
 
-    // Save updated data back to localStorage
-    localStorage.setItem(`patient_${type + '/' + patientId}`, JSON.stringify(existingEntries));
+    // Rule 3: "Pulmonary" or any other type + "Cardiology" or any other type is allowed
+    if ((hasPulmonary || newVisitType === pulmonaryType) && (hasAcuteCare || newVisitType === acuteCareType)) {
+        return { success: false, message: `Only one of "Pulmonary" or "Acute Care Response" is allowed per day.` };
+    }
 
-    return { success: true, message: 'Send to Census successfully.' };
+    return { success: true, message: 'Encounter can be recorded.' };
 }
 
-// Delete localStorage Patient Data
-function deletePatientLocalStorage(resource: any, patient: any) {
-    const patientId = patient?.partOf?.reference;
-    const serviceDisplay = patient?.serviceType?.coding?.[0]?.display;
-    const serviceType = patient?.serviceType?.coding?.[0]?.code;
+async function deletePatientLocalStorage(patient: any) {
+    console.log('--delete', patient);
+    const token = localStorage.getItem('token');
 
-    // Retrieve existing patient data from localStorage
-    const existingPatientData = JSON.parse(localStorage.getItem(`patient_${patientId}`) || '[]');
+    if (!patient?.id) {
+        console.error('Patient ID is missing.');
+        return { success: false, message: 'Patient ID is missing.' };
+    }
 
-    // Find the patient data by ID
-    const updatedEntries = existingPatientData.map((entry: any) => {
-        if (entry.id === patientId) {
-            // Remove serviceDisplay from the display array
-            entry.display = entry.display.filter((display: string) => display !== serviceDisplay);
-
-            // Remove serviceType from the visitType array
-            entry.visitType = entry.visitType.filter((type: string) => type !== serviceType);
-        }
-        return entry;
+    // Step 1: Check if Encounter exists before deleting
+    const encounterResponse = await fetch(`${baseURL}/fhir/Encounter/${patient.id}`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
     });
 
-    // If the entries have been updated, save the updated data back to localStorage
-    localStorage.setItem(`patient_${patientId}`, JSON.stringify(updatedEntries));
+    if (!encounterResponse.ok) {
+        console.error('Encounter does not exist:', await encounterResponse.json());
+        return { success: false, message: 'Encounter not found.' };
+    }
+
+    // Step 2: Proceed with DELETE request
+    const response = await fetch(`${baseURL}/fhir/Encounter/${patient.id}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (response.ok) {
+        console.log('Delete successful.');
+        return { success: true, message: 'Delete Successful.' };
+    } else {
+        const errorResponse = await response.json();
+        console.error('Delete failed:', errorResponse);
+        return { success: false, message: 'Delete Failed.' };
+    }
 }
