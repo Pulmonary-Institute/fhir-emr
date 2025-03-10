@@ -38,6 +38,5 @@ export function compileAsArray<SRC, DST = unknown, REQ = false>(expression: stri
 
 export function compileAsFirst<SRC, DST = unknown, REQ = false>(expression: string) {
     const path = fhirpath.compile(expression);
-    console.log((s: SRC, context?: Context | undefined) => path(s, context)[0] as REQ extends true ? DST : DST | undefined)
     return (s: SRC, context?: Context | undefined) => path(s, context)[0] as REQ extends true ? DST : DST | undefined;
 }

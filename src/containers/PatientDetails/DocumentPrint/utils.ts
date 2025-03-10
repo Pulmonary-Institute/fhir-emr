@@ -19,7 +19,7 @@ const questionnaireItemValueTypeMap: Record<QuestionnaireItem['type'], string> =
     date: 'Date',
     dateTime: 'DateTime',
     time: 'Time',
-    choice: 'Coding.display',
+    choice: 'Coding.code',
     boolean: 'Boolean',
     reference: 'Reference.display',
     'open-choice': '',
@@ -36,7 +36,6 @@ export function getQuestionnaireItemValue(
     if (qItemIsHidden(questionnaireItem)) {
         return undefined;
     }
-
     return getQrItemValueByLinkIdAndType(
         questionnaireItem.linkId,
         questionnaireItemValueTypeMap[questionnaireItem.type],
