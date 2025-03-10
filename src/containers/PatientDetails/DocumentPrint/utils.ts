@@ -49,11 +49,11 @@ export function flattenQuestionnaireGroupItems(item: QuestionnaireItem): Questio
     } else {
         const extractedItems = item.item
             ? item.item.map((internalItem) => {
-                  if (internalItem.type === 'group') {
-                      return flattenQuestionnaireGroupItems(internalItem);
-                  }
-                  return [internalItem];
-              })
+                if (internalItem.type === 'group') {
+                    return flattenQuestionnaireGroupItems(internalItem);
+                }
+                return [internalItem];
+            })
             : [];
         return [...extractedItems.flat()];
     }
