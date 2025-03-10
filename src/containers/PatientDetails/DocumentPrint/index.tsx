@@ -12,6 +12,21 @@ import { flattenQuestionnaireGroupItems, getQuestionnaireItemValue } from './uti
 export function DocumentPrintAnswer(props: { item: QuestionnaireItem; qResponse?: QuestionnaireResponse }) {
     const { item, qResponse } = props;
     const itemValue = qResponse && getQuestionnaireItemValue(item, qResponse);
+    if (itemValue === 'Other') {
+        return (
+            <S.P key={item.linkId}>
+                {item.text}
+                {itemValue && ':'}
+            </S.P>
+        );
+    }
+    if (!item.text) {
+        return (
+            <S.P key={item.linkId}>
+                {itemValue}
+            </S.P>
+        );
+    }
     return (
         <S.P key={item.linkId}>
             {item.text}
@@ -57,7 +72,6 @@ export function DocumentPrintAnswers(props: {
 export function DocumentPrint(props: { headerHeight?: string; footerHeight?: string; pageMargin?: string }) {
     const { headerHeight, footerHeight, pageMargin } = props;
     const { response } = usePatientDocumentPrint();
-
     return (
         <>
             <RenderRemoteData remoteData={response} renderLoading={Spinner}>
