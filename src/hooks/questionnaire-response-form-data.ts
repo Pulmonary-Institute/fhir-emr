@@ -227,9 +227,6 @@ export async function handleFormDataSave(
             return saveQRRemoteData;
         }
 
-        console.log('fhirQuestionnaire:', fhirQuestionnaire);
-        console.log('saveQRRemoteData.data:', saveQRRemoteData.data);
-
         const extractRemoteData = await service<any>({
             ...(config.sdcBackendUrl ? { baseURL: config.sdcBackendUrl } : {}),
             method: 'POST',
@@ -262,13 +259,6 @@ export async function handleFormDataSave(
         const availableCensus = await availableEncounter(resource, patient);
         if (!availableCensus.success) {
             return failure({ error: availableCensus.message });
-        }
-        return sendData();
-    } else if (questionnaireId === 'visit-encounter-delete-extract') {
-        const patient = launchContextParameters?.[0]?.resource;
-        const result = await deletePatientLocalStorage(patient);
-        if (!result.success) {
-            return failure({ error: result.message });
         }
         return sendData();
     } else {
@@ -388,7 +378,10 @@ async function availableEncounter(resource: any, patient: any) {
     // Rule 1: Can't submit the same Type of visit on the same day
     if (
         sameDayEncounters.some(
-            (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code.toLowerCase() === newVisitType,
+            (entry: any) =>
+                entry?.resource?.serviceType?.coding?.[0]?.code.toLowerCase() === newVisitType &&
+                // entry?.resource?.status == 'planned',
+                entry?.resource?.status !== 'entered-in-error',
         )
     ) {
         return {
@@ -418,46 +411,4 @@ async function availableEncounter(resource: any, patient: any) {
     }
 
     return { success: true, message: 'Encounter can be recorded.' };
-}
-
-async function deletePatientLocalStorage(patient: any) {
-    console.log('--delete', patient);
-    const token = localStorage.getItem('token');
-
-    if (!patient?.id) {
-        console.error('Patient ID is missing.');
-        return { success: false, message: 'Patient ID is missing.' };
-    }
-
-    // Step 1: Check if Encounter exists before deleting
-    const encounterResponse = await fetch(`${baseURL}/fhir/Encounter/${patient.id}`, {
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (!encounterResponse.ok) {
-        console.error('Encounter does not exist:', await encounterResponse.json());
-        return { success: false, message: 'Encounter not found.' };
-    }
-
-    // Step 2: Proceed with DELETE request
-    const response = await fetch(`${baseURL}/fhir/Encounter/${patient.id}`, {
-        method: 'DELETE',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (response.ok) {
-        console.log('Delete successful.');
-        return { success: true, message: 'Delete Successful.' };
-    } else {
-        const errorResponse = await response.json();
-        console.error('Delete failed:', errorResponse);
-        return { success: false, message: 'Delete Failed.' };
-    }
 }
