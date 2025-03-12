@@ -9,6 +9,7 @@ const qItemIsHidden = compileAsFirst<QuestionnaireItem, boolean>(
 const getQrItemValueByLinkIdAndType = (linkId: string, type: string) =>
     compileAsFirst<QuestionnaireResponse, string>(`repeat(item).where(linkId='${linkId}').answer.value${type}`);
 
+
 const questionnaireItemValueTypeMap: Record<QuestionnaireItem['type'], string> = {
     display: 'String',
     group: 'String',
@@ -35,6 +36,27 @@ export function getQuestionnaireItemValue(
 ) {
     if (qItemIsHidden(questionnaireItem)) {
         return undefined;
+    }
+    if (questionnaireItem.repeats) {
+        let result: [] | any = []
+        function recursiveFlatten(array: [] | any): void {
+            array.map((item: any) => {
+                if (item.item) {
+                    recursiveFlatten(item.item)
+                }
+                else {
+                    result.push(item)
+                }
+            })
+        }
+        if (questionnaireResponse.item) {
+            recursiveFlatten(questionnaireResponse.item)
+        }
+        const valueFilter = result.filter((item: any) => item.linkId == questionnaireItem.linkId)
+        const itemValue = valueFilter[0].answer.map((item: any) => {
+            return item.valueCoding.code
+        })
+        return itemValue.join(', ')
     }
     return getQrItemValueByLinkIdAndType(
         questionnaireItem.linkId,
