@@ -37,6 +37,26 @@ export function getQuestionnaireItemValue(
     if (qItemIsHidden(questionnaireItem)) {
         return undefined;
     }
+    if (questionnaireItem.type === 'decimal') {
+        const unit = questionnaireItem?.extension?.[0]?.valueCoding?.code
+        let result: [] | any = []
+        function recursiveFlatten(array: [] | any): void {
+            array.map((item: any) => {
+                if (item.item) {
+                    recursiveFlatten(item.item)
+                }
+                else {
+                    result.push(item)
+                }
+            })
+        }
+        if (questionnaireResponse.item) {
+            recursiveFlatten(questionnaireResponse.item)
+        }
+        const valueFilter = result.filter((item: any) => item.linkId == questionnaireItem.linkId)
+        const valueDecimal = valueFilter[0].answer[0].valueDecimal
+        return valueDecimal + ' ' + unit
+    }
     if (questionnaireItem.repeats) {
         let result: [] | any = []
         function recursiveFlatten(array: [] | any): void {
