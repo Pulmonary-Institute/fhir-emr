@@ -333,6 +333,7 @@ export function usePatientQuestionnaireResponseFormData(
  * - Updates existing entry if user submits data on a different date
  */
 async function availableEncounter(resource: any, patient: any) {
+    console.log('resource, patient', resource, patient);
     const patientId = patient?.entry?.[0]?.resource?.id;
     const type = patient?.entry?.[0]?.resource?.resourceType;
     const reference = type + '/' + patientId;
@@ -349,10 +350,10 @@ async function availableEncounter(resource: any, patient: any) {
     });
 
     const data = await response.json();
-
+    console.log('data:', { data }, { reference });
     // Filter encounters where partOf.reference matches the generated reference
     const filteredEncounters = data?.entry?.filter((entry: any) => entry?.resource?.partOf?.reference === reference);
-
+    console.log('filteredEncounters:', filteredEncounters);
     // Extract patient status
     const patientStatus = patient?.entry?.[0]?.resource?.status;
     if (patientStatus !== 'in-progress') {
