@@ -339,7 +339,7 @@ async function availableEncounter(resource: any, patient: any) {
 
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`${baseURL}/fhir/Encounter?_sort=last-visit-date`, {
+    const response = await fetch(`${baseURL}/fhir/Encounter?status=planned`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -348,10 +348,10 @@ async function availableEncounter(resource: any, patient: any) {
     });
 
     const data = await response.json();
-    console.log('data:', { data }, { reference });
+
     // Filter encounters where partOf.reference matches the generated reference
     const filteredEncounters = data?.entry?.filter((entry: any) => entry?.resource?.partOf?.reference === reference);
-    console.log('filteredEncounters:', filteredEncounters);
+
     // Extract patient status
     const patientStatus = patient?.entry?.[0]?.resource?.status;
     if (patientStatus !== 'in-progress') {
@@ -373,7 +373,7 @@ async function availableEncounter(resource: any, patient: any) {
 
     // Find encounters with the same date
     const sameDayEncounters = filteredEncounters.filter((entry: any) => entry?.resource?.period?.start === visitDate);
-    console.log('filter same day filter:', sameDayEncounters, newVisitType);
+
     // Rule 1: Can't submit the same Type of visit on the same day
     if (
         sameDayEncounters.some(
