@@ -333,15 +333,13 @@ export function usePatientQuestionnaireResponseFormData(
  * - Updates existing entry if user submits data on a different date
  */
 async function availableEncounter(resource: any, patient: any) {
-    console.log('resource, patient', resource, patient);
     const patientId = patient?.entry?.[0]?.resource?.id;
     const type = patient?.entry?.[0]?.resource?.resourceType;
     const reference = type + '/' + patientId;
-    // const url = new URL(`${baseURL}/fhir/Encounter?_sort=last-visit-date&custom-status!=entered-in-error&_count=5`);
-    const url = new URL(`${baseURL}/fhir/Encounter?_sort=last-visit-date`);
+
     const token = localStorage.getItem('token');
 
-    const response = await fetch(url.toString(), {
+    const response = await fetch(`${baseURL}/fhir/Encounter?_sort=last-visit-date`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
