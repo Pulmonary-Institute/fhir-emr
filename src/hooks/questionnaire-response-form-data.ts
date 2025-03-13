@@ -374,7 +374,7 @@ async function availableEncounter(resource: any, patient: any) {
 
     // Find encounters with the same date
     const sameDayEncounters = filteredEncounters.filter((entry: any) => entry?.resource?.period?.start === visitDate);
-
+    console.log('filter same day filter:', sameDayEncounters, newVisitType);
     // Rule 1: Can't submit the same Type of visit on the same day
     if (
         sameDayEncounters.some(
