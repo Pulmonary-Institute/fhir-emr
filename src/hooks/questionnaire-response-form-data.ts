@@ -337,8 +337,8 @@ async function availableEncounter(resource: any, patient: any) {
     const patientId = patient?.entry?.[0]?.resource?.id;
     const type = patient?.entry?.[0]?.resource?.resourceType;
     const reference = type + '/' + patientId;
-
-    const url = new URL(`${baseURL}/fhir/Encounter`);
+    // const url = new URL(`${baseURL}/fhir/Encounter?_sort=last-visit-date&custom-status!=entered-in-error&_count=5`);
+    const url = new URL(`${baseURL}/fhir/Encounter?_sort=last-visit-date`);
     const token = localStorage.getItem('token');
 
     const response = await fetch(url.toString(), {
@@ -361,7 +361,7 @@ async function availableEncounter(resource: any, patient: any) {
     }
 
     // Extract visit details from the new resource
-    const newVisitType = resource.item?.[3]?.answer?.[0]?.value?.Coding?.code?.toLowerCase();
+    const newVisitType = resource.item?.[3]?.answer?.[0]?.value?.Coding?.code;
     const newDisplay = resource.item?.[3]?.answer?.[0]?.value?.Coding?.display;
     const visitDate = resource.item?.[1]?.answer?.[0]?.value?.date;
 
@@ -380,7 +380,7 @@ async function availableEncounter(resource: any, patient: any) {
     if (
         sameDayEncounters.some(
             (entry: any) =>
-                entry?.resource?.serviceType?.coding?.[0]?.code.toLowerCase() === newVisitType &&
+                entry?.resource?.serviceType?.coding?.[0]?.code === newVisitType &&
                 // entry?.resource?.status == 'planned',
                 entry?.resource?.status !== 'entered-in-error',
         )
@@ -393,10 +393,10 @@ async function availableEncounter(resource: any, patient: any) {
 
     // Rule 2: Can't submit "Pulmonary" and "Acute Care Response" together on the same day
     const hasPulmonary = sameDayEncounters.some(
-        (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code.toLowerCase() === pulmonaryType,
+        (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code === pulmonaryType,
     );
     const hasAcuteCare = sameDayEncounters.some(
-        (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code.toLowerCase() === acuteCareType,
+        (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code === acuteCareType,
     );
 
     if ((newVisitType === pulmonaryType && hasAcuteCare) || (newVisitType === acuteCareType && hasPulmonary)) {
