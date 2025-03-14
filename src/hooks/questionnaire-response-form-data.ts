@@ -348,7 +348,7 @@ async function availableEncounter(resource: any, patient: any) {
     });
 
     const data = await response.json();
-    console.log('-', data);
+
     // Filter encounters where partOf.reference matches the generated reference
     const filteredEncounters = data?.entry?.filter((entry: any) => entry?.resource?.partOf?.reference === reference);
 
