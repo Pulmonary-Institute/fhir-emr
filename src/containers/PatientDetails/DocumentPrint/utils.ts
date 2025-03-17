@@ -54,8 +54,11 @@ export function getQuestionnaireItemValue(
             recursiveFlatten(questionnaireResponse.item)
         }
         const valueFilter = result.filter((item: any) => item.linkId == questionnaireItem.linkId)
-        const valueDecimal = valueFilter[0].answer[0].valueDecimal
-        return valueDecimal + ' ' + unit
+        if (valueFilter[0]) {
+            const valueDecimal = valueFilter[0].answer[0].valueDecimal
+            return valueDecimal + ' ' + unit
+        }
+
     }
     if (questionnaireItem.repeats) {
         let result: [] | any = []
@@ -73,10 +76,12 @@ export function getQuestionnaireItemValue(
             recursiveFlatten(questionnaireResponse.item)
         }
         const valueFilter = result.filter((item: any) => item.linkId == questionnaireItem.linkId)
-        const itemValue = valueFilter[0].answer.map((item: any) => {
-            return item.valueCoding.code
-        })
-        return itemValue.join(', ')
+        if (valueFilter[0]) {
+            const itemValue = valueFilter[0].answer.map((item: any) => {
+                return item.valueCoding.code
+            })
+            return itemValue.join(', ')
+        }
     }
     return getQrItemValueByLinkIdAndType(
         questionnaireItem.linkId,

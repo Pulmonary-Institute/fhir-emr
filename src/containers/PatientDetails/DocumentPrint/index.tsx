@@ -11,6 +11,10 @@ import { flattenQuestionnaireGroupItems, getQuestionnaireItemValue } from './uti
 
 export function DocumentPrintAnswer(props: { item: QuestionnaireItem; qResponse?: QuestionnaireResponse }) {
     const { item, qResponse } = props;
+    const linkID = item.linkId
+    if (linkID === 'patient-facility' || linkID === 'patient-name' || linkID === 'patient-birth-date') {
+        return undefined;
+    }
     const itemValue = qResponse && getQuestionnaireItemValue(item, qResponse);
     if (itemValue === 'Other') {
         return (
