@@ -255,7 +255,7 @@ interface ResourcesListPageReportProps<R> {
         }[],
         any
     >;
-    getReportColumns: (bundle: Bundle, reportBundle?: Bundle) => Array<ReportColumn>;
+    getReportColumns: (bundles: Array<{ resource: R; bundle: Bundle }>, reportBundle?: Bundle) => Array<ReportColumn>;
 }
 
 function ResourcesListPageReport<R>(props: ResourcesListPageReportProps<R>) {
@@ -263,9 +263,8 @@ function ResourcesListPageReport<R>(props: ResourcesListPageReportProps<R>) {
     const emptyBundle: Bundle = { resourceType: 'Bundle', entry: [], type: 'searchset' };
     const items =
         isSuccess(recordResponse) && recordResponse.data?.[0]?.bundle
-            ? getReportColumns(recordResponse.data[0].bundle)
-            : getReportColumns(emptyBundle);
-
+            ? getReportColumns(recordResponse.data)
+            : getReportColumns([], emptyBundle);
     return <Report items={items} />;
 }
 
