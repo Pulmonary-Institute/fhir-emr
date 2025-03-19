@@ -19,7 +19,7 @@ export function SelectChoiceColumn(props: SearchBarColumnChoiceTypeProps) {
             classNamePrefix="react-select"
             placeholder={placeholder}
             defaultMenuIsOpen={defaultOpen}
-            isClearable={columnFilterValue.column.id != 'status'}
+            isClearable
         />
     );
 }
