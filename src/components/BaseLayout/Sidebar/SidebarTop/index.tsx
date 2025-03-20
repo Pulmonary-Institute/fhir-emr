@@ -47,7 +47,7 @@ export function SidebarTop(props: Props) {
     return (
         <S.Container $collapsed={collapsed} className={classNames(s.container, { _collapsed: collapsed })} {...other}>
             <Link to="/" className={s.logoWrapper}>
-                {collapsed ? <LogoSmall width={90} height={90} /> : <LogoLarge height={100} />}
+                {collapsed ? <LogoSmall width={90} height={90} /> : <LogoLarge height={60} />}
             </Link>
             <S.Divider />
             <Menu
