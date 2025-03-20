@@ -66,7 +66,7 @@ export interface BaseQuestionnaireResponseFormProps {
     cancelButtonTitle?: React.ReactNode;
 }
 
-export function BaseQuestionnaireResponseForm(props: BaseQuestionnaireResponseFormProps) {
+export function NoteEditSaveForm(props: BaseQuestionnaireResponseFormProps) {
     const {
         onSubmit,
         formData,
@@ -79,15 +79,18 @@ export function BaseQuestionnaireResponseForm(props: BaseQuestionnaireResponseFo
     } = props;
 
     const questionnaireId = formData.context.questionnaire.assembledFrom;
+
     const schema: yup.AnyObjectSchema = useMemo(
         () => questionnaireToValidationSchema(formData.context.questionnaire),
         [formData.context.questionnaire],
     );
+
     const methods = useForm<FormItems>({
         defaultValues: formData.formValues,
         resolver: yupResolver(schema),
         mode: 'onBlur',
     });
+
     const { setValue, handleSubmit, watch } = methods;
 
     const formValues = watch();
@@ -95,7 +98,7 @@ export function BaseQuestionnaireResponseForm(props: BaseQuestionnaireResponseFo
     const [isLoading, setIsLoading] = useState(false);
 
     const previousFormValuesRef = useRef<FormItems | null>(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     const debouncedSaveDraft = useCallback(
         _.debounce(async (currentFormValues: FormItems) => {
             if (!autoSave || !questionnaireId) return;
@@ -213,6 +216,16 @@ export function BaseQuestionnaireResponseForm(props: BaseQuestionnaireResponseFo
 
     const isWizard = isGroupWizard(formData.context.questionnaire);
 
+    // Function to copy form data to clipboard
+    // const copyToClipboard = (data: any) => {
+    //     console.log('data', data);
+    //     const formattedData = JSON.stringify(data, null, 2);
+    //     navigator.clipboard
+    //         .writeText(formattedData)
+    //         .then(() => alert('Form data copied to clipboard!'))
+    //         .catch((err) => console.error('Failed to copy:', err));
+    // };
+
     return (
         <FormProvider {...methods}>
             <form
@@ -244,6 +257,7 @@ export function BaseQuestionnaireResponseForm(props: BaseQuestionnaireResponseFo
                         readOnly={readOnly}
                     >
                         <>
+                            {/* <button onClick={() => copyToClipboard(formValues)}>Copy</button> */}
                             <div className={classNames(s.content, 'form__content')}>
                                 <QuestionItems
                                     questionItems={formData.context.questionnaire.item!}

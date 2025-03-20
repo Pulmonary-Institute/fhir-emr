@@ -34,3 +34,4 @@ export * from './Typography';
 export * from './BaseLayout/PageContainer';
 export * from './Tabs';
 export * from './Report';
+export * from './NoteEditResponseForm';
