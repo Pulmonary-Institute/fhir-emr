@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { S } from './DashboardCard.styles';
+import { S, S1 } from './DashboardCard.styles';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
@@ -45,6 +45,29 @@ export function DashboardCard(props: Props) {
     );
 }
 
+export function DashboardCardVertical(props: Props) {
+    const { title, icon, extra, children, className, empty = false } = props;
+
+    return (
+        <S1.Wrapper>
+            <S1.Card
+                className={classNames(className, {
+                    _empty: empty,
+                })}
+            >
+                <S1.Header>
+                    <div>
+                        <S.Icon className={classNames({ _empty: empty })}>{icon}</S.Icon>
+                        <S.Title>{title}</S.Title>
+                    </div>
+                    {extra && <div>{extra}</div>}
+                </S1.Header>
+                {children && <S1.Content>{children}</S1.Content>}
+            </S1.Card>
+        </S1.Wrapper>
+    );
+}
+
 export function DashboardCardTable(props: TableProps) {
     const { title, data, columns, getKey } = props;
     console.log('dashboard card table:', title);
@@ -71,6 +94,29 @@ export function DashboardCardTable(props: TableProps) {
                             </S.TableCell>
                         ))}
                     </S.TableRow>
+                );
+            })}
+        </div>
+    );
+}
+
+export function DashboardCardTableVertical(props: TableProps) {
+    const { title, data, columns, getKey } = props;
+    console.log('dashboard card table:', title);
+    return (
+        <div>
+            {data.map((item) => {
+                const key = getKey(item);
+
+                return (
+                    <S1.TableRow key={`row-${key}`}>
+                        {columns.map((col) => (
+                            <S1.TableCell key={`row-${key}-${col.title}`}>
+                                <S1.TableCellLabel>{col.title}</S1.TableCellLabel>
+                                <S1.TableCellValue>{col.render(item)}</S1.TableCellValue>
+                            </S1.TableCell>
+                        ))}
+                    </S1.TableRow>
                 );
             })}
         </div>

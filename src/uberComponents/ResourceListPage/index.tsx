@@ -116,6 +116,7 @@ interface ResourceListPageProps<R extends Resource> {
      * TODO: https://github.com/beda-software/fhir-emr/issues/414
      */
     getReportColumns?: (bundle: Bundle, reportBundle?: Bundle) => Array<ReportColumn>;
+    defaultPageSize?: number;
 }
 
 export function ResourceListPage<R extends Resource>({
@@ -131,6 +132,7 @@ export function ResourceListPage<R extends Resource>({
     getTableColumns,
     defaultLaunchContext,
     getReportColumns,
+    defaultPageSize,
 }: ResourceListPageProps<R>) {
     const allFilters = getFilters?.() ?? [];
     const { columnsFilterValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
@@ -140,7 +142,6 @@ export function ResourceListPage<R extends Resource>({
         () => columnsFilterValues.filter((filter) => isTableFilter(filter)),
         [JSON.stringify(columnsFilterValues)],
     );
-
     const {
         recordResponse,
         reload,
@@ -149,8 +150,7 @@ export function ResourceListPage<R extends Resource>({
         selectedRowKeys,
         setSelectedRowKeys,
         selectedResourcesBundle,
-    } = useResourceListPage(resourceType, extractPrimaryResources, columnsFilterValues, searchParams ?? {});
-
+    } = useResourceListPage(resourceType, extractPrimaryResources, columnsFilterValues, searchParams ?? {}, defaultPageSize ?? undefined);
     // TODO: move to hooks
     const initialTableColumns = getTableColumns({ reload });
     const tableColumns = populateTableColumnsWithFiltersAndSorts({
@@ -255,7 +255,7 @@ interface ResourcesListPageReportProps<R> {
         }[],
         any
     >;
-    getReportColumns: (bundles: Array<{ resource: R; bundle: Bundle }>, reportBundle?: Bundle) => Array<ReportColumn>;
+    getReportColumns: (bundle: Bundle, reportBundle?: Bundle) => Array<ReportColumn>;
 }
 
 function ResourcesListPageReport<R>(props: ResourcesListPageReportProps<R>) {
@@ -263,10 +263,12 @@ function ResourcesListPageReport<R>(props: ResourcesListPageReportProps<R>) {
     const emptyBundle: Bundle = { resourceType: 'Bundle', entry: [], type: 'searchset' };
     const items =
         isSuccess(recordResponse) && recordResponse.data?.[0]?.bundle
-            ? getReportColumns(recordResponse.data)
-            : getReportColumns([], emptyBundle);
+            ? getReportColumns(recordResponse.data[0].bundle)
+            : getReportColumns(emptyBundle);
     return <Report items={items} />;
 }
+
+
 
 function getRecordActionsColumn<R extends Resource>({
     getRecordActions,
