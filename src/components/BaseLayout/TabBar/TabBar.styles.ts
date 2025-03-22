@@ -67,36 +67,77 @@ export const S = {
         }
     `,
     Drawer: styled(Drawer)`
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        margin: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 16px 16px 8px 16px; /* Margem menor na parte inferior */
+    
+    &.ant-drawer-content {
+        height: auto !important;
+    }
 
-        .ant-drawer-body {
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        // Fix for both bottom and right overflow
+    .ant-drawer-body {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-y: visible !important; // Removendo a barra de rolagem vertical
+    }
+    
+    // Adiciona estilo responsivo para dispositivos móveis
+    @media screen and (max-width: 480px) {
         .ant-drawer-content-wrapper {
-            max-height: calc(100% - 16px) !important;
-            bottom: 8px !important;
-            right: 8px !important;
-            max-width: calc(100% - 16px) !important;
+            top: auto !important;
+            bottom: 16px !important;
+            left: 16px !important;
+            right: 16px !important;
+            max-height: 65vh !important; // Um pouco mais baixo em dispositivos móveis
+            max-width: calc(100% - 32px) !important;
+            height: auto !important;
+            position: fixed !important;
         }
         
-        // Ensures the drawer content is scrollable when needed
         .ant-drawer-content {
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            border-radius: 16px;
-            width: 100%;
+            border-radius: 12px !important;
+            height: auto !important;
         }
+    }
+    
+.ant-drawer-content-wrapper {
+        position: fixed !important;
+        top: auto !important; // Removendo a posição superior fixa
+        bottom: 16px !important; // Mantendo apenas a posição inferior
+        left: 16px !important;
+        right: 16px !important;
+        max-height: 70vh !important; // Limitando a altura máxima a 70% da tela
+        max-width: calc(100% - 32px) !important;
+        height: auto !important;
+    }
+    
+    // Ensures the drawer content is scrollable when needed
+    .ant-drawer-content {
+        overflow: visible !important; // Removendo qualquer barra de rolagem
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+        width: 100%;
+        height: auto !important; // Altura automática baseada no conteúdo
+    }
+    
+    // Reduzir a altura dos itens de menu
+    ul.ant-menu {
+        line-height: 36px !important; // Reduz o espaçamento entre itens
+        
+        .ant-menu-item {
+            height: 36px !important;
+            line-height: 36px !important;
+            margin: 0 !important;
+            padding: 0 16px !important;
+        }
+    }
+
     `,
 
     ResponsiveTable: styled(Table)`
