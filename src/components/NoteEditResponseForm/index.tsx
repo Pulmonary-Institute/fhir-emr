@@ -13,7 +13,7 @@ import {
 import { RenderRemoteData, formatError } from '@beda.software/fhir-react';
 import { RemoteDataResult, isFailure, isSuccess } from '@beda.software/remote-data';
 
-import { NoteEditSaveForm } from 'src/components/BaseQuestionnaireResponseForm/NoteEditSaveForm';
+import { EditableQuestionnaireResponseForm } from 'src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm';
 import {
     QuestionnaireResponseFormData,
     QuestionnaireResponseFormProps,
@@ -28,7 +28,6 @@ import { Spinner } from '../Spinner';
 export interface NoteQRFProps extends QuestionnaireResponseFormProps {
     onSuccess?: (response: QuestionnaireResponseFormSaveResponse) => void;
     onFailure?: (error: any) => void;
-    readOnly?: boolean;
     itemControlQuestionItemComponents?: ItemControlQuestionItemComponentMapping;
     itemControlGroupItemComponents?: ItemControlGroupItemComponentMapping;
     onCancel?: () => void;
@@ -132,7 +131,7 @@ export function useNoteQuestionnaireResponseForm(props: NoteQRFProps) {
     const memoizedProps = useMemo(() => props, [JSON.stringify(props)]);
 
     const { response, handleSave } = useQuestionnaireResponseFormData(memoizedProps);
-    const { onSuccess, onFailure, readOnly, initialQuestionnaireResponse, onCancel } = memoizedProps;
+    const { onSuccess, onFailure, initialQuestionnaireResponse, onCancel } = memoizedProps;
 
     const onSubmit = async (formData: QuestionnaireResponseFormData) => {
         const modifiedFormData = _.merge({}, formData, {
@@ -144,23 +143,24 @@ export function useNoteQuestionnaireResponseForm(props: NoteQRFProps) {
         });
 
         /* delete modifiedFormData.context.questionnaireResponse.meta; */
-
+        console.log('save form data:', modifiedFormData);
         const saveResponse = await handleSave(modifiedFormData);
+
         onNoteFormResponse({ response: saveResponse, onSuccess, onFailure });
     };
 
-    return { response, onSubmit, readOnly, onCancel };
+    return { response, onSubmit, onCancel };
 }
 
 export function NoteEditResponseForm(props: NoteQRFProps) {
-    const { response, onSubmit, readOnly, onCancel } = useNoteQuestionnaireResponseForm(props);
+    const { response, onSubmit, onCancel } = useNoteQuestionnaireResponseForm(props);
+
     return (
         <RenderRemoteData remoteData={response} renderLoading={Spinner}>
             {(formData) => (
-                <NoteEditSaveForm
+                <EditableQuestionnaireResponseForm
                     formData={formData}
                     onSubmit={onSubmit}
-                    readOnly={readOnly}
                     onCancel={onCancel}
                     {...props}
                 />

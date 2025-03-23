@@ -1,0 +1,56 @@
+.form {
+    :global .ant-form-item-label {
+        font-weight: bold;
+    }
+
+    :global .ant-form-item-row {
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    :global .ant-form-item-label {
+        text-align: start;
+        white-space: normal;
+
+        label {
+            display: flex;
+            height: auto;
+
+            &:after {
+                display: none;
+            }
+        }
+    }
+
+    :global .ant-form-item-control {
+        flex-grow: 0;
+    }
+
+    :global .form__question {
+        gap: 0px !important;
+    }
+
+    :global .form-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.field {
+    width: 100%;
+    margin-bottom: 0;
+    display: flex;
+
+    &._hidden {
+        display: none;
+    }
+}
