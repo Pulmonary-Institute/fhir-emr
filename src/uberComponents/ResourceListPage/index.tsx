@@ -116,7 +116,7 @@ interface ResourceListPageProps<R extends Resource> {
      * TODO: https://github.com/beda-software/fhir-emr/issues/414
      */
     getReportColumns?: (bundle: Bundle, reportBundle?: Bundle) => Array<ReportColumn>;
-    defaultPageSize?: number;
+    defaultPageSize?: number | any;
 }
 
 export function ResourceListPage<R extends Resource>({
@@ -142,6 +142,7 @@ export function ResourceListPage<R extends Resource>({
         () => columnsFilterValues.filter((filter) => isTableFilter(filter)),
         [JSON.stringify(columnsFilterValues)],
     );
+
     const {
         recordResponse,
         reload,
@@ -150,7 +151,14 @@ export function ResourceListPage<R extends Resource>({
         selectedRowKeys,
         setSelectedRowKeys,
         selectedResourcesBundle,
-    } = useResourceListPage(resourceType, extractPrimaryResources, columnsFilterValues, searchParams ?? {}, defaultPageSize ?? undefined);
+    } = useResourceListPage(
+        resourceType,
+        extractPrimaryResources,
+        columnsFilterValues,
+        searchParams ?? {},
+        defaultPageSize ?? undefined,
+    );
+
     // TODO: move to hooks
     const initialTableColumns = getTableColumns({ reload });
     const tableColumns = populateTableColumnsWithFiltersAndSorts({
@@ -233,12 +241,12 @@ export function ResourceListPage<R extends Resource>({
                     ...tableColumns,
                     ...(getRecordActions
                         ? [
-                            getRecordActionsColumn({
-                                getRecordActions,
-                                reload,
-                                defaultLaunchContext: defaultLaunchContext ?? [],
-                            }),
-                        ]
+                              getRecordActionsColumn({
+                                  getRecordActions,
+                                  reload,
+                                  defaultLaunchContext: defaultLaunchContext ?? [],
+                              }),
+                          ]
                         : []),
                 ]}
                 loading={isLoading(recordResponse) && { indicator: SpinIndicator }}
@@ -267,8 +275,6 @@ function ResourcesListPageReport<R>(props: ResourcesListPageReportProps<R>) {
             : getReportColumns(emptyBundle);
     return <Report items={items} />;
 }
-
-
 
 function getRecordActionsColumn<R extends Resource>({
     getRecordActions,
