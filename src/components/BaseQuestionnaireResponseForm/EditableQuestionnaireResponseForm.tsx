@@ -299,7 +299,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                     );
                                 }}
                             />
-                            <span>cm</span>
+                            <span>feet</span>
                         </div>
                         <div className="edit-field">
                             <label>Weight:</label>
@@ -314,7 +314,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                     );
                                 }}
                             />
-                            <span>kg</span>
+                            <span>lbs</span>
                         </div>
                         <div className="edit-field">
                             <label>Temperature:</label>
@@ -330,7 +330,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                     );
                                 }}
                             />
-                            <span>Celsius</span>
+                            <span>Farenheit</span>
                         </div>
                         <div className="edit-field">
                             <label>Oxygen saturation:</label>
