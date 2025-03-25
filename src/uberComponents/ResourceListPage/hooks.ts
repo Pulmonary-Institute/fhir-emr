@@ -87,11 +87,11 @@ export function useResourceListPage<R extends Resource>(
         type: 'collection',
         entry: isSuccess(recordResponse)
             ? recordResponse.data
-                .filter(
-                    ({ resource }) =>
-                        resource.resourceType === resourceType && selectedRowKeys.includes(resource.id!),
-                )
-                .map(({ resource }) => ({ resource: resource as R }))
+                  .filter(
+                      ({ resource }) =>
+                          resource.resourceType === resourceType && selectedRowKeys.includes(resource.id!),
+                  )
+                  .map(({ resource }) => ({ resource: resource as R }))
             : [],
     };
 
