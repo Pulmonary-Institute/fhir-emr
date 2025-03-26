@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro';
 import classNames from 'classnames';
 import { QuestionnaireResponse } from 'fhir/r4b';
 import { notification, Button } from 'antd';
@@ -43,8 +44,6 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
     const formValues: any = watch();
 
     const [isLoading, setIsLoading] = useState(false);
-
-    console.log('formValues:', formValues);
 
     const copyAllToClipboard = () => {
         let textToCopy = '';
@@ -127,6 +126,147 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
             'BMI',
             formValues['patient-vital-signs-group']?.items?.bmi?.[0]?.value?.decimal,
         );
+        textToCopy += generateTextForField(
+            'General appearance',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                'general-appearance'
+            ]?.[0]?.value.Coding.display,
+        );
+        textToCopy += generateTextForField(
+            'Integumentary',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['integumentary']?.[0]
+                ?.value.Coding.display,
+        );
+        textToCopy += generateTextForField(
+            'HEENT',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['heent']?.[0]?.value
+                .Coding.display,
+        );
+        textToCopy += generateTextForField(
+            'Neck',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['neck']?.[0]?.value
+                .Coding.display,
+        );
+        textToCopy += generateTextForField(
+            'Respiratory',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['respiratory']?.[0]
+                ?.value.Coding.display,
+        );
+        textToCopy += generateTextForField(
+            'Cardiovascular',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['cardiovascular']?.[0]
+                ?.value.Coding.display,
+        );
+        textToCopy += generateTextForField(
+            'Gastrointestinal',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                'gastrointestinal'
+            ]?.[0]?.value.Coding.display || '-',
+        );
+        textToCopy += generateTextForField(
+            'Genitourinary',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['genitourinary']?.[0]
+                ?.value.Coding.display || '-',
+        );
+        textToCopy += generateTextForField(
+            'Extremities',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['extremities']?.[0]
+                ?.value.Coding.display || '-',
+        );
+        textToCopy += generateTextForField(
+            'Musculoskeletal',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['musculoskeletal']?.[0]
+                ?.value.Coding.display || '-',
+        );
+        textToCopy += generateTextForField(
+            'Neurological',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['neurological']?.[0]
+                ?.value.Coding.display || '-',
+        );
+        textToCopy += generateTextForField(
+            'Psychiatric',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['psychiatric']?.[0]
+                ?.value.Coding.display || '-',
+        );
+        textToCopy += generateTextForField(
+            'Diagnostic test or pertinent labs',
+            formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                'diagnostic-test-or-pertinent-labs'
+            ]?.[0]?.value.string || '-',
+        );
+        textToCopy += generateTextForField(
+            'Assessment Question',
+            formValues['patient-assessment-plan-group']?.items['assessment']?.[0]?.question,
+        );
+        const assessmentItems =
+            formValues['patient-assessment-plan-group']?.items['assessment']?.map(
+                (item: { value: { Coding: { code: any } } }) => ` ${item?.value?.Coding?.code || '-'}`,
+            ) || [];
+        textToCopy += `\n${assessmentItems.join('\n')}`;
+        textToCopy += generateTextForField(
+            'Treatment',
+            formValues['patient-assessment-plan-group']?.items['treatment']?.[0]?.value.string,
+        );
+        textToCopy += generateTextForField(
+            'Psychosocial Support',
+            formValues['care-plan-group']?.items['psychosocial-upport']?.[0]?.value.Coding.display || '_',
+        );
+        const dailyCareItems =
+            formValues['care-plan-group']?.items['daily-care']?.map(
+                (item: { value: { Coding: { display: string } } }) => `${item?.value?.Coding?.display || '-'}`,
+            ) || [];
+        textToCopy += generateTextForField('Daily Care', dailyCareItems);
+        textToCopy += generateTextForField(
+            'Monitor',
+            formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.display || '-',
+        );
+        const aspirationItems =
+            formValues['care-plan-group']?.items['aspiration-precautions']?.map(
+                (item: { value: { Coding: { display: string } } }) => `${item?.value?.Coding?.display || '-'}`,
+            ) || [];
+        textToCopy += generateTextForField('Aspiration Precautions', aspirationItems);
+        const positioningItems =
+            formValues['care-plan-group']?.items['positioning-recautions']?.map(
+                (item: { value: { Coding: { display: string } } }) => `${item?.value?.Coding?.display || '-'}`,
+            ) || [];
+        textToCopy += generateTextForField('Positioning Precautions', positioningItems);
+        textToCopy += generateTextForField(
+            'Safety precautions',
+            formValues['care-plan-group']?.items['safety-precautions']?.[0]?.value.Coding.display || '',
+        );
+        const careCollaborationItems =
+            formValues['care-plan-group']?.items['care-collaboration']?.map(
+                (item: { value: { Coding: { display: string } } }) => ` ${item?.value?.Coding?.display || '-'}`,
+            ) || [];
+        textToCopy += generateTextForField('Care Collaboration', careCollaborationItems);
+        const patientFamilyItems =
+            formValues['care-plan-group']?.items['patient-and-family-involvement']?.map(
+                (item: { value: { Coding: { display: string } } }) => `${item?.value?.Coding?.display || '-'}`,
+            ) || [];
+        textToCopy += generateTextForField('Patient and Family Involvement', patientFamilyItems);
+        textToCopy += generateTextForField(
+            'Follow-Up',
+            formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.display,
+        );
+        const disclosureItems =
+            formValues['care-plan-group']?.items['disclosure']?.map(
+                (item: { value: { Coding: { display: string } } }) => `${item?.value?.Coding?.display || '-'}`,
+            ) || [];
+        textToCopy += generateTextForField('Disclosure', disclosureItems);
+        const cptCodeItems =
+            formValues['cpt-code']?.map(
+                (item: { value: { Coding: { code: string } } }) => ` ${item?.value?.Coding?.code || '-'}`,
+            ) || [];
+        textToCopy += generateTextForField('CPT Code', cptCodeItems);
+        textToCopy += generateTextForField('Provider', formValues['provider']?.[0]?.value.string);
+        textToCopy += generateTextForField(
+            'Ferrer Pulmonary Institute',
+            formValues['ferrer-pulmonary-institute']?.[0]?.value.string,
+        );
+        textToCopy += generateTextForField(
+            'Case Discussed With',
+            formValues['case-discussed-with']?.[0]?.value.Coding.display,
+        );
 
         navigator.clipboard
             .writeText(textToCopy)
@@ -154,82 +294,82 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                 className={classNames(s.form)}
             >
                 <div className="form-action">
-                    <Button onClick={copyAllToClipboard}>Copy All</Button>
+                    <Button onClick={copyAllToClipboard}>{t`Copy All`}</Button>
                 </div>
                 <div className="form-content">
                     <div className="field-content">
                         <div className="edit-field">
-                            <label>Feedback:</label>
+                            <label>{t`Feedback`}:</label>
                             <TiptapEditor
                                 value={formValues['feedback']?.[0]?.value?.string || ''}
                                 onChange={(content) => setValue('feedback.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Facility:</label>
+                            <label>{t`Facility`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-facility']?.[0]?.value?.string || ''}
                                 onChange={(content) => setValue('patient-facility.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Type of Care:</label>
+                            <label>{t`Type of Care`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-visit-type']?.[0]?.value?.string || ''}
                                 onChange={(content) => setValue('patient-visit-type.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Name:</label>
+                            <label>{t`Name`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-name']?.[0]?.value?.string || ''}
                                 onChange={(content) => setValue('patient-name.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Date of Birth:</label>
+                            <label>{t`Date of Birth`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-birth-date']?.[0]?.value?.date || ''}
                                 onChange={(content) => setValue('patient-birth-date.0.value.date', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Time of Service:</label>
+                            <label>{t`Time of Service`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-service-time']?.[0]?.value?.dateTime || ''}
                                 onChange={(content) => setValue('patient-service-time.0.value.dateTime', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Code Status:</label>
+                            <label>{t`Code Status`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-code']?.[0]?.value?.string || ''}
                                 onChange={(content) => setValue('patient-code.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Charlson Comorbidity Index(CCI):</label>
+                            <label>{t`Charlson Comorbidity Index (CCI)`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-cci']?.[0]?.value?.string || ''}
                                 onChange={(content) => setValue('patient-cci.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>HPI:</label>
+                            <label>{t`HPI`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-hpi']?.[0]?.value?.string || ''}
                                 onChange={(content) => setValue('patient-hpi.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Problem list:</label>
+                            <label>{t`Problem List`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-problem-list']?.[0]?.value?.string || ''}
                                 onChange={(content) => setValue('patient-problem-list.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Current medications:</label>
+                            <label>{t`Current Medications`}:</label>
                             <TiptapEditor
                                 value={formValues['current-medications']?.[0]?.value?.Coding.display || ''}
                                 onChange={(content) => {
@@ -239,25 +379,21 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Allergies:</label>
+                            <label>{t`Allergies`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-allergies']?.[0]?.value?.string || ''}
-                                onChange={(content) => {
-                                    setValue('patient-allergies.0.value.string', content);
-                                }}
+                                onChange={(content) => setValue('patient-allergies.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Family History:</label>
+                            <label>{t`Family History`}:</label>
                             <TiptapEditor
                                 value={formValues['family-hostory']?.[0]?.value?.string || ''}
-                                onChange={(content) => {
-                                    setValue('family-hostory.0.value.string', content);
-                                }}
+                                onChange={(content) => setValue('family-hostory.0.value.string', content)}
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Past Surgical History:</label>
+                            <label>{t`Past Surgical History`}:</label>
                             <TiptapEditor
                                 value={formValues['past-surgical-history']?.[0]?.value?.Coding.display || ''}
                                 onChange={(content) => {
@@ -267,7 +403,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Social History:</label>
+                            <label>{t`Social History`}:</label>
                             <TiptapEditor
                                 value={formValues['social-history']?.[0]?.value?.Coding.display || ''}
                                 onChange={(content) => {
@@ -277,7 +413,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Review of systems:</label>
+                            <label>{t`Review of Systems`}:</label>
                             <TiptapEditor
                                 value={formValues['review-of-systems']?.[0]?.value?.Coding.display || ''}
                                 onChange={(content) => {
@@ -286,8 +422,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 }}
                             />
                         </div>
+
                         <div className="edit-field">
-                            <label>Height:</label>
+                            <label>{t`Height`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['height']?.[0]?.value.decimal || ''
@@ -302,7 +439,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <span>feet</span>
                         </div>
                         <div className="edit-field">
-                            <label>Weight:</label>
+                            <label>{t`Weight`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['weight']?.[0]?.value.decimal || ''
@@ -317,7 +454,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <span>lbs</span>
                         </div>
                         <div className="edit-field">
-                            <label>Temperature:</label>
+                            <label>{t`Temperature`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['temperature']?.[0]?.value.decimal ||
@@ -330,10 +467,10 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                     );
                                 }}
                             />
-                            <span>Farenheit</span>
+                            <span>Fahrenheit</span>
                         </div>
                         <div className="edit-field">
-                            <label>Oxygen saturation:</label>
+                            <label>{t`Oxygen Saturation`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['oxygen-saturation']?.[0]?.value
@@ -349,7 +486,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <span>%</span>
                         </div>
                         <div className="edit-field">
-                            <label>Pulse rate:</label>
+                            <label>{t`Pulse Rate`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['pulse-rate']?.[0]?.value.decimal ||
@@ -362,10 +499,10 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                     );
                                 }}
                             />
-                            <span>%</span>
+                            <span>bpm</span>
                         </div>
                         <div className="edit-field">
-                            <label>Respiratory Rate:</label>
+                            <label>{t`Respiratory Rate`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['respiratory-rate']?.[0]?.value
@@ -381,7 +518,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <span>bpm</span>
                         </div>
                         <div className="edit-field">
-                            <label>BP systolic:</label>
+                            <label>{t`BP Systolic`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['blood-pressure']?.items[
@@ -398,7 +535,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <span>mmHg</span>
                         </div>
                         <div className="edit-field">
-                            <label>BP diastolic:</label>
+                            <label>{t`BP Diastolic`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['blood-pressure']?.items[
@@ -415,7 +552,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <span>mmHg</span>
                         </div>
                         <div className="edit-field">
-                            <label>Positions:</label>
+                            <label>{t`Positions`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['blood-pressure']?.items[
@@ -435,17 +572,18 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>BMI:</label>
+                            <label>{t`BMI`}:</label>
                             <TiptapEditor
                                 value={formValues['patient-vital-signs-group']?.items['bmi']?.[0]?.value.decimal || ''}
                                 onChange={(content) => {
                                     setValue('patient-vital-signs-group.items.bmi.0.value.decimal', content);
                                 }}
                             />
-                            <span>kg/m2</span>
+                            <span>kg/m²</span>
                         </div>
+
                         <div className="edit-field">
-                            <label>General appearance:</label>
+                            <label>{t`General appearance`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -464,7 +602,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Integumentary:</label>
+                            <label>{t`Integumentary`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -483,7 +621,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>HEENT:</label>
+                            <label>{t`HEENT`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -502,7 +640,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Neck:</label>
+                            <label>{t`Neck`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -521,7 +659,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Respiratory:</label>
+                            <label>{t`Respiratory`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -540,7 +678,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Cardiovascular:</label>
+                            <label>{t`Cardiovascular`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -559,7 +697,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Gastrointestinal:</label>
+                            <label>{t`Gastrointestinal`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -578,7 +716,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Genitourinary:</label>
+                            <label>{t`Genitourinary`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -597,7 +735,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Extremities:</label>
+                            <label>{t`Extremities`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -616,7 +754,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Musculoskeletal:</label>
+                            <label>{t`Musculoskeletal`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -635,7 +773,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Neurological:</label>
+                            <label>{t`Neurological`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -653,8 +791,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 }}
                             />
                         </div>
+
                         <div className="edit-field">
-                            <label>Psychiatric:</label>
+                            <label>{t`Psychiatric`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -672,8 +811,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 }}
                             />
                         </div>
+
                         <div className="edit-field">
-                            <label>Diagnostic test or pertinent labs:</label>
+                            <label>{t`Diagnostic test or pertinent labs`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
@@ -687,8 +827,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 }}
                             />
                         </div>
+
                         <div className="edit-field">
-                            <label>Assessment/Plan:</label>
+                            <label>{t`Assessment/Plan`}:</label>
                             <div className="assessment-field">
                                 <div>
                                     {formValues['patient-assessment-plan-group']?.items['assessment']?.[0]?.question ||
@@ -752,8 +893,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 </div>
                             </div>
                         </div>
+
                         <div className="edit-field">
-                            <label>Psychosocial Support:</label>
+                            <label>{t`Psychosocial Support`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['care-plan-group']?.items['psychosocial-upport']?.[0]?.value.Coding
@@ -768,8 +910,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 }}
                             />
                         </div>
+
                         <div className="edit-field">
-                            <label>Daily Care:</label>
+                            <label>{t`Daily Care`}:</label>
                             <div className="assessment-item">
                                 {formValues['care-plan-group']?.items['daily-care']?.length > 0 ? (
                                     formValues['care-plan-group']?.items['daily-care'].map(
@@ -809,8 +952,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 )}
                             </div>
                         </div>
+
                         <div className="edit-field">
-                            <label>Monitor:</label>
+                            <label>{t`Monitor`}:</label>
                             <TiptapEditor
                                 value={formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.display || ''}
                                 onChange={(content) => {
@@ -819,8 +963,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 }}
                             />
                         </div>
+
                         <div className="edit-field">
-                            <label>Aspiration Precautions:</label>
+                            <label>{t`Aspiration Precautions`}:</label>
                             <div className="assessment-item">
                                 {formValues['care-plan-group']?.items['aspiration-precautions']?.length > 0 ? (
                                     formValues['care-plan-group']?.items['aspiration-precautions'].map(
@@ -864,8 +1009,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 )}
                             </div>
                         </div>
+
                         <div className="edit-field">
-                            <label>Positioning Precautions:</label>
+                            <label>{t`Positioning Precautions`}:</label>
                             <div className="assessment-item">
                                 {formValues['care-plan-group']?.items['positioning-recautions']?.length > 0 ? (
                                     formValues['care-plan-group']?.items['positioning-recautions'].map(
@@ -909,8 +1055,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 )}
                             </div>
                         </div>
+
                         <div className="edit-field">
-                            <label>Safety precautions:</label>
+                            <label>{t`Safety precautions`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['care-plan-group']?.items['safety-precautions']?.[0]?.value.Coding
@@ -925,8 +1072,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                 }}
                             />
                         </div>
+
                         <div className="edit-field">
-                            <label>Care Collaboration:</label>
+                            <label>{t`Care Collaboration`}:</label>
                             <div className="assessment-item">
                                 {formValues['care-plan-group']?.items['care-collaboration']?.length > 0 ? (
                                     formValues['care-plan-group']?.items['care-collaboration'].map(
@@ -971,7 +1119,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             </div>
                         </div>
                         <div className="edit-field">
-                            <label>Patient and Family Involvement:</label>
+                            <label>{t`Patient and Family Involvement`}:</label>
                             <div className="assessment-item">
                                 {formValues['care-plan-group']?.items['patient-and-family-involvement']?.length > 0 ? (
                                     formValues['care-plan-group']?.items['patient-and-family-involvement'].map(
@@ -1016,7 +1164,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             </div>
                         </div>
                         <div className="edit-field">
-                            <label>Follow-Up:</label>
+                            <label>{t`Follow-Up`}:</label>
                             <TiptapEditor
                                 value={
                                     formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.display || ''
@@ -1028,7 +1176,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Disclosure:</label>
+                            <label>{t`Disclosure`}:</label>
                             <div className="assessment-item">
                                 {formValues['care-plan-group']?.items['disclosure']?.length > 0 ? (
                                     formValues['care-plan-group']?.items['disclosure'].map(
@@ -1069,7 +1217,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             </div>
                         </div>
                         <div className="edit-field">
-                            <label>CPT Code:</label>
+                            <label>{t`CPT Code`}:</label>
                             <div className="assessment-item">
                                 {formValues['cpt-code']?.length > 0 ? (
                                     formValues['cpt-code'].map(
@@ -1103,7 +1251,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             </div>
                         </div>
                         <div className="edit-field">
-                            <label>Provider:</label>
+                            <label>{t`Provider`}:</label>
                             <TiptapEditor
                                 value={formValues['provider']?.[0]?.value.string || ''}
                                 onChange={(content) => {
@@ -1120,7 +1268,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             />
                         </div>
                         <div className="edit-field">
-                            <label>Case discussed with:</label>
+                            <label>{t`Case discussed with`}:</label>
                             <TiptapEditor
                                 value={formValues['case-discussed-with']?.[0]?.value.Coding.display || ''}
                                 onChange={(content) => {
