@@ -1,4 +1,5 @@
 import { CloseOutlined } from '@ant-design/icons';
+import { Button } from 'antd'; // Make sure to import Button
 import { useState } from 'react';
 
 import { LogoLarge } from 'src/icons/brand/LogoLarge';
@@ -20,7 +21,13 @@ export function AppTabBar() {
                 <S.Button icon={<MenuIcon />} type="text" onClick={() => toggleMenuOpened((v) => !v)} />
             </S.TabBar>
             <S.Drawer placement="left" onClose={() => toggleMenuOpened(false)} open={menuOpened} closable={false}>
-                <S.CloseIcon type="text" icon={<CloseOutlined />} onClick={() => toggleMenuOpened(false)} />
+                {/* Replace S.CloseIcon with a direct Button component */}
+                <Button 
+                    type="text" 
+                    icon={<CloseOutlined />} 
+                    onClick={() => toggleMenuOpened(false)}
+                    style={{ position: 'absolute', top: 16, right: 16, zIndex: 1 }}
+                />
                 <SidebarTop collapsed={false} onItemClick={() => toggleMenuOpened(false)} />
                 <SidebarBottom collapsed={false} onItemClick={() => toggleMenuOpened(false)} />
             </S.Drawer>
