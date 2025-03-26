@@ -442,6 +442,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                                     setValue('patient-vital-signs-group.items.bmi.0.value.decimal', content);
                                 }}
                             />
+                            <span>kg/m2</span>
                         </div>
                         <div className="edit-field">
                             <label>General appearance:</label>
