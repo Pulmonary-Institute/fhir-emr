@@ -12,8 +12,7 @@ export const formatHumanDateTime = (date?: string) => {
     if (!date) {
         return '';
     }
-
-    return parseFHIRDateTime(date).format(humanDateTime);
+    return parseFHIRDate(date).format(humanDate);
 };
 
 export const formatHumanDate = (date?: string) => {

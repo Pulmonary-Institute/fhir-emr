@@ -14,7 +14,6 @@ export interface ReportProps {
 
 export function Report(props: ReportProps) {
     const { className, style, items, fullWidth = false } = props;
-    console.log(items)
     return (
         <S.Container className={className} style={style} $fullWidth={fullWidth}>
             {items.map(({ title, value }, index) => (

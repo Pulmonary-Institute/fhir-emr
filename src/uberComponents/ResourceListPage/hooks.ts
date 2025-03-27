@@ -15,6 +15,7 @@ export function useResourceListPage<R extends Resource>(
     extractPrimaryResources: ((bundle: Bundle) => R[]) | undefined,
     filterValues: ColumnFilterValue[],
     defaultSearchParams: SearchParams,
+    defaultPageSize?: number,
 ) {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
@@ -29,14 +30,12 @@ export function useResourceListPage<R extends Resource>(
         ),
     };
     const searchParams = { _sort: '-_lastUpdated', ...defaultSearchParams, ...searchBarSearchParams };
-
     const {
         resourceResponse,
         pagerManager,
         handleTableChange: pagerHandleTableChange,
         pagination,
-    } = usePagerExtended<R, ColumnFilterValue[]>(resourceType, searchParams);
-
+    } = usePagerExtended<R, ColumnFilterValue[]>(resourceType, searchParams, undefined, defaultPageSize);
     const handleTableChange = async (pagination: TablePaginationConfig) => {
         // Handle pagination only
         if (typeof pagination.current !== 'number') {

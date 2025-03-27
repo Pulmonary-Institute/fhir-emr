@@ -77,6 +77,7 @@ export function BaseQuestionnaireResponseForm(props: BaseQuestionnaireResponseFo
         ItemWrapper,
         GroupWrapper,
     } = props;
+
     const questionnaireId = formData.context.questionnaire.assembledFrom;
     const schema: yup.AnyObjectSchema = useMemo(
         () => questionnaireToValidationSchema(formData.context.questionnaire),

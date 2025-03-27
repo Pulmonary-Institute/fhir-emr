@@ -339,7 +339,7 @@ async function availableEncounter(resource: any, patient: any) {
 
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`${baseURL}/fhir/Encounter?status=planned`, {
+    const response = await fetch(`${baseURL}/fhir/Encounter?_sort=-lastUpdated&status=planned`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,

@@ -1,6 +1,6 @@
 import { TablePaginationConfig } from 'antd';
 import { Resource } from 'fhir/r4b';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SearchParams, usePager } from '@beda.software/fhir-react';
 import { isSuccess } from '@beda.software/remote-data';
@@ -21,6 +21,13 @@ export function usePagerExtended<T extends Resource, F = unknown>(
         resourcesOnPage: pageSize,
         initialSearchParams: searchParams,
     });
+
+    // Update pageSize when defaultPageSize changes
+    useEffect(() => {
+        if (defaultPageSize !== undefined && defaultPageSize !== pageSize) {
+            setPageSize(defaultPageSize);
+        }
+    }, [defaultPageSize]);
 
     const handleTableChange = async (pagination: TablePaginationConfig) => {
         if (typeof pagination.current !== 'number') return;
