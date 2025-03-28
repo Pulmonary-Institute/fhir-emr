@@ -63,7 +63,7 @@ export function AppFooter({
           backgroundColor: nextBackgroundColor,
           color: getTextColor(nextBackgroundColor),
           padding: '10px 15px',
-          borderRadius: '5px',
+          borderRadius: '10px',
           cursor: 'pointer',
           zIndex: 2,
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
