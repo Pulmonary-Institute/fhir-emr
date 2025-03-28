@@ -55,7 +55,6 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
             return `\n${label}:`;
         };
 
-        textToCopy += generateTextForField('Feedback', formValues['feedback']?.[0]?.value?.string);
         textToCopy += generateTextForField('Facility', formValues['patient-facility']?.[0]?.value?.string);
         textToCopy += generateTextForField('Type of Care', formValues['patient-visit-type']?.[0]?.value?.string);
         textToCopy += generateTextForField('Name', formValues['patient-name']?.[0]?.value?.string);
@@ -298,13 +297,6 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                 </div>
                 <div className="form-content">
                     <div className="field-content">
-                        <div className="edit-field">
-                            <label>{t`Feedback`}:</label>
-                            <TiptapEditor
-                                value={formValues['feedback']?.[0]?.value?.string || ''}
-                                onChange={(content) => setValue('feedback.0.value.string', content)}
-                            />
-                        </div>
                         <div className="edit-field">
                             <label>{t`Facility`}:</label>
                             <TiptapEditor
