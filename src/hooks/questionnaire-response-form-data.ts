@@ -266,10 +266,7 @@ export async function handleFormDataSave(
         questionnaireId === 'admission-encounter-create-not-assigned-extract' &&
         filterCensusForm['action-selection']?.[0].value.Coding.code == 'search'
     ) {
-        const availableAddPatientNotAssigned = await availableNotAssignedEncounter(
-            itemContext,
-            finalFCEQuestionnaireResponse,
-        );
+        const availableAddPatientNotAssigned = await availableNotAssignedEncounter(finalFCEQuestionnaireResponse);
 
         if (!availableAddPatientNotAssigned.success) {
             return failure({ error: availableAddPatientNotAssigned.message });
@@ -433,7 +430,7 @@ async function availableEncounter(resource: any, patient: any) {
  * - Prevents conflicting visit types (Pulmonary vs Acute Care Response)
  * - Updates existing entry if user submits data on a different date
  */
-async function availableNotAssignedEncounter(itemContext: any, finalFCEQuestionnaireResponse: any) {
+async function availableNotAssignedEncounter(finalFCEQuestionnaireResponse: any) {
     const token = localStorage.getItem('token');
     const response = await fetch(`${baseURL}/fhir/Encounter?_sort=-lastUpdated&status=planned`, {
         method: 'GET',
@@ -446,22 +443,24 @@ async function availableNotAssignedEncounter(itemContext: any, finalFCEQuestionn
     const data = await response.json();
 
     const encounter_reference =
-        itemContext?.resource.item[0]['item'][1]['answer'][0]?.value?.Reference?.resourceType +
+        finalFCEQuestionnaireResponse.item?.[1]?.item?.[2]?.answer?.[0]?.value?.Reference?.resourceType +
         '/' +
-        itemContext?.resource.item[0]['item'][1]['answer'][0]?.value?.Reference?.id;
+        finalFCEQuestionnaireResponse.item?.[1]?.item?.[2]?.answer?.[0]?.value?.Reference?.id;
 
     const filteredEncounters = data?.entry?.filter(
         (entry: any) => entry?.resource?.partOf?.reference === encounter_reference,
     );
 
-    const visitDate = finalFCEQuestionnaireResponse.authored.split('T')[0];
+    const extractDate = finalFCEQuestionnaireResponse?.item?.[1]?.item?.[0]?.answer;
+    const visitDate: string = extractDate[0]?.value?.date;
+
     const newVisitType =
         finalFCEQuestionnaireResponse.item?.[1]?.linkId === 'search-patient' &&
-        finalFCEQuestionnaireResponse.item?.[1]?.item?.[3]?.answer?.[0].value.Coding.code;
+        finalFCEQuestionnaireResponse.item?.[1]?.item?.[4]?.answer?.[0]?.value.Coding?.code;
 
     const newDisplay =
         finalFCEQuestionnaireResponse.item?.[1]?.linkId === 'search-patient' &&
-        finalFCEQuestionnaireResponse.item?.[1]?.item?.[3]?.answer?.[0]?.value.Coding.display;
+        finalFCEQuestionnaireResponse.item?.[1]?.item?.[4]?.answer?.[0]?.value.Coding?.display;
 
     if (!newVisitType || !newDisplay || !visitDate) {
         return { success: false, message: 'Invalid encounter data.' };
@@ -472,7 +471,9 @@ async function availableNotAssignedEncounter(itemContext: any, finalFCEQuestionn
     const acuteCareType = 'acute-care-response';
 
     // Find encounters with the same date
-    const sameDayEncounters = filteredEncounters.filter((entry: any) => entry?.resource?.period?.start === visitDate);
+    const sameDayEncounters = filteredEncounters.filter(
+        (entry: any) => (entry?.resource?.period?.start as string) == visitDate,
+    );
 
     // Rule 1: Can't submit the same Type of visit on the same day
     if (
