@@ -251,6 +251,7 @@ export async function handleFormDataSave(
 
     // Safe handling of questionnaireId with optional chaining
     const questionnaireId = itemContext.questionnaire.mapping?.[0]?.id;
+    const filterCensusForm: any = formData.formValues;
 
     if (questionnaireId === 'visit-encounter-batch-create-extract') {
         const resource = itemContext.resource;
@@ -259,6 +260,19 @@ export async function handleFormDataSave(
         const availableCensus = await availableEncounter(resource, patient);
         if (!availableCensus.success) {
             return failure({ error: availableCensus.message });
+        }
+        return sendData();
+    } else if (
+        questionnaireId === 'admission-encounter-create-not-assigned-extract' &&
+        filterCensusForm['action-selection']?.[0].value.Coding.code == 'search'
+    ) {
+        const availableAddPatientNotAssigned = await availableNotAssignedEncounter(
+            itemContext,
+            finalFCEQuestionnaireResponse,
+        );
+
+        if (!availableAddPatientNotAssigned.success) {
+            return failure({ error: availableAddPatientNotAssigned.message });
         }
         return sendData();
     } else {
@@ -327,6 +341,7 @@ export function usePatientQuestionnaireResponseFormData(
 
 /**
  * Function to check if the patient can have an encounter recorded.
+ * - Send to Census in Patient
  * - Ensures patient status is 'in-progress'
  * - Checks duplicate visit types for the same day
  * - Prevents conflicting visit types (Pulmonary vs Acute Care Response)
@@ -336,7 +351,6 @@ async function availableEncounter(resource: any, patient: any) {
     const patientId = patient?.entry?.[0]?.resource?.id;
     const type = patient?.entry?.[0]?.resource?.resourceType;
     const reference = type + '/' + patientId;
-
     const token = localStorage.getItem('token');
 
     const response = await fetch(`${baseURL}/fhir/Encounter?_sort=-lastUpdated&status=planned`, {
@@ -348,12 +362,12 @@ async function availableEncounter(resource: any, patient: any) {
     });
 
     const data = await response.json();
-
     // Filter encounters where partOf.reference matches the generated reference
     const filteredEncounters = data?.entry?.filter((entry: any) => entry?.resource?.partOf?.reference === reference);
 
     // Extract patient status
     const patientStatus = patient?.entry?.[0]?.resource?.status;
+
     if (patientStatus !== 'in-progress') {
         return { success: false, message: 'Only patients with status "in-progress" can have encounters recorded.' };
     }
@@ -393,6 +407,92 @@ async function availableEncounter(resource: any, patient: any) {
     const hasPulmonary = sameDayEncounters.some(
         (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code === pulmonaryType,
     );
+    const hasAcuteCare = sameDayEncounters.some(
+        (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code === acuteCareType,
+    );
+
+    if ((newVisitType === pulmonaryType && hasAcuteCare) || (newVisitType === acuteCareType && hasPulmonary)) {
+        return {
+            success: false,
+            message: `You cannot submit both "Pulmonary" and "Acute Care Response" on the same day.`,
+        };
+    }
+
+    // Rule 3: "Pulmonary" or any other type + "Cardiology" or any other type is allowed
+    if ((hasPulmonary || newVisitType === pulmonaryType) && (hasAcuteCare || newVisitType === acuteCareType)) {
+        return { success: false, message: `Only one of "Pulmonary" or "Acute Care Response" is allowed per day.` };
+    }
+
+    return { success: true, message: 'Encounter can be recorded.' };
+}
+
+/**
+ * Function to check if the patient can have an encounter recorded.
+ * - Add patient not assigned in Census
+ * - Checks duplicate visit types for the same day
+ * - Prevents conflicting visit types (Pulmonary vs Acute Care Response)
+ * - Updates existing entry if user submits data on a different date
+ */
+async function availableNotAssignedEncounter(itemContext: any, finalFCEQuestionnaireResponse: any) {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${baseURL}/fhir/Encounter?_sort=-lastUpdated&status=planned`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const data = await response.json();
+
+    const encounter_reference =
+        itemContext?.resource.item[0]['item'][1]['answer'][0]?.value?.Reference?.resourceType +
+        '/' +
+        itemContext?.resource.item[0]['item'][1]['answer'][0]?.value?.Reference?.id;
+
+    const filteredEncounters = data?.entry?.filter(
+        (entry: any) => entry?.resource?.partOf?.reference === encounter_reference,
+    );
+
+    const visitDate = finalFCEQuestionnaireResponse.authored.split('T')[0];
+    const newVisitType =
+        finalFCEQuestionnaireResponse.item?.[1]?.linkId === 'search-patient' &&
+        finalFCEQuestionnaireResponse.item?.[1]?.item?.[3]?.answer?.[0].value.Coding.code;
+
+    const newDisplay =
+        finalFCEQuestionnaireResponse.item?.[1]?.linkId === 'search-patient' &&
+        finalFCEQuestionnaireResponse.item?.[1]?.item?.[3]?.answer?.[0]?.value.Coding.display;
+
+    if (!newVisitType || !newDisplay || !visitDate) {
+        return { success: false, message: 'Invalid encounter data.' };
+    }
+
+    // Define restricted visit types
+    const pulmonaryType = 'pulmonary';
+    const acuteCareType = 'acute-care-response';
+
+    // Find encounters with the same date
+    const sameDayEncounters = filteredEncounters.filter((entry: any) => entry?.resource?.period?.start === visitDate);
+
+    // Rule 1: Can't submit the same Type of visit on the same day
+    if (
+        sameDayEncounters.some(
+            (entry: any) =>
+                entry?.resource?.serviceType?.coding?.[0]?.code === newVisitType &&
+                entry?.resource?.status == 'planned',
+        )
+    ) {
+        return {
+            success: false,
+            message: `You cannot submit the same visit type (${newDisplay}) twice on the same day.`,
+        };
+    }
+
+    // Rule 2: Can't submit "Pulmonary" and "Acute Care Response" together on the same day
+    const hasPulmonary = sameDayEncounters.some(
+        (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code === pulmonaryType,
+    );
+
     const hasAcuteCare = sameDayEncounters.some(
         (entry: any) => entry?.resource?.serviceType?.coding?.[0]?.code === acuteCareType,
     );
