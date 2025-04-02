@@ -241,12 +241,12 @@ export async function handleFormDataSave(
             },
         });
         console.log('extractRemoteData', extractRemoteData);
-        // return success({
-        //     questionnaireResponse: saveQRRemoteData.data,
-        //     extracted: isSuccess(extractRemoteData),
-        //     extractedError: isFailure(extractRemoteData) ? extractRemoteData.error : undefined,
-        //     extractedBundle: isSuccess(extractRemoteData) ? extractRemoteData.data : undefined,
-        // });
+        return success({
+            questionnaireResponse: saveQRRemoteData.data,
+            extracted: isSuccess(extractRemoteData),
+            extractedError: isFailure(extractRemoteData) ? extractRemoteData.error : undefined,
+            extractedBundle: isSuccess(extractRemoteData) ? extractRemoteData.data : undefined,
+        });
     };
 
     // Safe handling of questionnaireId with optional chaining
