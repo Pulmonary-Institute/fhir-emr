@@ -29,7 +29,7 @@ function isValueEmpty(linkId: string, data: FormItems) {
 }
 
 function isGroup(data: FormGroupItems | FormItems) {
-    if (!Array.isArray(data) && data.items) {
+    if (!Array.isArray(data) && data?.items) {
         return true;
     }
 
@@ -37,9 +37,9 @@ function isGroup(data: FormGroupItems | FormItems) {
 }
 
 export function getFormDataDiff(initialCurrentData: FormItems, initialPrevData: FormItems) {
-    const generateDiff = (currentData: FormItems | FormGroupItems, prevData: FormItems | FormGroupItems) => {
-        let diffBefore: FormItems = {};
-        let diffAfter: FormItems = {};
+    const generateDiff = (currentData: FormItems | FormGroupItems, prevData: FormItems | FormGroupItems | any) => {
+        let diffBefore: FormItems | any = {};
+        let diffAfter: FormItems | any = {};
 
         _.toPairs(currentData).forEach(([linkId, data]) => {
             if (isGroup(data)) {
@@ -66,7 +66,7 @@ export function getFormDataDiff(initialCurrentData: FormItems, initialPrevData: 
         });
 
         _.toPairs(prevData).forEach(([linkId, data]) => {
-            if (isGroup(data)) {
+            if (isGroup(data as any)) {
                 return;
             }
 
@@ -101,7 +101,7 @@ export function prepareDataToDisplay(
 
     const { diffBefore, diffAfter } = getFormDataDiff(currentFormValues, prevFormValues);
 
-    const diff = _.toPairs(diffAfter).map(([linkId, item = []]) => {
+    const diff = _.toPairs(diffAfter).map(([linkId, item = [] as any]) => {
         const itemBefore = diffBefore[linkId];
 
         return {
@@ -114,7 +114,7 @@ export function prepareDataToDisplay(
     });
 
     const deletions = _.compact(
-        _.toPairs(diffBefore).map(([linkId, item = []]) => {
+        _.toPairs(diffBefore).map(([linkId, item = [] as any]) => {
             const itemAfter = diffAfter[linkId];
 
             if (itemAfter) {
