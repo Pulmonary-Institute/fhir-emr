@@ -42,7 +42,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
 
     const { setValue, handleSubmit, watch } = methods;
     const formValues: any = watch();
-
+    console.log({ formValues });
     const [isLoading, setIsLoading] = useState(false);
 
     const copyAllToClipboard = () => {
@@ -69,15 +69,29 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
         textToCopy += generateTextForField('Problem list', formValues['patient-problem-list']?.[0]?.value?.string);
         textToCopy += generateTextForField(
             'Current medications',
-            formValues['current-medications']?.[0]?.value?.Coding?.display,
+            formValues['current-medications']?.[0]?.value?.Coding?.code === 'Other'
+                ? formValues['current-medications-other']?.[0]?.value?.string
+                : formValues['current-medications']?.[0]?.value?.Coding?.display,
         );
         textToCopy += generateTextForField('Allergies', formValues['patient-allergies']?.[0]?.value?.string);
-        textToCopy += generateTextForField('Family History', formValues['family-hostory']?.[0]?.value?.string);
+        textToCopy += generateTextForField(
+            'Family History',
+            formValues['family-hostory']?.[0]?.value?.Coding?.code === 'Other'
+                ? formValues['family-history-other']?.[0]?.value?.string
+                : formValues['family-hostory']?.[0]?.value?.Coding?.display,
+        );
         textToCopy += generateTextForField(
             'Past Surgical History',
-            formValues['past-surgical-history']?.[0]?.value?.Coding?.display,
+            formValues['past-surgical-history']?.[0]?.value?.Coding?.code == 'Other'
+                ? formValues['past-surgical-history-other']?.[0]?.value?.string
+                : formValues['past-surgical-history']?.[0]?.value?.Coding?.display,
         );
-        textToCopy += generateTextForField('Social History', formValues['social-history']?.[0]?.value?.Coding?.display);
+        textToCopy += generateTextForField(
+            'Social History',
+            formValues['social-history']?.[0]?.value?.Coding?.code == 'Other'
+                ? formValues['social-history-other']?.[0]?.value?.string
+                : formValues['social-history']?.[0]?.value?.Coding?.display,
+        );
         textToCopy += generateTextForField(
             'Review of systems',
             formValues['review-of-systems']?.[0]?.value?.Coding?.display,
@@ -129,63 +143,133 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
             'General appearance',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
                 'general-appearance'
-            ]?.[0]?.value.Coding.display,
+            ]?.[0]?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'general-appearance-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'general-appearance'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Integumentary',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['integumentary']?.[0]
-                ?.value.Coding.display,
+                ?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'integumentary-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'integumentary'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'HEENT',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['heent']?.[0]?.value
-                .Coding.display,
+                .Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'heent-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['heent']?.[0]
+                      ?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Neck',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['neck']?.[0]?.value
-                .Coding.display,
+                .Coding.display == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'neck-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['neck']?.[0]
+                      ?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Respiratory',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['respiratory']?.[0]
-                ?.value.Coding.display,
+                ?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'respiratory-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'respiratory'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Cardiovascular',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['cardiovascular']?.[0]
-                ?.value.Coding.display,
+                ?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'cardiovascular-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'cardiovascular'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Gastrointestinal',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
                 'gastrointestinal'
-            ]?.[0]?.value.Coding.display || '-',
+            ]?.[0]?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'gastrointestinal-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'gastrointestinal'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Genitourinary',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['genitourinary']?.[0]
-                ?.value.Coding.display || '-',
+                ?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'genitourinary-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'genitourinary'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Extremities',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['extremities']?.[0]
-                ?.value.Coding.display || '-',
+                ?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'extremities-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'extremities'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Musculoskeletal',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['musculoskeletal']?.[0]
-                ?.value.Coding.display || '-',
+                ?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'musculoskeletal-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'musculoskeletal'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Neurological',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['neurological']?.[0]
-                ?.value.Coding.display || '-',
+                ?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'neurological-other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'neurological'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Psychiatric',
             formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items['psychiatric']?.[0]
-                ?.value.Coding.display || '-',
+                ?.value.Coding.code == 'Other'
+                ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'psychiatric -other'
+                  ]?.[0]?.value.string
+                : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']?.items[
+                      'psychiatric'
+                  ]?.[0]?.value.Coding.display,
         );
         textToCopy += generateTextForField(
             'Diagnostic test or pertinent labs',
@@ -208,7 +292,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
         );
         textToCopy += generateTextForField(
             'Psychosocial Support',
-            formValues['care-plan-group']?.items['psychosocial-upport']?.[0]?.value.Coding.display || '_',
+            formValues['care-plan-group']?.items['psychosocial-upport']?.[0]?.value.Coding.code == 'Other'
+                ? formValues['care-plan-group']?.items['psychosocial-upport-other']?.[0]?.value.string
+                : formValues['care-plan-group']?.items['psychosocial-upport']?.[0]?.value.Coding.display,
         );
         const dailyCareItems =
             formValues['care-plan-group']?.items['daily-care']?.map(
@@ -217,7 +303,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
         textToCopy += generateTextForField('Daily Care', dailyCareItems);
         textToCopy += generateTextForField(
             'Monitor',
-            formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.display || '-',
+            formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.display == 'Other'
+                ? formValues['care-plan-group']?.items['psychosocial-upport-other']?.[0]?.value.string
+                : formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.display,
         );
         const aspirationItems =
             formValues['care-plan-group']?.items['aspiration-precautions']?.map(
@@ -231,7 +319,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
         textToCopy += generateTextForField('Positioning Precautions', positioningItems);
         textToCopy += generateTextForField(
             'Safety precautions',
-            formValues['care-plan-group']?.items['safety-precautions']?.[0]?.value.Coding.display || '',
+            formValues['care-plan-group']?.items['safety-precautions']?.[0]?.value.Coding.code == 'Other'
+                ? formValues['care-plan-group']?.items['safety-precautions-other']?.[0]?.value.string
+                : formValues['care-plan-group']?.items['safety-precautions']?.[0]?.value.Coding.display,
         );
         const careCollaborationItems =
             formValues['care-plan-group']?.items['care-collaboration']?.map(
@@ -245,7 +335,9 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
         textToCopy += generateTextForField('Patient and Family Involvement', patientFamilyItems);
         textToCopy += generateTextForField(
             'Follow-Up',
-            formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.display,
+            formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.code == 'Other'
+                ? formValues['care-plan-group']?.items['follow-up-other']?.[0]?.value.string
+                : formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.display,
         );
         const disclosureItems =
             formValues['care-plan-group']?.items['disclosure']?.map(
@@ -321,15 +413,67 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                         <div className="edit-field">
                             <label>{t`Date of Birth`}:</label>
                             <TiptapEditor
-                                value={formValues['patient-birth-date']?.[0]?.value?.date || ''}
-                                onChange={(content) => setValue('patient-birth-date.0.value.date', content)}
+                                value={
+                                    formValues['patient-birth-date']?.[0]?.value?.date
+                                        ? (() => {
+                                              const [year, month, day] =
+                                                  formValues['patient-birth-date'][0].value.date.split('-');
+                                              return `${month}/${day}/${year}`;
+                                          })()
+                                        : ''
+                                }
+                                onChange={(content) => {
+                                    const dateParts = content.split('/');
+                                    let [month, day, year] = formValues['patient-birth-date']?.[0]?.value?.date?.split(
+                                        '-',
+                                    ) || ['', '', ''];
+
+                                    month = dateParts[0]?.replace(/\D/g, '').slice(0, 2) || month;
+                                    day = dateParts[1]?.replace(/\D/g, '').slice(0, 2) || day;
+                                    year = dateParts[2]?.replace(/\D/g, '').slice(0, 4) || year;
+
+                                    if (month.length === 2 && day.length === 2 && year.length === 4) {
+                                        const formattedDate = `${year}-${month}-${day}`;
+                                        const dateCheck = new Date(formattedDate);
+
+                                        if (!isNaN(dateCheck.getTime())) {
+                                            setValue('patient-birth-date.0.value.date', formattedDate);
+                                        }
+                                    }
+                                }}
                             />
                         </div>
                         <div className="edit-field">
                             <label>{t`Time of Service`}:</label>
                             <TiptapEditor
-                                value={formValues['patient-service-time']?.[0]?.value?.dateTime || ''}
-                                onChange={(content) => setValue('patient-service-time.0.value.dateTime', content)}
+                                value={
+                                    formValues['patient-service-time']?.[0]?.value?.dateTime
+                                        ? (() => {
+                                              const [year, month, day] =
+                                                  formValues['patient-service-time']?.[0]?.value?.dateTime.split('-');
+                                              return `${month}/${day}/${year}`;
+                                          })()
+                                        : ''
+                                }
+                                onChange={(content) => {
+                                    const dateParts = content.split('/');
+                                    let [month, day, year] = formValues[
+                                        'patient-service-time'
+                                    ]?.[0]?.value?.dateTime?.split('-') || ['', '', ''];
+
+                                    month = dateParts[0]?.replace(/\D/g, '').slice(0, 2) || month;
+                                    day = dateParts[1]?.replace(/\D/g, '').slice(0, 2) || day;
+                                    year = dateParts[2]?.replace(/\D/g, '').slice(0, 4) || year;
+
+                                    if (month.length === 2 && day.length === 2 && year.length === 4) {
+                                        const formattedDate = `${year}-${month}-${day}`;
+                                        const dateCheck = new Date(formattedDate);
+
+                                        if (!isNaN(dateCheck.getTime())) {
+                                            setValue('patient-service-time.0.value.dateTime', formattedDate);
+                                        }
+                                    }
+                                }}
                             />
                         </div>
                         <div className="edit-field">
@@ -363,10 +507,20 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                         <div className="edit-field">
                             <label>{t`Current Medications`}:</label>
                             <TiptapEditor
-                                value={formValues['current-medications']?.[0]?.value?.Coding.display || ''}
+                                value={
+                                    formValues['current-medications']?.[0]?.value?.Coding.code == 'Other'
+                                        ? formValues['current-medications-other']?.[0]?.value?.string
+                                        : formValues['current-medications']?.[0]?.value?.Coding.display
+                                }
                                 onChange={(content) => {
-                                    setValue('current-medications.0.value.Coding.display', content);
-                                    setValue('current-medications.0.value.Coding.code', content.toLowerCase());
+                                    if (formValues['current-medications']?.[0]?.value?.Coding.code == 'Other') {
+                                        setValue('current-medications-other.0.value.string', content);
+                                        setValue('current-medications.0.value.Coding.display', 'Other');
+                                        setValue('current-medications.0.value.Coding.code', 'Other');
+                                    } else {
+                                        setValue('current-medications.0.value.Coding.display', content);
+                                        setValue('current-medications.0.value.Coding.code', content.toLowerCase());
+                                    }
                                 }}
                             />
                         </div>
@@ -380,27 +534,60 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                         <div className="edit-field">
                             <label>{t`Family History`}:</label>
                             <TiptapEditor
-                                value={formValues['family-hostory']?.[0]?.value?.string || ''}
-                                onChange={(content) => setValue('family-hostory.0.value.string', content)}
+                                value={
+                                    formValues['family-hostory']?.[0]?.value?.Coding.code == 'Other'
+                                        ? formValues['family-history-other']?.[0]?.value?.string
+                                        : formValues['family-hostory']?.[0]?.value?.Coding.code
+                                }
+                                onChange={(content) => {
+                                    if (formValues['family-hostory']?.[0]?.value?.Coding.code == 'Other') {
+                                        setValue('family-history-other.0.value.string', content);
+                                        setValue('family-hostory.0.value.Coding.display', 'Other');
+                                        setValue('family-hostory.0.value.Coding.code', 'Other');
+                                    } else {
+                                        setValue('family-hostory.0.value.Coding.display', content);
+                                        setValue('family-hostory.0.value.Coding.code', content.toLowerCase());
+                                    }
+                                }}
                             />
                         </div>
                         <div className="edit-field">
                             <label>{t`Past Surgical History`}:</label>
                             <TiptapEditor
-                                value={formValues['past-surgical-history']?.[0]?.value?.Coding.display || ''}
+                                value={
+                                    formValues['past-surgical-history']?.[0]?.value?.Coding.code == 'Other'
+                                        ? formValues['past-surgical-history-other']?.[0]?.value?.string
+                                        : formValues['past-surgical-history']?.[0]?.value?.Coding.display
+                                }
                                 onChange={(content) => {
-                                    setValue('past-surgical-history.0.value.Coding.display', content);
-                                    setValue('past-surgical-history.0.value.Coding.code', content.toLowerCase());
+                                    if (formValues['past-surgical-history']?.[0]?.value?.Coding.code == 'Other') {
+                                        setValue('past-surgical-history-other.0.value.string', content);
+                                        setValue('past-surgical-history.0.value.Coding.display', 'Other');
+                                        setValue('past-surgical-history.0.value.Coding.code', 'Other');
+                                    } else {
+                                        setValue('past-surgical-history.0.value.Coding.display', content);
+                                        setValue('past-surgical-history.0.value.Coding.code', content.toLowerCase());
+                                    }
                                 }}
                             />
                         </div>
                         <div className="edit-field">
                             <label>{t`Social History`}:</label>
                             <TiptapEditor
-                                value={formValues['social-history']?.[0]?.value?.Coding.display || ''}
+                                value={
+                                    formValues['social-history']?.[0]?.value?.Coding.code == 'Other'
+                                        ? formValues['social-history-other']?.[0]?.value?.string
+                                        : formValues['social-history']?.[0]?.value?.Coding.display
+                                }
                                 onChange={(content) => {
-                                    setValue('social-history.0.value.Coding.display', content);
-                                    setValue('social-history.0.value.Coding.code', content.toLowerCase());
+                                    if (formValues['social-history']?.[0]?.value?.Coding.code == 'Other') {
+                                        setValue('social-history-other.0.value.string', content);
+                                        setValue('social-history.0.value.Coding.display', 'Other');
+                                        setValue('social-history.0.value.Coding.code', 'Other');
+                                    } else {
+                                        setValue('social-history.0.value.Coding.display', content);
+                                        setValue('social-history.0.value.Coding.code', content.toLowerCase());
+                                    }
                                 }}
                             />
                         </div>
@@ -579,17 +766,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['general-appearance']?.[0]?.value.Coding.display || ''
+                                        ?.items['general-appearance']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['general-appearance-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['general-appearance']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.general-appearance.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.general-appearance.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['general-appearance']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.general-appearance-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.general-appearance.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.general-appearance.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.general-appearance.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.general-appearance.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -598,17 +807,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['integumentary']?.[0]?.value.Coding.display || ''
+                                        ?.items['integumentary']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['integumentary-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['integumentary']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.integumentary.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.integumentary.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['integumentary']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.integumentary-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.integumentary.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.integumentary.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.integumentary.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.integumentary.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -617,17 +848,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['heent']?.[0]?.value.Coding.display || ''
+                                        ?.items['heent']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['heent-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['heent']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.heent.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.heent.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['heent']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.heent-other.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.heent.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.heent.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.heent.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.heent.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -636,17 +889,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['neck']?.[0]?.value.Coding.display || ''
+                                        ?.items['neck']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['neck-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['neck']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.neck.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.neck.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['neck']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neck-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neck.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neck.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neck.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neck.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -655,17 +930,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['respiratory']?.[0]?.value.Coding.display || ''
+                                        ?.items['respiratory']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['respiratory-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['respiratory']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.respiratory.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.respiratory.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['respiratory']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.respiratory-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.respiratory.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.respiratory.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.respiratory.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.respiratory.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -674,17 +971,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['cardiovascular']?.[0]?.value.Coding.display || ''
+                                        ?.items['cardiovascular']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['cardiovascular-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['cardiovascular']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.cardiovascular.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.cardiovascular.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['cardiovascular']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.cardiovascular-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.cardiovascular.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.cardiovascular.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.cardiovascular.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.cardiovascular.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -693,17 +1012,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['gastrointestinal']?.[0]?.value.Coding.display || ''
+                                        ?.items['gastrointestinal']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['gastrointestinal-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['gastrointestinal']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.gastrointestinal.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.gastrointestinal.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['gastrointestinal']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.gastrointestinal-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.gastrointestinal.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.gastrointestinal.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.gastrointestinal.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.gastrointestinal.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -712,17 +1053,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['genitourinary']?.[0]?.value.Coding.display || ''
+                                        ?.items['genitourinary']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['genitourinary-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['genitourinary']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.genitourinary.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.genitourinary.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['genitourinary']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.genitourinary-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.genitourinary.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.genitourinary.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.genitourinary.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.genitourinary.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -731,17 +1094,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['extremities']?.[0]?.value.Coding.display || ''
+                                        ?.items['extremities']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['extremities-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['extremities']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.extremities.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.extremities.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['extremities']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.extremities-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.extremities.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.extremities.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.extremities.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.extremities.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -750,17 +1135,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['musculoskeletal']?.[0]?.value.Coding.display || ''
+                                        ?.items['musculoskeletal']?.[0]?.value.Coding.display == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['musculoskeletal-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['musculoskeletal']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.musculoskeletal.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.musculoskeletal.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['musculoskeletal']?.[0]?.value.Coding.display == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.musculoskeletal-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.musculoskeletal.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.musculoskeletal.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.musculoskeletal.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.musculoskeletal.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -769,17 +1176,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['neurological']?.[0]?.value.Coding.display || ''
+                                        ?.items['neurological']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['neurological-other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['neurological']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.neurological.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.neurological.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['neurological']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neurological-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neurological.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neurological.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neurological.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.neurological.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -789,17 +1218,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
-                                        ?.items['psychiatric']?.[0]?.value.Coding.display || ''
+                                        ?.items['psychiatric']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['psychiatric -other']?.[0]?.value.string
+                                        : formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                              ?.items['psychiatric']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.psychiatric.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue(
-                                        'patient-vital-signs-group.items.patient-physical-exam-group.items.psychiatric.0.value.Coding.code',
-                                        content,
-                                    );
+                                    if (
+                                        formValues['patient-vital-signs-group']?.items['patient-physical-exam-group']
+                                            ?.items['psychiatric']?.[0]?.value.Coding.code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.psychiatric -other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.psychiatric.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.psychiatric.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.psychiatric.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'patient-vital-signs-group.items.patient-physical-exam-group.items.psychiatric.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -825,7 +1276,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <div className="assessment-field">
                                 <div>
                                     {formValues['patient-assessment-plan-group']?.items['assessment']?.[0]?.question ||
-                                        ''}
+                                        'No selection'}
                                 </div>
                                 <div className="assessment-item">
                                     {formValues['patient-assessment-plan-group']?.items['assessment']?.length > 0 ? (
@@ -891,14 +1342,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['care-plan-group']?.items['psychosocial-upport']?.[0]?.value.Coding
-                                        .display || ''
+                                        .code == 'Other'
+                                        ? formValues['care-plan-group']?.items['psychosocial-upport-other']?.[0]?.value
+                                              .string
+                                        : formValues['care-plan-group']?.items['psychosocial-upport']?.[0]?.value.Coding
+                                              .display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'care-plan-group.items.psychosocial-upport.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue('care-plan-group.items.psychosocial-upport.0.value.Coding.code', content);
+                                    if (
+                                        formValues['care-plan-group']?.items['psychosocial-upport']?.[0]?.value.Coding
+                                            .code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'care-plan-group.items.psychosocial-upport-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'care-plan-group.items.psychosocial-upport.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'care-plan-group.items.psychosocial-upport.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'care-plan-group.items.psychosocial-upport.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'care-plan-group.items.psychosocial-upport.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -948,10 +1424,27 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                         <div className="edit-field">
                             <label>{t`Monitor`}:</label>
                             <TiptapEditor
-                                value={formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.display || ''}
+                                value={
+                                    formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['care-plan-group']?.items['psychosocial-upport-other']?.[0]?.value
+                                              .string
+                                        : formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.display
+                                }
                                 onChange={(content) => {
-                                    setValue('care-plan-group.items.monitor.0.value.Coding.display', content);
-                                    setValue('care-plan-group.items.monitor.0.value.Coding.code', content);
+                                    if (
+                                        formValues['care-plan-group']?.items['monitor']?.[0]?.value.Coding.code ==
+                                        'Other'
+                                    ) {
+                                        setValue(
+                                            'care-plan-group.items.psychosocial-upport-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue('care-plan-group.items.monitor.0.value.Coding.display', 'Other');
+                                        setValue('care-plan-group.items.monitor.0.value.Coding.code', 'Other');
+                                    } else {
+                                        setValue('care-plan-group.items.monitor.0.value.Coding.display', content);
+                                        setValue('care-plan-group.items.monitor.0.value.Coding.code', content);
+                                    }
                                 }}
                             />
                         </div>
@@ -1053,14 +1546,39 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <TiptapEditor
                                 value={
                                     formValues['care-plan-group']?.items['safety-precautions']?.[0]?.value.Coding
-                                        .display || ''
+                                        .code == 'Other'
+                                        ? formValues['care-plan-group']?.items['safety-precautions-other']?.[0]?.value
+                                              .string
+                                        : formValues['care-plan-group']?.items['safety-precautions']?.[0]?.value.Coding
+                                              .display
                                 }
                                 onChange={(content) => {
-                                    setValue(
-                                        'care-plan-group.items.safety-precautions.0.value.Coding.display',
-                                        content,
-                                    );
-                                    setValue('care-plan-group.items.safety-precautions.0.value.Coding.code', content);
+                                    if (
+                                        formValues['care-plan-group']?.items['safety-precautions']?.[0]?.value.Coding
+                                            .code == 'Other'
+                                    ) {
+                                        setValue(
+                                            'care-plan-group.items.safety-precautions-other.0.value.string',
+                                            content,
+                                        );
+                                        setValue(
+                                            'care-plan-group.items.safety-precautions.0.value.Coding.display',
+                                            'Other',
+                                        );
+                                        setValue(
+                                            'care-plan-group.items.safety-precautions.0.value.Coding.code',
+                                            'Other',
+                                        );
+                                    } else {
+                                        setValue(
+                                            'care-plan-group.items.safety-precautions.0.value.Coding.display',
+                                            content,
+                                        );
+                                        setValue(
+                                            'care-plan-group.items.safety-precautions.0.value.Coding.code',
+                                            content,
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -1159,11 +1677,22 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                             <label>{t`Follow-Up`}:</label>
                             <TiptapEditor
                                 value={
-                                    formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.display || ''
+                                    formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.code == 'Other'
+                                        ? formValues['care-plan-group']?.items['follow-up-other']?.[0]?.value.string
+                                        : formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.display
                                 }
                                 onChange={(content) => {
-                                    setValue('care-plan-group.items.follow-up.0.value.Coding.display', content);
-                                    setValue('care-plan-group.items.follow-up.0.value.Coding.code', content);
+                                    if (
+                                        formValues['care-plan-group']?.items['follow-up']?.[0]?.value.Coding.code ==
+                                        'Other'
+                                    ) {
+                                        setValue('care-plan-group.items.follow-up-other.0.value.string', content);
+                                        setValue('care-plan-group.items.follow-up.0.value.Coding.display', 'Other');
+                                        setValue('care-plan-group.items.follow-up.0.value.Coding.code', 'Other');
+                                    } else {
+                                        setValue('care-plan-group.items.follow-up.0.value.Coding.display', content);
+                                        setValue('care-plan-group.items.follow-up.0.value.Coding.code', content);
+                                    }
                                 }}
                             />
                         </div>
