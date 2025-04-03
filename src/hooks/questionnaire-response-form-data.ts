@@ -226,7 +226,7 @@ export async function handleFormDataSave(
         if (isFailure(saveQRRemoteData)) {
             return saveQRRemoteData;
         }
-        console.log('formData:', formData);
+
         const extractRemoteData = await service<any>({
             ...(config.sdcBackendUrl ? { baseURL: config.sdcBackendUrl } : {}),
             method: 'POST',
@@ -240,7 +240,7 @@ export async function handleFormDataSave(
                 ],
             },
         });
-        console.log('extractRemoteData', extractRemoteData);
+
         return success({
             questionnaireResponse: saveQRRemoteData.data,
             extracted: isSuccess(extractRemoteData),
