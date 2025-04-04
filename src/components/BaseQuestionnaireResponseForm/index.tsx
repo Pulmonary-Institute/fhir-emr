@@ -46,6 +46,8 @@ export interface BaseQuestionnaireResponseFormProps {
     questionItemComponents?: QuestionItemComponentMapping;
     groupItemComponent?: GroupItemComponent;
     onCancel?: () => void;
+    onCustomAction?: () => void;
+    customActionTitle?: React.ReactNode;
 
     autoSave?: boolean;
     draftSaveResponse?: RemoteData<QuestionnaireResponse>;
