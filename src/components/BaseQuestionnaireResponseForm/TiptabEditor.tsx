@@ -3,7 +3,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { useEffect, useState } from 'react';
 
 interface TiptapEditorProps {
-    value: string | number;
+    value: any;
     onChange: (content: string | number | any) => void;
 }
 
