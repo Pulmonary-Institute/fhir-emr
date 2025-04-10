@@ -3,34 +3,34 @@ import StarterKit from '@tiptap/starter-kit';
 import { useEffect, useState } from 'react';
 
 interface TiptapEditorProps {
-    value: string | number;
+    value: any;
     onChange: (content: string | number | any) => void;
 }
 
 const TiptapEditor: React.FC<TiptapEditorProps> = ({ value, onChange }) => {
     const [internalValue, setInternalValue] = useState(String(value));
+    const formatNewlines = (text: string) => {
+        return text.replace(/\n/g, '<br>');
+    };
+
     const editor = useEditor({
         extensions: [StarterKit],
-        content: internalValue,
+        content: formatNewlines(internalValue),
         onUpdate: ({ editor }) => {
-            let newValue: string | number = editor.getText();
+            const html = editor.getHTML();
+            const newValue = html.replace(/<br\s*\/?>/g, '\n').replace(/<\/?p>/g, '');
 
-            if (typeof value === 'number') {
-                const numericValue = parseFloat(editor.getText());
-                if (!isNaN(numericValue)) {
-                    newValue = numericValue;
-                }
-            }
-            setInternalValue(String(newValue));
-            onChange(newValue);
+            setInternalValue(newValue);
+            onChange(typeof value === 'number' ? parseFloat(newValue) : newValue);
         },
     });
 
     useEffect(() => {
         const stringValue = String(value);
-        if (editor && editor.getText() !== stringValue) {
+        if (editor && internalValue !== stringValue) {
+            const formatted = formatNewlines(stringValue);
             setInternalValue(stringValue);
-            editor.commands.setContent(stringValue);
+            editor.commands.setContent(formatted);
         }
     }, [value, editor]);
 
