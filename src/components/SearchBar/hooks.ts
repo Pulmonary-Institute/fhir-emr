@@ -26,8 +26,11 @@ import {
     validateSingleDateColumnFilterValue,
 } from './validate';
 
-export function useSearchBar(props: SearchBarProps): SearchBarData {
-    const { columns } = props;
+export function useSearchBar(props: SearchBarProps & {
+    handleFacilityFilterChange?: (value: boolean) => void;
+    filterID?: string;
+}): SearchBarData {
+    const { columns, handleFacilityFilterChange, filterID } = props;
     const defaultFiltersValues = useMemo<ColumnFilterValue[]>(() => {
         return columns.map((column) => {
             if (isStringColumn(column)) {
@@ -71,6 +74,9 @@ export function useSearchBar(props: SearchBarProps): SearchBarData {
 
     const onChangeColumnFilter = useCallback(
         (value: ColumnFilterValue['value'], id: string) => {
+            if (filterID == id) {
+                handleFacilityFilterChange?.(true)
+            }
             setColumnsFilterValues((prevFilterValues) => {
                 return prevFilterValues.map((filterValue) => {
                     if (filterValue.column.id !== id) {
