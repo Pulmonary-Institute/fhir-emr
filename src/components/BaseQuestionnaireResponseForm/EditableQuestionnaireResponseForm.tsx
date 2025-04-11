@@ -31,7 +31,7 @@ export interface BaseQuestionnaireResponseFormProps {
 
 interface FormField {
     label: string;
-    type: 'text' | 'date' | 'decimal' | 'coding';
+    type: 'text' | 'date' | 'decimal' | 'coding' | 'dateTime';
     path: string;
     otherPath?: string;
     isOther?: boolean;
@@ -84,8 +84,7 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
 
         const fields: [string, any][] = [
             ['Type of Care', getValue(formValues['patient-visit-type'])?.string],
-            ['Date of Birth', getValue(formValues['patient-birth-date'])?.date],
-            ['Time of Service', getValue(formValues['patient-service-time'])?.dateTime],
+            ['Date of Service', getValue(formValues['patient-service-time'])?.dateTime],
             ['Code Status', getValue(formValues['patient-code'])?.string],
             ['Charlson Comorbidity Index(CCI)', getValue(formValues['patient-cci'])?.string],
             ['HPI', getValue(formValues['patient-hpi'])?.string],
@@ -225,13 +224,8 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
             path: 'patient-visit-type.0.value.string',
         },
         {
-            label: 'Date of Birth',
-            type: 'date',
-            path: 'patient-birth-date.0.value.date',
-        },
-        {
-            label: 'Time of Service',
-            type: 'date',
+            label: 'Date of Service',
+            type: 'dateTime',
             path: 'patient-service-time.0.value.dateTime',
         },
         {
