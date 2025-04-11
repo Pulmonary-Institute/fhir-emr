@@ -15,6 +15,8 @@ export interface FormFooterComponentProps {
     submitting: boolean;
     submitDisabled?: boolean;
     onCancel?: () => void;
+    onCustomAction?: () => void;
+    customActionTitle?: React.ReactNode;
 }
 
 export interface Props extends BaseQuestionnaireResponseFormProps {
@@ -23,6 +25,8 @@ export interface Props extends BaseQuestionnaireResponseFormProps {
     className?: string | undefined;
     style?: CSSProperties | undefined;
     submitDisabled?: boolean;
+    onCustomAction?: () => void;
+    customActionTitle?: React.ReactNode;
 }
 
 export function FormFooter(props: Props) {
@@ -41,7 +45,11 @@ export function FormFooter(props: Props) {
         className,
         style,
         submitDisabled: initialSubmitDisabled,
+        onCustomAction,
+        customActionTitle,
     } = props;
+
+    console.log('FormFooter props:', { onCustomAction, customActionTitle });
 
     const formValues = useWatch();
     const assembledFromQuestionnaireId = formData.context.questionnaire.assembledFrom;
@@ -103,10 +111,11 @@ export function FormFooter(props: Props) {
     return (
         <>
             {FormFooterComponent ? (
-                <FormFooterComponent submitting={submitting} submitDisabled={submitDisabled} onCancel={onCancel} />
+                <FormFooterComponent submitting={submitting} submitDisabled={submitDisabled} onCancel={onCancel} onCustomAction={onCustomAction} customActionTitle={customActionTitle} />
             ) : (
                 <S.Footer className={className} style={style}>
                     {renderDraftButton()}
+                    
                     {onCancel && (
                         <Button
                             type="default"
@@ -117,6 +126,22 @@ export function FormFooter(props: Props) {
                             {cancelButtonTitle ?? <Trans>Cancel</Trans>}
                         </Button>
                     )}
+                    
+                    {/* Custom action button */}
+                    {onCustomAction && customActionTitle && (
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            onClick={onCustomAction}
+                            data-testid="custom-action-button"
+                            disabled={isSomeButtonInLoading}
+                            //style={{ marginRight: '10px', backgroundColor: '#ffeb3b' }} 
+                        >
+                            {customActionTitle}
+                        </Button>
+                    )}
+                    
+                    {/* Submit button */}
                     <Button
                         type="primary"
                         htmlType="submit"
