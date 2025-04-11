@@ -33,6 +33,9 @@ export interface QRFProps extends QuestionnaireResponseFormProps {
     itemControlGroupItemComponents?: ItemControlGroupItemComponentMapping;
     onCancel?: () => void;
 
+    onCustomAction?: () => void;
+    customActionTitle?: React.ReactNode;
+
     FormFooterComponent?: React.ElementType<FormFooterComponentProps>;
     saveButtonTitle?: React.ReactNode;
     cancelButtonTitle?: React.ReactNode;
@@ -132,7 +135,15 @@ export function useQuestionnaireResponseForm(props: QRFProps) {
     const memoizedProps = useMemo(() => props, [JSON.stringify(props)]);
 
     const { response, handleSave } = useQuestionnaireResponseFormData(memoizedProps);
-    const { onSuccess, onFailure, readOnly, initialQuestionnaireResponse, onCancel } = memoizedProps;
+    const { 
+        onSuccess, 
+        onFailure, 
+        readOnly, 
+        initialQuestionnaireResponse, 
+        onCancel,
+        onCustomAction,
+        customActionTitle
+    } = memoizedProps;
 
     const onSubmit = async (formData: QuestionnaireResponseFormData) => {
         const modifiedFormData = _.merge({}, formData, {
@@ -149,11 +160,18 @@ export function useQuestionnaireResponseForm(props: QRFProps) {
         onFormResponse({ response: saveResponse, onSuccess, onFailure });
     };
 
-    return { response, onSubmit, readOnly, onCancel };
+    return { 
+        response, 
+        onSubmit, 
+        readOnly, 
+        onCancel, 
+        onCustomAction,
+        customActionTitle
+    };
 }
 
 export function QuestionnaireResponseForm(props: QRFProps) {
-    const { response, onSubmit, readOnly, onCancel } = useQuestionnaireResponseForm(props);
+    const { response, onSubmit, readOnly, onCancel, onCustomAction, customActionTitle } = useQuestionnaireResponseForm(props);
     return (
         <RenderRemoteData remoteData={response} renderLoading={Spinner}>
             {(formData) => (
@@ -162,6 +180,8 @@ export function QuestionnaireResponseForm(props: QRFProps) {
                     onSubmit={onSubmit}
                     readOnly={readOnly}
                     onCancel={onCancel}
+                    onCustomAction={onCustomAction}
+                    customActionTitle={customActionTitle}
                     {...props}
                 />
             )}

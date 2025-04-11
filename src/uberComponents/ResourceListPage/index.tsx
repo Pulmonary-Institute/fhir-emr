@@ -117,6 +117,8 @@ interface ResourceListPageProps<R extends Resource> {
      */
     getReportColumns?: (bundle: Bundle, reportBundle?: Bundle) => Array<ReportColumn>;
     defaultPageSize?: number | any;
+    handleFacilityFilterChange?: (value: boolean) => void;
+    filterID?: string;
 }
 
 export function ResourceListPage<R extends Resource>({
@@ -133,16 +135,19 @@ export function ResourceListPage<R extends Resource>({
     defaultLaunchContext,
     getReportColumns,
     defaultPageSize,
+    handleFacilityFilterChange,
+    filterID,
 }: ResourceListPageProps<R>) {
     const allFilters = getFilters?.() ?? [];
     const { columnsFilterValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
         columns: allFilters ?? [],
+        handleFacilityFilterChange,
+        filterID: filterID
     });
     const tableFilterValues = useMemo(
         () => columnsFilterValues.filter((filter) => isTableFilter(filter)),
         [JSON.stringify(columnsFilterValues)],
     );
-
     const {
         recordResponse,
         reload,
@@ -196,7 +201,10 @@ export function ResourceListPage<R extends Resource>({
                     <SearchBar
                         columnsFilterValues={columnsFilterValues}
                         onChangeColumnFilter={onChangeColumnFilter}
-                        onResetFilters={onResetFilters}
+                        onResetFilters={() => {
+                            onResetFilters();
+                            handleFacilityFilterChange?.(false);
+                        }}
                     />
                 ) : null,
             }}
@@ -241,12 +249,12 @@ export function ResourceListPage<R extends Resource>({
                     ...tableColumns,
                     ...(getRecordActions
                         ? [
-                              getRecordActionsColumn({
-                                  getRecordActions,
-                                  reload,
-                                  defaultLaunchContext: defaultLaunchContext ?? [],
-                              }),
-                          ]
+                            getRecordActionsColumn({
+                                getRecordActions,
+                                reload,
+                                defaultLaunchContext: defaultLaunchContext ?? [],
+                            }),
+                        ]
                         : []),
                 ]}
                 loading={isLoading(recordResponse) && { indicator: SpinIndicator }}
