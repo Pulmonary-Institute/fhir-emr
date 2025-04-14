@@ -8,7 +8,7 @@ import _ from 'lodash';
 
 interface EditableFormContentProps {
     label?: string;
-    type?: 'text' | 'date' | 'decimal' | 'coding';
+    type?: 'text' | 'date' | 'decimal' | 'coding' | 'dateTime';
     path: string;
     otherPath?: string;
     unit?: string;
@@ -117,10 +117,23 @@ const EditableFormContent: React.FC<EditableFormContentProps> = ({
         [setValue, path, type, isOther, otherPath],
     );
 
+    const formatToLocalDateTime = (dateStr: string) => {
+        const date = new Date(dateStr);
+        const offset = date.getTimezoneOffset();
+        const localDate = new Date(date.getTime() - offset * 60 * 1000);
+        return localDate.toISOString().slice(0, 16);
+    };
+
     return (
         <FormFieldWrapper label={label} unit={unit}>
             {type === 'date' ? (
                 <input type="date" value={displayValue || ''} onChange={(e) => handleChange(e.target.value)} />
+            ) : type === 'dateTime' ? (
+                <input
+                    type="datetime-local"
+                    value={displayValue ? formatToLocalDateTime(displayValue) : ''}
+                    onChange={(e) => handleChange(new Date(e.target.value).toISOString())}
+                />
             ) : (
                 <TiptapEditor value={displayValue || ''} onChange={handleChange} />
             )}
