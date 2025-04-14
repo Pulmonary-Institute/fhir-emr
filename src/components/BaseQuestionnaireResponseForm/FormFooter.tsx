@@ -48,9 +48,6 @@ export function FormFooter(props: Props) {
         onCustomAction,
         customActionTitle,
     } = props;
-
-    console.log('FormFooter props:', { onCustomAction, customActionTitle });
-
     const formValues = useWatch();
     const assembledFromQuestionnaireId = formData.context.questionnaire.assembledFrom;
 
@@ -115,7 +112,7 @@ export function FormFooter(props: Props) {
             ) : (
                 <S.Footer className={className} style={style}>
                     {renderDraftButton()}
-                    
+
                     {onCancel && (
                         <Button
                             type="default"
@@ -126,7 +123,7 @@ export function FormFooter(props: Props) {
                             {cancelButtonTitle ?? <Trans>Cancel</Trans>}
                         </Button>
                     )}
-                    
+
                     {/* Custom action button */}
                     {onCustomAction && customActionTitle && (
                         <Button
@@ -135,12 +132,12 @@ export function FormFooter(props: Props) {
                             onClick={onCustomAction}
                             data-testid="custom-action-button"
                             disabled={isSomeButtonInLoading}
-                            //style={{ marginRight: '10px', backgroundColor: '#ffeb3b' }} 
+                        //style={{ marginRight: '10px', backgroundColor: '#ffeb3b' }} 
                         >
                             {customActionTitle}
                         </Button>
                     )}
-                    
+
                     {/* Submit button */}
                     <Button
                         type="primary"

@@ -141,8 +141,10 @@ export function ResourceListPage<R extends Resource>({
     const allFilters = getFilters?.() ?? [];
     const { columnsFilterValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
         columns: allFilters ?? [],
-        handleFacilityFilterChange,
-        filterID: filterID
+        options: {
+            handleFacilityFilterChange,
+            filterID
+        }
     });
     const tableFilterValues = useMemo(
         () => columnsFilterValues.filter((filter) => isTableFilter(filter)),
