@@ -27,6 +27,10 @@ export interface QuestionnaireActionType {
     questionnaireId: string;
     icon?: React.ReactNode;
     qrfProps?: Partial<QRFProps>;
+    customAction?: {
+        title: React.ReactNode;
+        handler: () => void;
+    };    
 }
 export interface ExportActionType {
     type: 'export';
@@ -54,7 +58,14 @@ export function customAction(control: React.ReactNode): CustomActionType {
 export function questionnaireAction(
     title: React.ReactNode,
     questionnaireId: string,
-    options?: { icon?: React.ReactNode; qrfProps?: Partial<QRFProps> },
+    options?: { 
+        icon?: React.ReactNode; 
+        qrfProps?: Partial<QRFProps>;
+        customAction?: {
+            title: React.ReactNode;
+            handler: () => void;
+        };
+    },
 ): QuestionnaireActionType {
     return {
         type: 'questionnaire',
@@ -62,6 +73,7 @@ export function questionnaireAction(
         icon: options?.icon,
         qrfProps: options?.qrfProps,
         questionnaireId,
+        customAction: options?.customAction, 
     };
 }
 
@@ -80,6 +92,8 @@ export function exportAction(
         action,
     };
 }
+
+
 
 export type ActionType = QuestionnaireActionType | NavigationActionType | CustomActionType;
 export function isQuestionnaireAction(action: ActionType): action is QuestionnaireActionType {
@@ -113,14 +127,19 @@ export function RecordQuestionnaireAction<R extends Resource>({
                         { name: resource.resourceType, resource: resource as any },
                     ]}
                     onSuccess={() => {
-                        notification.success({
-                            message: t`Successfully submitted`,
-                        });
+                    
+                        //if (!action.customAction || !action.customAction.handler) {
+                            notification.success({
+                                message: t`Successfully submitted`,
+                            });
+                       // }
                         reload();
                         closeModal();
                     }}
                     onCancel={closeModal}
                     saveButtonTitle={t`Submit`}
+                    //onCustomAction={action.customAction?.handler}
+                    //customActionTitle={action.customAction?.title}
                     {...(action.qrfProps ?? {})}
                 />
             )}
@@ -131,6 +150,7 @@ export function RecordQuestionnaireAction<R extends Resource>({
 interface HeaderQuestionnaireActionProps {
     action: QuestionnaireActionType;
     reload: () => void;
+
     defaultLaunchContext: ParametersParameter[];
 }
 
@@ -156,12 +176,19 @@ export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext
                     questionnaireLoader={questionnaireIdLoader(action.questionnaireId)}
                     onSuccess={() => {
                         closeModal();
-                        notification.success({ message: t`Successfully submitted` });
+                      
+                        if (!action.customAction || !action.customAction.handler) {
+                            notification.success({
+                                message: t`Successfully submitted`,
+                            });
+                        }
                         reload();
                     }}
                     launchContextParameters={defaultLaunchContext}
                     onCancel={closeModal}
                     saveButtonTitle={t`Submit`}
+                    onCustomAction={action.customAction?.handler}
+                    customActionTitle={action.customAction?.title}
                     {...(action.qrfProps ?? {})}
                 />
             )}
@@ -209,11 +236,17 @@ export function BatchQuestionnaireAction<R extends Resource>({
                     ]}
                     onSuccess={() => {
                         closeModal();
-                        notification.success({ message: t`Successfully submitted` });
+                        if (!action.customAction || !action.customAction.handler) {
+                            notification.success({
+                                message: t`Successfully submitted`,
+                            });
+                        }
                         reload();
                     }}
                     onCancel={closeModal}
                     saveButtonTitle={t`Submit`}
+                    onCustomAction={action.customAction?.handler}
+                    customActionTitle={action.customAction?.title}
                     {...(action.qrfProps ?? {})}
                 />
             )}
