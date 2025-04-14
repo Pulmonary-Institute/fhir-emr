@@ -132,11 +132,11 @@ export function RecordQuestionnaireAction<R extends Resource>({
                     onSuccess={() => {
                         
                     
-                       // if (!action.customAction || !action.customAction.handler) {
+                    
                             notification.success({
                                 message: t`Successfully submitted`,
                             });
-                       // }
+                 
                         reload();
                         closeModal();
                     }}
