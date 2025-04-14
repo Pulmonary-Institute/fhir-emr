@@ -117,6 +117,9 @@ export function RecordQuestionnaireAction<R extends Resource>({
     reload: () => void;
     defaultLaunchContext: ParametersParameter[];
 }) {
+
+
+
     return (
         <ModalTrigger title={action.title} trigger={<S.LinkButton type="link">{action.title}</S.LinkButton>}>
             {({ closeModal }) => (
@@ -127,8 +130,9 @@ export function RecordQuestionnaireAction<R extends Resource>({
                         { name: resource.resourceType, resource: resource as any },
                     ]}
                     onSuccess={() => {
+                        
                     
-                        //if (!action.customAction || !action.customAction.handler) {
+                       // if (!action.customAction || !action.customAction.handler) {
                             notification.success({
                                 message: t`Successfully submitted`,
                             });
@@ -138,8 +142,8 @@ export function RecordQuestionnaireAction<R extends Resource>({
                     }}
                     onCancel={closeModal}
                     saveButtonTitle={t`Submit`}
-                    //onCustomAction={action.customAction?.handler}
-                    //customActionTitle={action.customAction?.title}
+                    onCustomAction={action.customAction?.handler}
+                    customActionTitle={action.customAction?.title}
                     {...(action.qrfProps ?? {})}
                 />
             )}
