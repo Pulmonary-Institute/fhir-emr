@@ -14,6 +14,7 @@ interface SignInProps {
 }
 
 export function SignIn(props: SignInProps) {
+    console.log("props: ", props);
     return (
         <S.Container>
             <S.Form>

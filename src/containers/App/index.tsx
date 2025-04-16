@@ -90,7 +90,8 @@ function AnonymousUserApp({ extra }: { extra?: ReactElement }) {
     const location = useLocation();
     const originPathRef = useRef(location.pathname);
     const navigate = useNavigate();
-
+    
+    console.log("🚀 ~ AnonymousUserApp ~ originPathRef:", originPathRef)
     return (
         <Routes>
             {extra}
