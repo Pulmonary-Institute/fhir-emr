@@ -59,13 +59,13 @@ export type SearchBarChoiceColumn = SearchBarColumnBase & {
     defaultValue?: ValueSetOption;
 } & (
         | {
-              options: ValueSetOption[];
-              valueSet?: never;
-          }
+            options: ValueSetOption[];
+            valueSet?: never;
+        }
         | {
-              options?: never;
-              valueSet: ValueSet['id'];
-          }
+            options?: never;
+            valueSet: ValueSet['id'];
+        }
     );
 
 export type SearchBarSolidChoiceColumn = SearchBarColumnBase & {
@@ -139,7 +139,8 @@ export type ColumnFilterValue =
     | SingleDateTypeColumnFilterValue
     | ReferenceTypeColumnFilterValue
     | ChoiceTypeColumnFilterValue
-    | SolidChoiceTypeColumnFilterValue;
+    | SolidChoiceTypeColumnFilterValue
+    | any;
 export function isStringColumnFilterValue(filterValue: ColumnFilterValue): filterValue is StringTypeColumnFilterValue {
     return isStringColumn(filterValue.column);
 }
@@ -167,6 +168,8 @@ export function isSolidChoiceColumnFilterValue(
 
 export interface SearchBarData {
     columnsFilterValues: ColumnFilterValue[];
+    defaultFiltersValues: ColumnFilterValue[];
     onChangeColumnFilter: (value: ColumnFilterValue['value'], key: string) => void;
     onResetFilters: () => void;
+    onApplyFilter?: () => void;
 }

@@ -30,7 +30,7 @@ export interface QuestionnaireActionType {
     customAction?: {
         title: React.ReactNode;
         handler: () => void;
-    };    
+    };
 }
 export interface ExportActionType {
     type: 'export';
@@ -40,7 +40,6 @@ export interface ExportActionType {
     icon?: React.ReactNode;
     qrfProps?: Partial<QRFProps>;
 }
-
 
 export function navigationAction(
     title: React.ReactNode,
@@ -58,8 +57,8 @@ export function customAction(control: React.ReactNode): CustomActionType {
 export function questionnaireAction(
     title: React.ReactNode,
     questionnaireId: string,
-    options?: { 
-        icon?: React.ReactNode; 
+    options?: {
+        icon?: React.ReactNode;
         qrfProps?: Partial<QRFProps>;
         customAction?: {
             title: React.ReactNode;
@@ -73,7 +72,7 @@ export function questionnaireAction(
         icon: options?.icon,
         qrfProps: options?.qrfProps,
         questionnaireId,
-        customAction: options?.customAction, 
+        customAction: options?.customAction,
     };
 }
 
@@ -92,9 +91,6 @@ export function exportAction(
         action,
     };
 }
-
-
-
 export type ActionType = QuestionnaireActionType | NavigationActionType | CustomActionType;
 export function isQuestionnaireAction(action: ActionType): action is QuestionnaireActionType {
     return action.type === 'questionnaire';
@@ -130,13 +126,13 @@ export function RecordQuestionnaireAction<R extends Resource>({
                         { name: resource.resourceType, resource: resource as any },
                     ]}
                     onSuccess={() => {
-                        
-                    
-                       // if (!action.customAction || !action.customAction.handler) {
-                            notification.success({
-                                message: t`Successfully submitted`,
-                            });
-                       // }
+
+
+                        // if (!action.customAction || !action.customAction.handler) {
+                        notification.success({
+                            message: t`Successfully submitted`,
+                        });
+                        // }
                         reload();
                         closeModal();
                     }}
@@ -180,7 +176,7 @@ export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext
                     questionnaireLoader={questionnaireIdLoader(action.questionnaireId)}
                     onSuccess={() => {
                         closeModal();
-                      
+
                         if (!action.customAction || !action.customAction.handler) {
                             notification.success({
                                 message: t`Successfully submitted`,
@@ -205,7 +201,6 @@ export function HeaderExportAction({ icon, data, title, action, reload }: Header
         {title}
     </Button>)
 }
-
 export function BatchQuestionnaireAction<R extends Resource>({
     action,
     bundle,

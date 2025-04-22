@@ -134,10 +134,9 @@ export function useSearchBar(props: SearchBarProps & { options?: SearchBarOption
         },
         [setColumnsFilterValues],
     );
-
     const onResetFilters = useCallback(() => {
         setColumnsFilterValues(defaultFiltersValues);
     }, [setColumnsFilterValues, defaultFiltersValues]);
 
-    return { columnsFilterValues, onChangeColumnFilter, onResetFilters };
+    return { columnsFilterValues, defaultFiltersValues, onChangeColumnFilter, onResetFilters };
 }

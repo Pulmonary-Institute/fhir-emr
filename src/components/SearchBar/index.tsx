@@ -13,7 +13,7 @@ interface SearchBarProps extends SearchBarData {
 }
 
 export function SearchBar(props: SearchBarProps) {
-    const { columnsFilterValues, onChangeColumnFilter, onResetFilters, showInDrawerOnMobile = true } = props;
+    const { columnsFilterValues, onChangeColumnFilter, onResetFilters, onApplyFilter, showInDrawerOnMobile = true } = props;
     const searchBarFilterValues = useMemo(
         () => columnsFilterValues.filter((filter) => isSearchBarFilter(filter)),
         [JSON.stringify(columnsFilterValues)],
@@ -33,6 +33,9 @@ export function SearchBar(props: SearchBarProps) {
 
                 <Button onClick={onResetFilters}>
                     <Trans>Clear filters</Trans>
+                </Button>
+                <Button type='primary' onClick={onApplyFilter}>
+                    <Trans>Show results</Trans>
                 </Button>
             </S.SearchBar>
             <S.MobileFilters $showInDrawerOnMobile={showInDrawerOnMobile}>

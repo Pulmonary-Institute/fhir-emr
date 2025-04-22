@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro';
 import { Typography, Empty } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { Bundle, ParametersParameter, Resource } from 'fhir/r4b';
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { formatError, SearchParams } from '@beda.software/fhir-react';
 import { isFailure, isLoading, isSuccess, RemoteData } from '@beda.software/remote-data';
@@ -31,7 +31,7 @@ import {
 } from './actions';
 export { navigationAction, customAction, questionnaireAction, exportAction } from './actions';
 import { useResourceListPage } from './hooks';
-import { SearchBarColumn } from '../../components/SearchBar/types';
+import { SearchBarColumn, ColumnFilterValue } from '../../components/SearchBar/types';
 import { S } from './styles';
 import { Report } from 'src/components/Report';
 import { BatchActions } from './BatchActions';
@@ -139,16 +139,22 @@ export function ResourceListPage<R extends Resource>({
     filterID,
 }: ResourceListPageProps<R>) {
     const allFilters = getFilters?.() ?? [];
-    const { columnsFilterValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
+    const { columnsFilterValues, defaultFiltersValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
         columns: allFilters ?? [],
         options: {
             handleFacilityFilterChange,
             filterID
         }
     });
+    const [applyFilterValues, setApplyFilterValues] = useState<ColumnFilterValue[]>(defaultFiltersValues);
+    const [isShowResults, setIsShowResults] = useState(false)
+    const onApplyFilters = () => {
+        setApplyFilterValues(columnsFilterValues);
+        setIsShowResults(true)
+    }
     const tableFilterValues = useMemo(
-        () => columnsFilterValues.filter((filter) => isTableFilter(filter)),
-        [JSON.stringify(columnsFilterValues)],
+        () => applyFilterValues.filter((filter) => isTableFilter(filter)),
+        [JSON.stringify(applyFilterValues)],
     );
     const {
         recordResponse,
@@ -161,12 +167,11 @@ export function ResourceListPage<R extends Resource>({
     } = useResourceListPage(
         resourceType,
         extractPrimaryResources,
-        columnsFilterValues,
+        applyFilterValues,
         searchParams ?? {},
         defaultPageSize ?? undefined,
+        isShowResults
     );
-
-    // TODO: move to hooks
     const initialTableColumns = getTableColumns({ reload });
     const tableColumns = populateTableColumnsWithFiltersAndSorts({
         tableColumns: initialTableColumns,
@@ -207,6 +212,8 @@ export function ResourceListPage<R extends Resource>({
                             onResetFilters();
                             handleFacilityFilterChange?.(false);
                         }}
+                        defaultFiltersValues={applyFilterValues}
+                        onApplyFilter={onApplyFilters}
                     />
                 ) : null,
             }}
