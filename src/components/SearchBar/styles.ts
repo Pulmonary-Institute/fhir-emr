@@ -43,6 +43,6 @@ export const S = {
         flex-direction: row;
         align-items: center;
         flex-wrap: wrap;
-        gap: 10px 8px;
+        gap: 10px 16px;
     `,
 };

@@ -36,10 +36,12 @@ export function SearchBar(props: SearchBarProps) {
         <>
             <S.SearchBar $showInDrawerOnMobile={showInDrawerOnMobile}>
                 <S.LeftColumn>
-                    <Badge count={appliedFiltersCount} size="small">
-                        <FilterOutlined style={{ fontSize: '16px', marginLeft: '8px', cursor: 'pointer' }}
-                            onClick={() => setIsModalVisible(true)} />
-                    </Badge>
+                    {searchBarFilterInModal.length > 0 && (
+                        <Badge count={appliedFiltersCount} size="default">
+                            <FilterOutlined style={{ fontSize: '16px', marginLeft: '8px', cursor: 'pointer' }}
+                                onClick={() => setIsModalVisible(true)} />
+                        </Badge>
+                    )}
                     {searchBarFilterValues.map((columnFilterValue) => (
                         <SearchBarColumn
                             key={`search-bar-column-${columnFilterValue.column.id}`}
