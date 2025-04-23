@@ -29,7 +29,8 @@ type SearchBarColumnBase = {
     id: string;
     searchParam?: string;
     // placement = 'search-bar' by default
-    placement?: Array<'search-bar' | 'table'>;
+    placement?: Array<'search-bar' | 'table' | 'modal'>;
+
 };
 
 export type SearchBarStringColumn = SearchBarColumnBase & {

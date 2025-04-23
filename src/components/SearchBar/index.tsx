@@ -1,13 +1,13 @@
 import { Trans } from '@lingui/macro';
-import { Button, Badge } from 'antd';
+import { Button, Badge, Modal } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 
 import { SearchBarColumn } from './SearchBarColumn';
 import { S } from './styles';
 import { SearchBarData } from './types';
 import { SearchBarMobile } from './SearchBarMobile';
-import { isSearchBarFilter } from './utils';
-import { useMemo } from 'react';
+import { isSearchBarFilter, isGroupedInModal } from './utils';
+import { useState, useMemo } from 'react';
 
 interface SearchBarProps extends SearchBarData {
     showInDrawerOnMobile?: boolean;
@@ -15,13 +15,17 @@ interface SearchBarProps extends SearchBarData {
 
 export function SearchBar(props: SearchBarProps) {
     const { columnsFilterValues, onChangeColumnFilter, onResetFilters, onApplyFilter, showInDrawerOnMobile = true } = props;
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const searchBarFilterValues = useMemo(
         () => columnsFilterValues.filter((filter) => isSearchBarFilter(filter)),
         [JSON.stringify(columnsFilterValues)],
     );
+    const searchBarFilterInModal = useMemo(
+        () => columnsFilterValues.filter((filter) => isGroupedInModal(filter)),
+        [JSON.stringify(columnsFilterValues)],
+    );
     const appliedFiltersCount = useMemo(() => {
-        return searchBarFilterValues.reduce((count, filter) => {
-            // Considerar que un filtro está aplicado si tiene algún valor
+        return searchBarFilterInModal.reduce((count, filter) => {
             if (filter.value !== undefined && filter.value !== null && filter.value !== '') {
                 return count + 1;
             }
@@ -31,10 +35,11 @@ export function SearchBar(props: SearchBarProps) {
     return (
         <>
             <S.SearchBar $showInDrawerOnMobile={showInDrawerOnMobile}>
-                <Badge count={appliedFiltersCount} size="small">
-                    <FilterOutlined style={{ fontSize: '16px', marginLeft: '8px' }} />
-                </Badge>
                 <S.LeftColumn>
+                    <Badge count={appliedFiltersCount} size="small">
+                        <FilterOutlined style={{ fontSize: '16px', marginLeft: '8px', cursor: 'pointer' }}
+                            onClick={() => setIsModalVisible(true)} />
+                    </Badge>
                     {searchBarFilterValues.map((columnFilterValue) => (
                         <SearchBarColumn
                             key={`search-bar-column-${columnFilterValue.column.id}`}
@@ -43,14 +48,45 @@ export function SearchBar(props: SearchBarProps) {
                         />
                     ))}
                 </S.LeftColumn>
-
-                <Button onClick={onResetFilters}>
-                    <Trans>Clear filters</Trans>
-                </Button>
-                <Button type='primary' onClick={onApplyFilter}>
-                    <Trans>Show results</Trans>
-                </Button>
+                <S.LeftColumn>
+                    <Button onClick={onResetFilters}>
+                        <Trans>Clear filters</Trans>
+                    </Button>
+                    <Button type='primary' onClick={onApplyFilter}>
+                        <Trans>Show results</Trans>
+                    </Button>
+                </S.LeftColumn>
             </S.SearchBar>
+            <Modal
+                title={<Trans>Filters</Trans>}
+                open={isModalVisible}
+                onCancel={() => setIsModalVisible(false)}
+                onOk={() => {
+                    setIsModalVisible(false);
+                }}
+                footer={[
+                    <Button key="clear" onClick={() => {
+                        setIsModalVisible(false);
+                        onResetFilters();
+                    }}>
+                        <Trans>Cancel</Trans>
+                    </Button>,
+                    <Button key="submit" type="primary" onClick={() => {
+                        setIsModalVisible(false);
+                    }}>
+                        <Trans>Submit</Trans>
+                    </Button>,
+                ]}
+            >
+                {searchBarFilterInModal.map((columnFilterValue) => (
+                    <div key={`modal-search-bar-column-${columnFilterValue.column.id}`} style={{ marginBottom: 16 }}>
+                        <SearchBarColumn
+                            columnFilterValue={columnFilterValue}
+                            onChange={onChangeColumnFilter}
+                        />
+                    </div>
+                ))}
+            </Modal>
             <S.MobileFilters $showInDrawerOnMobile={showInDrawerOnMobile}>
                 <SearchBarMobile {...props} />
             </S.MobileFilters>
