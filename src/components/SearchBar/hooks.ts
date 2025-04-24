@@ -28,6 +28,8 @@ import {
 interface SearchBarOptions {
     handleFacilityFilterChange?: (value: boolean) => void;
     filterID?: string;
+    setIsShowResults?: (value: boolean) => void;
+
 }
 
 export function useSearchBar(props: SearchBarProps & { options?: SearchBarOptions }): SearchBarData {
@@ -135,6 +137,7 @@ export function useSearchBar(props: SearchBarProps & { options?: SearchBarOption
         [setColumnsFilterValues],
     );
     const onResetFilters = useCallback(() => {
+        options?.setIsShowResults?.(false)
         setColumnsFilterValues(defaultFiltersValues);
     }, [setColumnsFilterValues, defaultFiltersValues]);
 

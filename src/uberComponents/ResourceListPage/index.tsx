@@ -139,15 +139,17 @@ export function ResourceListPage<R extends Resource>({
     filterID,
 }: ResourceListPageProps<R>) {
     const allFilters = getFilters?.() ?? [];
+    const [isShowResults, setIsShowResults] = useState(false)
     const { columnsFilterValues, defaultFiltersValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
         columns: allFilters ?? [],
         options: {
             handleFacilityFilterChange,
-            filterID
+            filterID,
+            setIsShowResults
         }
     });
     const [applyFilterValues, setApplyFilterValues] = useState<ColumnFilterValue[]>(defaultFiltersValues);
-    const [isShowResults, setIsShowResults] = useState(false)
+
     const onApplyFilters = () => {
         setApplyFilterValues(columnsFilterValues);
         setIsShowResults(true)
