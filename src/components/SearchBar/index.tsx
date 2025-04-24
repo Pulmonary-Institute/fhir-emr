@@ -69,14 +69,14 @@ export function SearchBar(props: SearchBarProps) {
                 footer={[
                     <Button key="clear" onClick={() => {
                         setIsModalVisible(false);
-                        onResetFilters();
                     }}>
                         <Trans>Cancel</Trans>
                     </Button>,
                     <Button key="submit" type="primary" onClick={() => {
                         setIsModalVisible(false);
+                        onApplyFilter?.()
                     }}>
-                        <Trans>Submit</Trans>
+                        <Trans>Show results</Trans>
                     </Button>,
                 ]}
             >
