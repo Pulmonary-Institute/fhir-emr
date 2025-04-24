@@ -19,7 +19,7 @@ import s from './EditableQuestionnaireResponseForm.module.scss';
 import EditableFormContent from './EditableQuestionnaireFormContent';
 import { FormFooter } from './FormFooter';
 
-import { copyAllToClipboard } from './utils';
+import { copyAllToClipboard, generatePDF } from './utils';
 
 export interface BaseQuestionnaireResponseFormProps {
     formData: QuestionnaireResponseFormData;
@@ -448,6 +448,10 @@ export function EditableQuestionnaireResponseForm(props: BaseQuestionnaireRespon
                 {/* Form Actions */}
                 <div className="form-action">
                     <Button onClick={() => copyAllToClipboard(formValues, questionnaireId)}>{t`Copy All`}</Button>
+                    <Button
+                        type="primary"
+                        onClick={() => generatePDF(formValues, questionnaireId)}
+                    >{t`Download PDF`}</Button>
                 </div>
 
                 {/* Form Content */}

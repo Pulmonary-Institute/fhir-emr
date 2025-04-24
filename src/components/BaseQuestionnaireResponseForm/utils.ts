@@ -1,5 +1,6 @@
 import { ControllerFieldState, ControllerRenderProps, FieldValues } from 'react-hook-form';
 import { notification } from 'antd';
+import jsPDF from 'jspdf';
 
 export function getFieldErrorMessage(
     field: ControllerRenderProps<FieldValues, any>,
@@ -21,8 +22,8 @@ export function getFieldErrorMessage(
     return errorMessageWithHumanReadableFieldName;
 }
 
-// Copuy function
-export const copyAllToClipboard = (formValues: any, questionnaireId: string | undefined) => {
+// Helper function to extract and format data
+const extractFormData = (formValues: any, questionnaireId: string | undefined): string => {
     const getValue = (path: any) => path?.[0]?.value;
     const generateText = (label: string, value: any) => `\n${label}: ${value ?? ''}`;
 
@@ -167,8 +168,15 @@ export const copyAllToClipboard = (formValues: any, questionnaireId: string | un
         text += generateText(label, value);
     });
 
+    return text.trim();
+};
+
+// Copy function using the helper
+export const copyAllToClipboard = (formValues: any, questionnaireId: string | undefined) => {
+    const textToCopy = extractFormData(formValues, questionnaireId);
+
     return navigator.clipboard
-        .writeText(text.trim())
+        .writeText(textToCopy)
         .then(() => {
             notification.success({
                 message: `Copied all content`,
@@ -177,4 +185,47 @@ export const copyAllToClipboard = (formValues: any, questionnaireId: string | un
         .catch((err) => {
             notification.error({ message: 'Failed to copy all content' });
         });
+};
+
+// Create PDF function using the helper
+export const generatePDF = (formValues: any, questionnaireId: string | undefined) => {
+    const textToPdf = extractFormData(formValues, questionnaireId);
+
+    const doc = new jsPDF({
+        unit: 'mm',
+        format: 'a4',
+        putOnlyUsedFonts: true,
+    });
+
+    const marginLeft = 20;
+    const marginTop = 40;
+    const marginBottom = 30;
+    const marginRight = 20;
+
+    const lineHeight = 10;
+    const pageHeight = 297;
+    const maxLineWidth = 210 - marginLeft - marginRight;
+
+    const lines = doc.splitTextToSize(textToPdf, maxLineWidth);
+
+    let currentY = marginTop;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(16);
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('Process Note', 105, 20, { align: 'center' });
+
+    doc.setFont('helvetica', 'normal');
+
+    lines.forEach((line: string) => {
+        if (currentY + lineHeight > pageHeight - marginBottom) {
+            doc.addPage();
+            currentY = marginTop;
+        }
+        doc.text(line, marginLeft, currentY);
+        currentY += lineHeight;
+    });
+
+    doc.save('ProcessNote.pdf');
 };
