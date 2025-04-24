@@ -6,7 +6,7 @@ import { SearchBarColumn } from './SearchBarColumn';
 import { S } from './styles';
 import { SearchBarData } from './types';
 import { SearchBarMobile } from './SearchBarMobile';
-import { isSearchBarFilter, isGroupedInModal } from './utils';
+import { isSearchBarFilter, isGroupedInModal, isSearchBarDownFilter } from './utils';
 import { useState, useMemo } from 'react';
 
 interface SearchBarProps extends SearchBarData {
@@ -22,6 +22,10 @@ export function SearchBar(props: SearchBarProps) {
     );
     const searchBarFilterInModal = useMemo(
         () => columnsFilterValues.filter((filter) => isGroupedInModal(filter)),
+        [JSON.stringify(columnsFilterValues)],
+    );
+    const searchBarFilterValuesDown = useMemo(
+        () => columnsFilterValues.filter((filter) => isSearchBarDownFilter(filter)),
         [JSON.stringify(columnsFilterValues)],
     );
     const appliedFiltersCount = useMemo(() => {
@@ -58,6 +62,15 @@ export function SearchBar(props: SearchBarProps) {
                         <Trans>Show results</Trans>
                     </Button>
                 </S.LeftColumn>
+                <S.BottomRow>
+                    {searchBarFilterValuesDown.map((columnFilterValue) => (
+                        <SearchBarColumn
+                            key={`search-bar-column-${columnFilterValue.column.id}`}
+                            columnFilterValue={columnFilterValue}
+                            onChange={onChangeColumnFilter}
+                        />
+                    ))}
+                </S.BottomRow>
             </S.SearchBar>
             <Modal
                 title={<Trans>Filters</Trans>}

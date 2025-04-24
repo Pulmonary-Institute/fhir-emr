@@ -45,4 +45,12 @@ export const S = {
         flex-wrap: wrap;
         gap: 10px 16px;
     `,
+    BottomRow: styled.div`
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+    `,
 };
