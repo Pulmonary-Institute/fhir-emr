@@ -1,6 +1,7 @@
 import { ControllerFieldState, ControllerRenderProps, FieldValues } from 'react-hook-form';
 import { notification } from 'antd';
 import jsPDF from 'jspdf';
+import { pdfLogo, topbackgroundImg, bottomBackgroundImg } from 'src/images/pdfImage';
 
 export function getFieldErrorMessage(
     field: ControllerRenderProps<FieldValues, any>,
@@ -187,8 +188,24 @@ export const copyAllToClipboard = (formValues: any, questionnaireId: string | un
         });
 };
 
-// Create PDF function using the helper
-export const generatePDF = (formValues: any, questionnaireId: string | undefined) => {
+// Tuple type for RGB colors
+type RGB = [number, number, number];
+
+// Utility function to add appropriate units to specific labels
+const addUnitsIfNeeded = (label: string, value: string): string => {
+    const normalizedLabel = label.toLowerCase();
+
+    if (normalizedLabel.includes('weight')) return `${value} lbs`;
+    if (normalizedLabel.includes('temperature')) return `${value} °F`;
+    if (normalizedLabel.includes('oxygen saturation')) return `${value} %`;
+    if (normalizedLabel.includes('pulse')) return `${value} bpm`;
+    if (normalizedLabel.includes('respiratory')) return `${value} bpm`;
+    if (normalizedLabel.includes('bp systolic') || normalizedLabel.includes('bp diastolic')) return `${value} mmHg`;
+
+    return value;
+};
+
+export const generatePDF = (formValues: Record<string, any>, questionnaireId?: string): void => {
     const textToPdf = extractFormData(formValues, questionnaireId);
 
     const doc = new jsPDF({
@@ -198,34 +215,168 @@ export const generatePDF = (formValues: any, questionnaireId: string | undefined
     });
 
     const marginLeft = 20;
-    const marginTop = 40;
-    const marginBottom = 30;
+    const marginTop = 34;
+    const marginBottom = 20;
     const marginRight = 20;
 
-    const lineHeight = 10;
+    const lineHeight = 8;
     const pageHeight = 297;
-    const maxLineWidth = 210 - marginLeft - marginRight;
-
-    const lines = doc.splitTextToSize(textToPdf, maxLineWidth);
+    const pageWidth = 210;
+    const maxLineWidth = pageWidth - marginLeft - marginRight;
 
     let currentY = marginTop;
 
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(16);
+    const topBackgroundBase64 = topbackgroundImg;
+    const topBackgroundWidth = 65;
+    const topBackgroundHeight = 35;
 
-    doc.setFont('helvetica', 'bold');
-    doc.text('Process Note', 105, 20, { align: 'center' });
+    const bottomBackgroundBase64 = bottomBackgroundImg;
+    const bottomBackgroundWidth = 65;
+    const bottomBackgroundHeight = 35;
 
-    doc.setFont('helvetica', 'normal');
+    const logoBase64 = pdfLogo;
+    const logoWidth = 50;
+    const logoHeight = 25;
+    const rightMargin = 3;
+    const logoTopMargin = 3;
 
-    lines.forEach((line: string) => {
+    const drawPageImages = (): void => {
+        doc.addImage(topBackgroundBase64, 'PNG', 0, 0, topBackgroundWidth, topBackgroundHeight);
+        const logoX = pageWidth - rightMargin - logoWidth;
+        doc.addImage(logoBase64, 'PNG', logoX, logoTopMargin, logoWidth, logoHeight);
+        const bottomX = pageWidth - bottomBackgroundWidth;
+        const bottomY = pageHeight - bottomBackgroundHeight;
+        doc.addImage(bottomBackgroundBase64, 'PNG', bottomX, bottomY, bottomBackgroundWidth, bottomBackgroundHeight);
+    };
+
+    const addWrappedText = (text: string, fontStyle: 'normal' | 'italic' = 'normal', color: RGB = [0, 0, 0]): void => {
+        doc.setFont('helvetica', fontStyle);
+        doc.setTextColor(...color);
+        const wrappedLines = doc.splitTextToSize(text, maxLineWidth);
+        wrappedLines.forEach((wrappedLine: string) => {
+            if (currentY + lineHeight > pageHeight - marginBottom) {
+                doc.addPage();
+                drawPageImages();
+                currentY = marginTop;
+            }
+            doc.text(wrappedLine, marginLeft, currentY);
+            currentY += lineHeight;
+        });
+    };
+
+    const addLabelValue = (label: string, value: string): void => {
+        const labelFontSize = 12;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(labelFontSize);
+        const labelWidth = doc.getTextWidth(label);
+
+        const remainingWidth = maxLineWidth - labelWidth - 2;
+        const wrappedValueLines = doc.splitTextToSize(value, remainingWidth);
+
         if (currentY + lineHeight > pageHeight - marginBottom) {
             doc.addPage();
+            drawPageImages();
             currentY = marginTop;
         }
+
+        doc.setTextColor(0, 0, 0);
+        doc.text(label, marginLeft, currentY);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(28, 27, 27);
+        doc.text(wrappedValueLines[0], marginLeft + labelWidth + 2, currentY);
+        currentY += lineHeight;
+
+        for (let i = 1; i < wrappedValueLines.length; i++) {
+            if (currentY + lineHeight > pageHeight - marginBottom) {
+                doc.addPage();
+                drawPageImages();
+                currentY = marginTop;
+            }
+            doc.text(wrappedValueLines[i], marginLeft + 4, currentY);
+            currentY += lineHeight;
+        }
+    };
+
+    const lines = textToPdf ? textToPdf.split('\n') : [];
+
+    drawPageImages();
+
+    lines.forEach((rawLine) => {
+        const line = rawLine.trim();
+
+        if (!line) {
+            currentY += lineHeight / 2;
+            return;
+        }
+
+        if (line.endsWith(':') && !line.includes(' ')) {
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text(line.replace(':', ''), marginLeft, currentY);
+            currentY += lineHeight;
+        } else if (line.startsWith('•') || line.startsWith('-')) {
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(0, 0, 0);
+            doc.text(line, marginLeft + 4, currentY);
+            currentY += lineHeight;
+        } else if (line.includes(':')) {
+            const [label = '', ...rest] = line.split(':');
+            const rawValue = rest.join(':').trim();
+            const valueWithUnit = addUnitsIfNeeded(label, rawValue);
+            addLabelValue(`${label.trim()}:`, valueWithUnit);
+        } else if (line.startsWith('No ') || line.startsWith('NORMAL ') || line.includes('no ')) {
+            addWrappedText(line, 'italic');
+        } else {
+            addWrappedText(line);
+        }
+    });
+
+    let providerName = 'Provider';
+    for (const line of lines) {
+        if (line.toLowerCase().includes('provider')) {
+            const match = line.match(/provider\s*:\s*(.+)/i);
+            if (match && match[1]) {
+                providerName = match[1].trim();
+                break;
+            }
+        }
+    }
+
+    currentY += 15;
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString();
+
+    const signedText = `**ELECTRONICALLY SIGNED ON ${formattedDate} BY ${providerName}, ARNP**`;
+    const signedColor: RGB = [116, 116, 116];
+    const signedLines = doc.splitTextToSize(signedText, maxLineWidth);
+
+    signedLines.forEach((line: string) => {
+        if (currentY + lineHeight > pageHeight - marginBottom) {
+            doc.addPage();
+            drawPageImages();
+            currentY = marginTop;
+        }
+        doc.setFont('courier', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(...signedColor);
         doc.text(line, marginLeft, currentY);
         currentY += lineHeight;
     });
 
-    doc.save('ProcessNote.pdf');
+    let visitOfType = 'UnknownTypeOfCare';
+
+    for (const line of lines) {
+        if (line.toLowerCase().startsWith('type of care')) {
+            const match = line.match(/Type of Care:\s*(.+)/i);
+            if (match && match[1]) {
+                visitOfType = match[1].trim();
+                break;
+            }
+        }
+    }
+    const sanitizedVisitType = visitOfType.replace(/[^a-z0-9]/gi, '_');
+
+    doc.save(`Moxie Health Group(${sanitizedVisitType}).pdf`);
 };
