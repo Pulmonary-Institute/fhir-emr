@@ -48,28 +48,34 @@ export function SearchBar(props: SearchBarProps) {
                         />
                     ))}
                     {searchBarFilterInModal.length > 0 && (
-                        <Badge count={appliedFiltersCount} size="default">
-                            <FilterOutlined style={{ fontSize: '16px', marginLeft: '8px', cursor: 'pointer' }}
-                                onClick={() => setIsModalVisible(true)} />
+                        <Badge count={appliedFiltersCount} size="default" offset={[4, -2]} style={{ backgroundColor: '#FF5A5F', fontWeight: 'bold', }}>
+                            <Button
+                                icon={<FilterOutlined />}
+                                onClick={() => setIsModalVisible(true)}
+                            >
+                                More Filters
+                            </Button>
                         </Badge>
                     )}
                 </S.LeftColumn>
-                <S.LeftColumn>
-                    <Button onClick={onResetFilters}>
-                        <Trans>Clear filters</Trans>
-                    </Button>
-                    <Button type='primary' onClick={onApplyFilter}>
-                        <Trans>Show results</Trans>
-                    </Button>
-                </S.LeftColumn>
                 <S.BottomRow>
-                    {searchBarFilterValuesDown.map((columnFilterValue) => (
-                        <SearchBarColumn
-                            key={`search-bar-column-${columnFilterValue.column.id}`}
-                            columnFilterValue={columnFilterValue}
-                            onChange={onChangeColumnFilter}
-                        />
-                    ))}
+                    <S.LeftColumn>
+                        {searchBarFilterValuesDown.map((columnFilterValue) => (
+                            <SearchBarColumn
+                                key={`search-bar-column-${columnFilterValue.column.id}`}
+                                columnFilterValue={columnFilterValue}
+                                onChange={onChangeColumnFilter}
+                            />
+                        ))}
+                    </S.LeftColumn>
+                    <S.RightColumn>
+                        <Button onClick={onResetFilters}>
+                            <Trans>Clear filters</Trans>
+                        </Button>
+                        <Button type='primary' onClick={onApplyFilter}>
+                            <Trans>Show results</Trans>
+                        </Button>
+                    </S.RightColumn>
                 </S.BottomRow>
             </S.SearchBar>
             <Modal

@@ -46,11 +46,18 @@ export const S = {
         gap: 10px 16px;
     `,
     BottomRow: styled.div`
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px 16px;
-    `,
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+`,
+    RightColumn: styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px 16px;
+    margin-left: auto;
+`,
 };
