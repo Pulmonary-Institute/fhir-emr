@@ -3,7 +3,7 @@ import { Bundle, Resource } from 'fhir/r4b';
 import { useEffect, useMemo, useState } from 'react';
 
 import { SearchParams } from '@beda.software/fhir-react';
-import { isSuccess, mapSuccess } from '@beda.software/remote-data';
+import { isSuccess, mapSuccess, success } from '@beda.software/remote-data';
 
 import { ColumnFilterValue } from 'src/components/SearchBar/types';
 import { getSearchBarColumnFilterValue } from 'src/components/SearchBar/utils';
@@ -16,6 +16,7 @@ export function useResourceListPage<R extends Resource>(
     filterValues: ColumnFilterValue[],
     defaultSearchParams: SearchParams,
     defaultPageSize?: number,
+    isShowResults?: boolean,
 ) {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
@@ -68,33 +69,32 @@ export function useResourceListPage<R extends Resource>(
     // );
 
     // New recordResponse
-    const recordResponse = mapSuccess(resourceResponse, (bundle) => {
-        const extractedResources = extractPrimaryResourcesMemoized(bundle as Bundle);
+    const recordResponse = isShowResults
+        ? mapSuccess(resourceResponse, (bundle) => {
+            const extractedResources = extractPrimaryResourcesMemoized(bundle as Bundle);
 
-        const mappedResponse = extractedResources.map((resource) => {
-            const record = {
-                resource: resource as R,
-                bundle: bundle as Bundle,
-            };
-            return record;
-        });
+            const mappedResponse = extractedResources.map((resource) => {
+                const record = {
+                    resource: resource as R,
+                    bundle: bundle as Bundle,
+                };
+                return record;
+            });
 
-        return mappedResponse;
-    });
-
+            return mappedResponse;
+        }) : success([])
     const selectedResourcesBundle: Bundle<R> = {
         resourceType: 'Bundle',
         type: 'collection',
         entry: isSuccess(recordResponse)
             ? recordResponse.data
-                  .filter(
-                      ({ resource }) =>
-                          resource.resourceType === resourceType && selectedRowKeys.includes(resource.id!),
-                  )
-                  .map(({ resource }) => ({ resource: resource as R }))
+                .filter(
+                    ({ resource }) =>
+                        resource.resourceType === resourceType && selectedRowKeys.includes(resource.id!),
+                )
+                .map(({ resource }) => ({ resource: resource as R }))
             : [],
     };
-
     return {
         pagination,
         recordResponse,

@@ -65,3 +65,14 @@ export function isTableFilter(filter: ColumnFilterValue) {
 
     return placement.includes('table');
 }
+
+export function isGroupedInModal(filter: ColumnFilterValue) {
+    const { placement = ['search-bar'] } = filter.column;
+
+    return placement.includes('modal');
+}
+export function isSearchBarDownFilter(filter: ColumnFilterValue) {
+    const { placement = ['search-bar'] } = filter.column;
+
+    return placement.includes('search-bar-down');
+}
