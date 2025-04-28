@@ -35,7 +35,7 @@ msgstr "Action"
 #: src/containers/PatientList/index.tsx:103
 #: src/containers/PractitionerList/index.tsx:121
 #: src/containers/Prescriptions/index.tsx:148
-#: src/uberComponents/ResourceListPage/index.tsx:292
+#: src/uberComponents/ResourceListPage/index.tsx:302
 msgid "Actions"
 msgstr "Actions"
 
@@ -138,7 +138,6 @@ msgstr "AI Summary"
 msgid "Aidbox Forms Builder"
 msgstr "Aidbox Forms Builder"
 
-#: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:520
 #: src/containers/PatientDetails/PatientOverviewDynamic/components/StandardCard/prepare.tsx:35
 #: src/containers/PatientDetails/PatientResources/utils.tsx:109
 msgid "Allergies"
@@ -193,8 +192,8 @@ msgstr "Are you sure you want to delete this item?"
 #~ msgstr "Aspiration Precautions"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1224
-msgid "Assessment/Plan"
-msgstr "Assessment/Plan"
+#~ msgid "Assessment/Plan"
+#~ msgstr "Assessment/Plan"
 
 #: src/containers/PractitionerDetails/PractitionerDetailsTabs/index.tsx:26
 #: src/containers/Scheduling/Availability/index.tsx:54
@@ -234,12 +233,12 @@ msgid "BMI"
 msgstr "BMI"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:698
-msgid "BP Diastolic"
-msgstr "BP Diastolic"
+#~ msgid "BP Diastolic"
+#~ msgstr "BP Diastolic"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:681
-msgid "BP Systolic"
-msgstr "BP Systolic"
+#~ msgid "BP Systolic"
+#~ msgstr "BP Systolic"
 
 #: src/containers/Scheduling/Availability/index.tsx:171
 msgid "Break"
@@ -253,7 +252,7 @@ msgstr "Build your form"
 msgid "Calories"
 msgstr "Calories"
 
-#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:117
+#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:123
 #: src/containers/DocumentsList/ChooseDocumentToCreateModal/index.tsx:55
 #: src/containers/InvoiceList/components/ModalCancelInvoice/index.tsx:18
 #: src/containers/Prescriptions/ModalMedicationRequestCancel.tsx:22
@@ -281,24 +280,24 @@ msgid "Capture in progress"
 msgstr "Capture in progress"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:921
-msgid "Cardiovascular"
-msgstr "Cardiovascular"
+#~ msgid "Cardiovascular"
+#~ msgstr "Cardiovascular"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1077
 #~ msgid "Care Collaboration"
 #~ msgstr "Care Collaboration"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1398
-msgid "Case discussed with"
-msgstr "Case discussed with"
+#~ msgid "Case discussed with"
+#~ msgstr "Case discussed with"
 
 #: src/containers/MedicationManagement/utils.tsx:49
 msgid "Characteristics"
 msgstr "Characteristics"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:475
-msgid "Charlson Comorbidity Index (CCI)"
-msgstr "Charlson Comorbidity Index (CCI)"
+#~ msgid "Charlson Comorbidity Index (CCI)"
+#~ msgstr "Charlson Comorbidity Index (CCI)"
 
 #: src/containers/PatientResourceListExample/index.tsx:96
 msgid "Choose gender"
@@ -327,8 +326,8 @@ msgid "Code"
 msgstr "Code"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:467
-msgid "Code Status"
-msgstr "Code Status"
+#~ msgid "Code Status"
+#~ msgstr "Code Status"
 
 #: src/containers/QuestionnaireBuilder/QuestionnaireItemSettings/controls.tsx:64
 msgid "Col (default)"
@@ -383,7 +382,7 @@ msgstr "Consultation"
 msgid "Contact the patient to obtain their consent for accessing activity data"
 msgstr "Contact the patient to obtain their consent for accessing activity data"
 
-#: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:389
+#: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:450
 msgid "Copy All"
 msgstr "Copy All"
 
@@ -393,8 +392,8 @@ msgid "Cost"
 msgstr "Cost"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1347
-msgid "CPT Code"
-msgstr "CPT Code"
+#~ msgid "CPT Code"
+#~ msgstr "CPT Code"
 
 #: src/containers/DocumentsList/ChooseDocumentToCreateModal/index.tsx:87
 msgid "Create"
@@ -434,8 +433,8 @@ msgid "CRP"
 msgstr "CRP"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:500
-msgid "Current Medications"
-msgstr "Current Medications"
+#~ msgid "Current Medications"
+#~ msgstr "Current Medications"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:915
 #~ msgid "Daily Care"
@@ -476,8 +475,8 @@ msgid "Date created"
 msgstr "Date created"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:401
-msgid "Date of Birth"
-msgstr "Date of Birth"
+#~ msgid "Date of Birth"
+#~ msgstr "Date of Birth"
 
 #: src/components/Calendar/index.tsx:32
 msgid "Day"
@@ -525,12 +524,12 @@ msgid "Description:"
 msgstr "Description:"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1208
-msgid "Diagnostic test or pertinent labs"
-msgstr "Diagnostic test or pertinent labs"
+#~ msgid "Diagnostic test or pertinent labs"
+#~ msgstr "Diagnostic test or pertinent labs"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1290
-msgid "Disclosure"
-msgstr "Disclosure"
+#~ msgid "Disclosure"
+#~ msgstr "Disclosure"
 
 #: src/containers/QuestionnaireBuilder/QuestionnaireItemSettings/controls.tsx:508
 msgid "Display"
@@ -556,6 +555,10 @@ msgstr "Dose form"
 #: src/components/AudioRecorder/index.tsx:124
 msgid "Download audio"
 msgstr "Download audio"
+
+#: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:454
+msgid "Download PDF"
+msgstr "Download PDF"
 
 #: src/containers/InvoiceList/tableUtils.tsx:30
 #: src/containers/Prescriptions/components/PrescriptionsSearchBar/hooks.ts:121
@@ -657,7 +660,7 @@ msgid "Error deleting a draft"
 msgstr "Error deleting a draft"
 
 #: src/components/NoteEditResponseForm/index.tsx:67
-#: src/components/QuestionnaireResponseForm/index.tsx:68
+#: src/components/QuestionnaireResponseForm/index.tsx:71
 msgid "Error saving a draft:"
 msgstr "Error saving a draft:"
 
@@ -687,8 +690,8 @@ msgid "Extract medical documents"
 msgstr "Extract medical documents"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1044
-msgid "Extremities"
-msgstr "Extremities"
+#~ msgid "Extremities"
+#~ msgstr "Extremities"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:309
 #~ msgid "Facility"
@@ -699,8 +702,8 @@ msgid "False"
 msgstr "False"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:527
-msgid "Family History"
-msgstr "Family History"
+#~ msgid "Family History"
+#~ msgstr "Family History"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:302
 #~ msgid "Feedback"
@@ -732,7 +735,7 @@ msgstr "First name"
 #~ msgstr "Follow-Up"
 
 #: src/components/NoteEditResponseForm/index.tsx:109
-#: src/components/QuestionnaireResponseForm/index.tsx:110
+#: src/components/QuestionnaireResponseForm/index.tsx:113
 msgid "Form successfully saved"
 msgstr "Form successfully saved"
 
@@ -741,16 +744,16 @@ msgid "Friday"
 msgstr "Friday"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:962
-msgid "Gastrointestinal"
-msgstr "Gastrointestinal"
+#~ msgid "Gastrointestinal"
+#~ msgstr "Gastrointestinal"
 
 #: src/containers/PatientResourceListExample/index.tsx:62
 msgid "Gender"
 msgstr "Gender"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:716
-msgid "General appearance"
-msgstr "General appearance"
+#~ msgid "General appearance"
+#~ msgstr "General appearance"
 
 #: src/containers/PatientDetails/PatientOverviewDynamic/components/GeneralInformationDashboard/index.tsx:20
 #: src/containers/PractitionerDetails/PractitionerOverview/index.tsx:61
@@ -758,8 +761,8 @@ msgid "General Information"
 msgstr "General Information"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1003
-msgid "Genitourinary"
-msgstr "Genitourinary"
+#~ msgid "Genitourinary"
+#~ msgstr "Genitourinary"
 
 #: src/containers/PatientDetails/PatientOrders/index.tsx:140
 msgid "Glucose"
@@ -791,8 +794,8 @@ msgid "Healthcare Services"
 msgstr "Healthcare Services"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:798
-msgid "HEENT"
-msgstr "HEENT"
+#~ msgid "HEENT"
+#~ msgstr "HEENT"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:427
 #~ msgid "Height"
@@ -815,8 +818,8 @@ msgid "History of changes"
 msgstr "History of changes"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:486
-msgid "HPI"
-msgstr "HPI"
+#~ msgid "HPI"
+#~ msgstr "HPI"
 
 #: src/containers/PatientDetails/PatientOrders/index.tsx:148
 msgid "IL-6"
@@ -840,8 +843,8 @@ msgid "Inline options?"
 msgstr "Inline options?"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:757
-msgid "Integumentary"
-msgstr "Integumentary"
+#~ msgid "Integumentary"
+#~ msgstr "Integumentary"
 
 #: src/containers/PatientDetails/PatientOverviewDynamic/components/StandardCard/prepare.tsx:313
 msgid "Intent"
@@ -957,8 +960,8 @@ msgstr "Monday"
 #~ msgstr "Monitor"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1085
-msgid "Musculoskeletal"
-msgstr "Musculoskeletal"
+#~ msgid "Musculoskeletal"
+#~ msgstr "Musculoskeletal"
 
 #: src/containers/MedicationManagement/index.tsx:58
 #: src/containers/PatientDetails/PatientOverviewDynamic/components/StandardCard/prepare.tsx:43
@@ -984,12 +987,12 @@ msgid "msg.QuestionnaireName"
 msgstr "Name"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:839
-msgid "Neck"
-msgstr "Neck"
+#~ msgid "Neck"
+#~ msgstr "Neck"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1126
-msgid "Neurological"
-msgstr "Neurological"
+#~ msgid "Neurological"
+#~ msgstr "Neurological"
 
 #: src/containers/OrganizationScheduling/NewAppointmentModal/index.tsx:59
 #: src/containers/Scheduling/ScheduleCalendar/components/NewAppointmentModal/index.tsx:49
@@ -1012,7 +1015,7 @@ msgstr "No"
 #: src/containers/PractitionerList/index.tsx:101
 #: src/containers/QuestionnaireBuilder/QuestionnaireItemSettings/controls.tsx:500
 #: src/containers/QuestionnaireList/index.tsx:102
-#: src/uberComponents/ResourceListPage/index.tsx:234
+#: src/uberComponents/ResourceListPage/index.tsx:244
 msgid "No data"
 msgstr "No data"
 
@@ -1098,8 +1101,8 @@ msgid "Overview"
 msgstr "Overview"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:633
-msgid "Oxygen Saturation"
-msgstr "Oxygen Saturation"
+#~ msgid "Oxygen Saturation"
+#~ msgstr "Oxygen Saturation"
 
 #: src/containers/MedicationManagement/utils.tsx:35
 msgid "Packaging"
@@ -1111,8 +1114,8 @@ msgstr "Packaging"
 #~ msgstr "Password"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:547
-msgid "Past Surgical History"
-msgstr "Past Surgical History"
+#~ msgid "Past Surgical History"
+#~ msgstr "Past Surgical History"
 
 #: src/components/BaseLayout/Sidebar/SidebarTop/context.tsx:41
 #: src/containers/EncounterList/index.tsx:45
@@ -1167,8 +1170,8 @@ msgid "Phone widget"
 msgstr "Phone widget"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1333
-msgid "Plan"
-msgstr "Plan"
+#~ msgid "Plan"
+#~ msgstr "Plan"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1014
 #~ msgid "Positioning Precautions"
@@ -1207,29 +1210,28 @@ msgid "Prescriptions"
 msgstr "Prescriptions"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:493
-msgid "Problem List"
-msgstr "Problem List"
+#~ msgid "Problem List"
+#~ msgstr "Problem List"
 
 #: src/containers/QuestionnaireBuilder/QuestionnaireItemSettings/index.tsx:95
 msgid "Properties"
 msgstr "Properties"
 
-#: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1381
 #: src/containers/PatientDetails/PatientWearables/index.tsx:52
 msgid "Provider"
 msgstr "Provider"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:1167
-msgid "Psychiatric"
-msgstr "Psychiatric"
+#~ msgid "Psychiatric"
+#~ msgstr "Psychiatric"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:898
 #~ msgid "Psychosocial Support"
 #~ msgstr "Psychosocial Support"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:649
-msgid "Pulse Rate"
-msgstr "Pulse Rate"
+#~ msgid "Pulse Rate"
+#~ msgstr "Pulse Rate"
 
 #: src/containers/InvoiceDetails/index.tsx:81
 msgid "Quantity"
@@ -1295,16 +1297,16 @@ msgid "Resources"
 msgstr "Resources"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:880
-msgid "Respiratory"
-msgstr "Respiratory"
+#~ msgid "Respiratory"
+#~ msgstr "Respiratory"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:665
-msgid "Respiratory Rate"
-msgstr "Respiratory Rate"
+#~ msgid "Respiratory Rate"
+#~ msgstr "Respiratory Rate"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:587
-msgid "Review of Systems"
-msgstr "Review of Systems"
+#~ msgid "Review of Systems"
+#~ msgstr "Review of Systems"
 
 #: src/containers/QuestionnaireBuilder/QuestionnaireItemSettings/controls.tsx:67
 msgid "Row"
@@ -1318,7 +1320,7 @@ msgstr "Row"
 msgid "Saturday"
 msgstr ""
 
-#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:127
+#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:149
 #: src/containers/EncounterDetails/AIScribe/index.tsx:182
 #: src/containers/QuestionnaireBuilder/QuestionnaireItemSettings/index.tsx:130
 #: src/containers/QuestionnaireBuilder/QuestionnaireSaveForm/index.tsx:90
@@ -1327,7 +1329,7 @@ msgstr ""
 msgid "Save"
 msgstr "Save"
 
-#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:77
+#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:82
 msgid "Save as draft"
 msgstr "Save as draft"
 
@@ -1336,11 +1338,11 @@ msgstr "Save as draft"
 msgid "Save questionnaire"
 msgstr "Save questionnaire"
 
-#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:94
+#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:99
 msgid "Saved as draft"
 msgstr "Saved as draft"
 
-#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:85
+#: src/components/BaseQuestionnaireResponseForm/FormFooter.tsx:90
 msgid "Saving draft"
 msgstr "Saving draft"
 
@@ -1445,8 +1447,8 @@ msgid "Smart Apps"
 msgstr "Smart Apps"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:567
-msgid "Social History"
-msgstr "Social History"
+#~ msgid "Social History"
+#~ msgstr "Social History"
 
 #: src/containers/QuestionnaireBuilder/QuestionnaireItemSettings/controls.tsx:41
 msgid "Solid radio button"
@@ -1528,9 +1530,9 @@ msgid "Subject Type"
 msgstr "Subject Type"
 
 #: src/containers/QuestionnaireBuilder/PromptForm.tsx:104
-#: src/uberComponents/ResourceListPage/actions.tsx:123
-#: src/uberComponents/ResourceListPage/actions.tsx:164
-#: src/uberComponents/ResourceListPage/actions.tsx:216
+#: src/uberComponents/ResourceListPage/actions.tsx:144
+#: src/uberComponents/ResourceListPage/actions.tsx:193
+#: src/uberComponents/ResourceListPage/actions.tsx:251
 msgid "Submit"
 msgstr "Submit"
 
@@ -1540,9 +1542,9 @@ msgstr "Submit"
 #~ msgid "Successfully saved"
 #~ msgstr "Successfully saved"
 
-#: src/uberComponents/ResourceListPage/actions.tsx:117
-#: src/uberComponents/ResourceListPage/actions.tsx:159
-#: src/uberComponents/ResourceListPage/actions.tsx:212
+#: src/uberComponents/ResourceListPage/actions.tsx:137
+#: src/uberComponents/ResourceListPage/actions.tsx:186
+#: src/uberComponents/ResourceListPage/actions.tsx:245
 msgid "Successfully submitted"
 msgstr "Successfully submitted"
 
@@ -1563,8 +1565,8 @@ msgid "Tax"
 msgstr "Tax"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:617
-msgid "Temperature"
-msgstr "Temperature"
+#~ msgid "Temperature"
+#~ msgstr "Temperature"
 
 #: src/containers/QuestionnaireBuilder/QuestionnaireItemSettings/index.tsx:70
 msgid "Text"
@@ -1626,8 +1628,8 @@ msgid "Time"
 msgstr "Time"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:434
-msgid "Time of Service"
-msgstr "Time of Service"
+#~ msgid "Time of Service"
+#~ msgstr "Time of Service"
 
 #: src/containers/PatientDetails/PatientOrders/index.tsx:27
 #: src/containers/PatientDetails/PatientOverviewDynamic/components/PatientNoteListCard/NoteList/index.tsx:33
@@ -1662,8 +1664,8 @@ msgid "Type"
 msgstr "Type"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:394
-msgid "Type of Care"
-msgstr "Type of Care"
+#~ msgid "Type of Care"
+#~ msgstr "Type of Care"
 
 #: src/containers/MedicationManagement/index.tsx:114
 msgid "Units"
@@ -1732,8 +1734,8 @@ msgid "Week"
 msgstr "Week"
 
 #: src/components/BaseQuestionnaireResponseForm/EditableQuestionnaireResponseForm.tsx:598
-msgid "Weight"
-msgstr "Weight"
+#~ msgid "Weight"
+#~ msgstr "Weight"
 
 #: src/containers/SignIn/index.tsx:33
 #~ msgid "Welcome to"
