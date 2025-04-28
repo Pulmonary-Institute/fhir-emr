@@ -12,7 +12,7 @@ export const S = {
         ${({ $variant }) =>
             $variant === 'with-table' &&
             css`
-                padding-bottom: 79px;
+                padding-bottom: 24px;
             `}
 
         ${({ $variant }) =>
@@ -51,7 +51,7 @@ export const S = {
             $variant === 'with-table' &&
             css`
                 padding-top: 0;
-                margin-top: -47px;
+                margin-top: 30px;
             `}
     `,
 };
