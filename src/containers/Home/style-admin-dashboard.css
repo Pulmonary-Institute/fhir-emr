@@ -1,0 +1,547 @@
+html, body {
+    overscroll-behavior: none; /* Prevents the bounce effect */
+    overflow: auto; /* Ensures no scroll beyond content limits */
+  }
+  
+.home-admin, .home-scriber, .home-provider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+.home-admin p {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+
+.billing-graphics,
+.facilitySumary,
+.monthlyClaims,
+.footerAdmin {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+
+
+.billing-total {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.total-1,
+.total-2,
+.total-3,
+.total-4,
+.total-5,
+.total-6 {
+    width:200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh;
+    padding: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+    border-color: var(--e-health-dashboard-1-secondary-light-grey);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.graf-billing-1,
+.graf-billing-2,
+.table-facility-sumary,
+.table-monthly-claims {
+    flex:1;
+    height: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+    border-color: var(--e-health-dashboard-1-secondary-light-grey);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+.table-facility-sumary-p,
+.table-monthly-claims-p {
+    flex:2;
+    height: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+    border-color: var(--e-health-dashboard-1-secondary-light-grey);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+.facility-graph, .monthly-graphic  {
+   height: 340px;
+   flex:1;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-wrap: wrap;
+   gap: 20px;
+}
+
+.facility-sumary-graphic-1,
+.facility-sumary-graphic-2 {
+    flex:1;
+    height: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    overflow: hidden;
+    border-color: var(--e-health-dashboard-1-secondary-light-grey);
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+}
+
+
+.monthly-claim-graphic-1,
+.monthly-claim-graphic-2 {
+    flex:1;
+    height: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 65px 15px;
+    overflow: hidden;
+    border-color: var(--e-health-dashboard-1-secondary-light-grey);
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.monthly-claim-graphic-title {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    width: 100% 
+}
+
+.top-performace,
+.calen,
+.weekly-meeting {
+    flex:1;
+    height: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh;
+    overflow: hidden;
+    border-color: var(--e-health-dashboard-1-secondary-light-grey);
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+}
+
+.notices {
+    width: 20%;
+    height: 250px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+    border-color: var(--e-health-dashboard-1-secondary-light-grey);
+    box-shadow: var(--shadow-xl);
+    flex-direction: column;
+}
+
+.billing-info {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-billing-info {
+
+    border-radius: 50%;
+    background-color: #F4F7FE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.title-billing-total {
+    color: #2b3674;
+    font-family: "DM Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.30px;
+    text-align: center;
+}
+
+.value-billing-info {
+    color: #2B3674;
+    font-family: "DM Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: -0.48px;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.info p {
+    margin: 1px 0;
+    line-height: 1.2;
+}
+
+.cpt-code-bill-porcent {
+    color: #05CD99;
+    font-family: "DM Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: -0.24px;
+}
+
+.since-last-month {
+    color: #A3AED0;
+    font-family: "DM Sans";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 20px;
+    letter-spacing: -0.24px;
+}
+
+.info-graph-sumary-facility {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    flex-direction: column;
+
+}
+
+.amount {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-graph-sumary-facility p {
+    line-height: 1.2;
+    padding-left: 2vh;
+}
+
+.leyenda-graphic {
+    width: 100%;
+    height: 26%;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+   justify-content: space-around;
+
+}
+.legend-item{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: column; 
+}
+
+.title-graph-pae {
+    /* height: 0vh; */
+    width: 100%;
+}
+
+.title-graph-pae p {
+    display: flex;
+    justify-content: start;
+    color: #2b3674;
+    font-weight: 700;
+    Size: 16px; 
+    line-height: 28px;
+    letter-spacing: -2%
+}
+.dot{
+    width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+.item{
+    width: 50px;
+    height: 50px;
+}
+.top-leyenda{
+    width: 100%;
+    height: 50%;
+    display: grid;
+    grid-template-rows: max-content;
+}
+.down-leyenda{
+    width: 100%;
+    height: 50%;
+}
+.down-leyenda p{
+    width: 41px;
+    height: 16px;
+    top: 37px;
+    left: 53px;
+    gap: 0px;
+    opacity: 0px;
+     
+}
+.top-leyenda p{
+    font-style:normal;
+    font-weight: 500;
+    font-size: 8px;
+    line-height: 20px;
+}
+
+/* Extra large devices (1200px) */
+@media (max-width: 1200px) {
+    .monthly-claim-graphic-title {
+        display: flex; 
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100% 
+    }
+    
+}
+  
+/* Large devices (992px) */
+@media (max-width: 992px) {
+
+}
+
+/* Medium devices (768px) */
+@media (max-width: 768px) {
+    .billing-total {
+        gap:20px;
+    } 
+
+    .monthly-claim-graphic-title {
+        display: flex; 
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100% 
+    }
+
+    .facilitySumary, .monthlyClaims {
+        flex-direction: column;
+    }
+
+    .facility-graph, .monthly-graphic {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .facility-sumary-graphic-1,
+    .facility-sumary-graphic-2, .monthly-claim-graphic-1, .monthly-claim-graphic-2 {
+        flex:unset;
+        width: 100%;
+        height: 300px;
+        padding:75px 15px
+    }
+      
+    .table-facility-sumary, .table-monthly-claims {
+        flex:unset;
+        width: 100%;
+    }
+
+    .table-facility-sumary-p, .table-monthly-claims-p {
+        flex:unset;
+        width: 100%;
+    }
+    .monthly-claim-graphic-title {
+        display: flex; 
+        justify-content: space-between;
+        align-items: center;
+        width: 100% 
+    }
+    
+}
+
+/* Small devices (576px) */
+@media (max-width: 576px) {
+    .billing-total {
+        gap:15px;
+    } 
+
+    .total-1,
+    .total-2,
+    .total-3,
+    .total-4,
+    .total-5,
+    .total-6 {
+        width:100%;
+    }
+
+    .facilitySumary, .monthlyClaims {
+        flex-direction: column;
+    }
+
+    .facility-graph, .monthly-graphic {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .facility-sumary-graphic-1,
+    .facility-sumary-graphic-2, .monthly-claim-graphic-1, .monthly-claim-graphic-2 {
+        flex:unset;
+        width: 100%;
+        height: 300px;
+        padding:75px 15px
+    }
+      
+    .table-facility-sumary, .table-monthly-claims {
+        flex:unset;
+        width: 100%;
+    }
+    .table-facility-sumary-p, .table-monthly-claims-p {
+        flex:unset;
+        width: 100%;
+    }
+}
+
+/* Extra small devices (480px) */
+@media (max-width: 480px) {
+    .billing-total {
+        gap:15px;
+    } 
+
+    .total-1,
+    .total-2,
+    .total-3,
+    .total-4,
+    .total-5,
+    .total-6 {
+        width:100%;
+    }
+
+    .facilitySumary, .monthlyClaims {
+        flex-direction: column;
+    }
+
+    .facility-graph, .monthly-graphic {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .facility-sumary-graphic-1,
+    .facility-sumary-graphic-2, .monthly-claim-graphic-1, .monthly-claim-graphic-2 {
+        flex:unset;
+        width: 100%;
+    }
+      
+    .table-facility-sumary, .table-monthly-claims {
+        flex:unset;
+        width: 100%;
+    }
+    .table-facility-sumary-p, .table-monthly-claims-p {
+        flex:unset;
+        width: 100%;
+    }
+}
+
+/* Ultra small devices (360px) */
+@media (max-width: 360px) {
+    .billing-total {
+        gap:15px;
+    } 
+
+    .total-1,
+    .total-2,
+    .total-3,
+    .total-4,
+    .total-5,
+    .total-6 {
+        width:100%;
+    }
+
+    .facilitySumary, .monthlyClaims {
+        flex-direction: column;
+    }
+
+    .facility-graph, .monthly-graphic {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .facility-sumary-graphic-1,
+    .facility-sumary-graphic-2, .monthly-claim-graphic-1, .monthly-claim-graphic-2 {
+        flex:unset;
+        width: 100%;
+        height: 300px;
+        padding:75px 15px
+    }
+      
+    .table-facility-sumary, .table-monthly-claims {
+        flex:unset;
+        width: 100%;
+    }
+    .table-facility-sumary-p, .table-monthly-claims-p {
+        flex:unset;
+        width: 100%;
+    }
+}
+  

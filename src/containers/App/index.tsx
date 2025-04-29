@@ -14,17 +14,15 @@ import { MenuLayout } from 'src/components/BaseLayout/Sidebar/SidebarTop/context
 import { Spinner } from 'src/components/Spinner';
 import { PublicAppointment } from 'src/containers/Appointment/PublicAppointment';
 import { EncounterList } from 'src/containers/EncounterList';
-import { PatientDetails } from 'src/containers/PatientDetails';
-import { PatientList } from 'src/containers/PatientList';
 import { PatientQuestionnaire } from 'src/containers/PatientQuestionnaire';
 import { PractitionerDetails } from 'src/containers/PractitionerDetails';
-import { PractitionerList } from 'src/containers/PractitionerList';
 import { QuestionnaireBuilder } from 'src/containers/QuestionnaireBuilder';
 import { QuestionnaireList } from 'src/containers/QuestionnaireList';
 import { SignIn } from 'src/containers/SignIn';
 import { VideoCall } from 'src/containers/VideoCall';
 import { getToken, parseOAuthState, setToken } from 'src/services/auth';
-
+import { PractitionerList } from '../PractitionerList';
+import { PatientList } from '../PatientList';
 import { restoreUserSession } from './utils';
 import { AidboxFormsBuilder } from '../AidboxFormsBuilder';
 import { HealthcareServiceList } from '../HealthcareServiceList';
@@ -36,6 +34,7 @@ import { OrganizationScheduling } from '../OrganizationScheduling';
 import { DocumentPrint } from '../PatientDetails/DocumentPrint';
 import { Prescriptions } from '../Prescriptions';
 import { SetPassword } from '../SetPassword';
+import { PatientDetails } from '../PatientDetails';
 
 interface AppProps {
     authenticatedRoutes?: ReactElement;

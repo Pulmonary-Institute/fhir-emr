@@ -1,0 +1,50 @@
+/* Create this as MarkdownStyles.module.scss */
+.markdownContainer {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.markdownTitle {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.markdownContent {
+    /* Styling for markdown elements */
+
+    /* Headers */
+    h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    /* Bold text */
+    strong {
+        font-weight: 600;
+    }
+
+    /* Lists */
+    ul {
+        padding-left: 20px;
+        margin-bottom: 10px;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+
+    /* Paragraphs */
+    p {
+        margin-bottom: 10px;
+        line-height: 1.5;
+    }
+}

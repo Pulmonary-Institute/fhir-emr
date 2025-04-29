@@ -1,0 +1,13 @@
+.noteEditModal {
+    :global(.ant-modal-content) {
+        position: relative;
+        min-height: calc(100vh - 80px);
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+    }
+
+    :global(.ant-modal-body) {
+        padding: 0 !important;
+        // overflow-y: auto;
+    }
+}

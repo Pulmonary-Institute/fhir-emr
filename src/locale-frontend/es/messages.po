@@ -1,0 +1,1088 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-07-26 21:38+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/containers/Prompts/hooks.ts:80
+msgid "A prompt with this type already exists"
+msgstr "Ya existe una solicitud con este tipo"
+
+#: src/containers/Facilities/index.tsx:110
+#~ msgid "Actions"
+#~ msgstr "Acciones"
+
+#: src/containers/PatientList/index.tsx:277
+msgid "Active"
+msgstr "Activo"
+
+#: src/containers/Home/components/News/Components/ModalAddURL.tsx:43
+msgid "Add"
+msgstr "Agregar"
+
+#: src/containers/FacilityList/index.tsx:78
+msgid "Add facility"
+msgstr "Agregar instalación"
+
+#: src/containers/Facilities/NewOrganizationModal.tsx:17
+#: src/containers/Facilities/NewOrganizationModal.tsx:21
+#~ msgid "Add Facility"
+#~ msgstr "Añadir instalación"
+
+#: src/containers/Insurances/index.tsx:51
+msgid "Add insurance"
+msgstr "Agregar seguro"
+
+#: src/containers/Prompts/index.tsx:40
+#: src/containers/Prompts/index.tsx:103
+msgid "Add New Prompt"
+msgstr "Añadir nueva solicitud"
+
+#: src/containers/Home/components/News/Components/ModalAddURL.tsx:22
+msgid "Add News"
+msgstr "Agregar Noticias"
+
+#: src/containers/Census/index.tsx:574
+msgid "Add note"
+msgstr "Añadir nota"
+
+#: src/containers/PatientList/index.tsx:466
+msgid "Add patient"
+msgstr "Agregar paciente"
+
+#: src/containers/Census/index.tsx:581
+msgid "Add patient not assigned"
+msgstr "Agregar paciente no asignado"
+
+#: src/containers/PractitionerList/index.tsx:82
+msgid "Add practitioner"
+msgstr "Agregar practicante"
+
+#: src/containers/FacilityList/index.tsx:74
+msgid "Add room"
+msgstr "Añadir habitación"
+
+#: src/containers/FacilityList/index.tsx:34
+msgid "Address"
+msgstr "Dirección"
+
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:77
+msgid "Admission Authorization Number"
+msgstr ""
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:48
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:48
+msgid "Admission date"
+msgstr "Fecha de admisión"
+
+#: src/containers/PatientList/index.tsx:92
+#: src/containers/Reports/index.tsx:75
+msgid "Age"
+msgstr "Edad"
+
+#: src/containers/Home/components/FacilitySumary/index.tsx:123
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:175
+#: src/containers/Home/components/MonthlyClaim/index.tsx:205
+#: src/containers/Home/components/MonthlyClaim/pieChartForTopFacilities.tsx:203
+#: src/containers/Home/components/MonthlyClaim/pieChartForTopInsurances.tsx:219
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:204
+#: src/containers/Home/components/MonthlyClaimProvider/pieChartForTopEncounters.tsx:123
+#: src/containers/Home/components/MonthlyClaimProvider/pieChartForTopFacilities.tsx:120
+msgid "All"
+msgstr "Todo"
+
+#: src/containers/Prompts/hooks.ts:113
+msgid "An error occurred while saving the prompt"
+msgstr "Error al guardar la solicitud"
+
+#: src/containers/Census/index.tsx:192
+msgid "Assessment"
+msgstr ""
+
+#: src/containers/Scribe/index.tsx:318
+msgid "Assign QA"
+msgstr "Asignar QA"
+
+#: src/containers/Scribe/index.tsx:317
+msgid "Assign scriber"
+msgstr "Asignar transcriptor"
+
+#: src/containers/Home/components/AssignedPatients/index.tsx:20
+msgid "Assigned Patients"
+msgstr "Pacientes Asignados"
+
+#: src/containers/CensusReport/index.tsx:10
+#: src/menu.tsx:98
+#: src/menu.tsx:102
+msgid "Audit Log"
+msgstr "Registro de auditoría"
+
+#: src/menu.tsx:86
+msgid "Billing"
+msgstr "Facturación"
+
+#: src/containers/Home/components/Invoices/index.tsx:39
+msgid "Billing Summary"
+msgstr "Resumen de Facturación"
+
+#: src/containers/Census/index.tsx:102
+#: src/containers/Census/index.tsx:465
+#: src/containers/PatientList/index.tsx:309
+msgid "Birth date"
+msgstr "Fecha de nacimiento"
+
+#: src/containers/Home/components/News/Components/ModalAddURL.tsx:40
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/containers/FacilityDetails/Dashboard/CareTeamWidget.tsx:18
+#: src/containers/PatientDetails/Dashboard/CareTeamWidget.tsx:18
+msgid "Care team"
+msgstr "Equipo de atención"
+
+#: src/containers/Census/index.tsx:64
+#: src/menu.tsx:31
+#: src/menu.tsx:67
+#: src/menu.tsx:72
+#: src/menu.tsx:77
+#: src/menu.tsx:82
+#: src/menu.tsx:85
+#: src/menu.tsx:94
+#: src/menu.tsx:97
+#: src/menu.tsx:101
+msgid "Census"
+msgstr "Censo"
+
+#: src/containers/PractitionerList/index.tsx:74
+msgid "Change password"
+msgstr "Cambiar la contraseña"
+
+#: src/containers/Census/index.tsx:608
+#: src/containers/Census/index.tsx:613
+msgid "Change status"
+msgstr "Cambiar estado"
+
+#: src/containers/Scribe/index.tsx:319
+msgid "Change Status"
+msgstr "Cambiar estado"
+
+#: src/containers/Census/index.tsx:262
+msgid "Chief complaint"
+msgstr "Queja principal"
+
+#: src/containers/PatientList/index.tsx:334
+msgid "Choose code status"
+msgstr "Elegir estado del código"
+
+#: src/containers/Scribe/index.tsx:265
+msgid "Choose facility"
+msgstr "Elegir instalación"
+
+#: src/containers/PatientList/index.tsx:374
+#: src/containers/PatientList/index.tsx:415
+msgid "Choose Insurance Authorization"
+msgstr "Elegir autorización de seguro"
+
+#: src/containers/Census/index.tsx:456
+#: src/containers/PatientList/index.tsx:293
+#: src/containers/Scribe/index.tsx:247
+msgid "Choose patient"
+msgstr "Elegir paciente"
+
+#: src/containers/PatientList/index.tsx:325
+msgid "Choose payer source"
+msgstr "Elegir fuente del pagador"
+
+#: src/containers/Scribe/index.tsx:256
+msgid "Choose practitioner"
+msgstr "Elegir practicante"
+
+#: src/containers/Scribe/index.tsx:283
+msgid "Choose qa"
+msgstr "Elegir qa"
+
+#: src/containers/Census/index.tsx:472
+#: src/containers/PatientList/index.tsx:316
+msgid "Choose room"
+msgstr "Elegir habitación"
+
+#: src/containers/Scribe/index.tsx:274
+msgid "Choose scriber"
+msgstr "Elegir transcriptor"
+
+#: src/containers/Scribe/index.tsx:190
+msgid "Choose status"
+msgstr "Elegir estado"
+
+#: src/containers/Census/index.tsx:481
+msgid "Choose Status"
+msgstr "Elegir estado"
+
+#: src/containers/Census/index.tsx:522
+msgid "Choose status PRM"
+msgstr ""
+
+#: src/containers/Census/index.tsx:413
+#: src/containers/PatientList/index.tsx:213
+msgid "Choose the facility"
+msgstr "Elegir la instalación"
+
+#: src/containers/Insurances/index.tsx:35
+msgid "Choose the Insurances"
+msgstr "Elija los seguros"
+
+#: src/containers/PractitionerList/index.tsx:70
+#~ msgid "Choose the name"
+#~ msgstr "Elija el nombre"
+
+#: src/containers/Census/index.tsx:422
+#: src/containers/Census/index.tsx:431
+msgid "Choose the practitioner"
+msgstr "Elegir el practicante"
+
+#: src/containers/PatientList/index.tsx:221
+msgid "Choose type of care"
+msgstr "Elegir tipo de atención"
+
+#: src/containers/Census/index.tsx:442
+msgid "Choose type of visit"
+msgstr "Elegir tipo de visita"
+
+#: src/containers/Home/components/MonthlyClaim/index.tsx:229
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:227
+msgid "Claim Accepted"
+msgstr "Reclamo Aceptado"
+
+#: src/containers/Home/components/MonthlyClaim/index.tsx:252
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:253
+msgid "Claim Rejected"
+msgstr "Reclamo Rechazado"
+
+#: src/containers/Home/components/MonthlyClaim/index.tsx:321
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:331
+msgid "Claim Sent"
+msgstr "Reclamo Enviado"
+
+#: src/containers/Home/components/MonthlyClaim/index.tsx:221
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:219
+#: src/containers/Home/components/MonthlySumaryScribe/index.tsx:52
+msgid "Claims"
+msgstr "Reclamos"
+
+#: src/containers/FacilityDetails/Dashboard/DiagnosesWidget.tsx:26
+#: src/containers/PatientDetails/Dashboard/DiagnosesWidget.tsx:26
+#: src/containers/Reports/index.tsx:81
+msgid "Code"
+msgstr "Código"
+
+#: src/containers/Census/index.tsx:253
+#: src/containers/PatientList/index.tsx:175
+msgid "Code Status"
+msgstr "Estado del código"
+
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:198
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:48
+msgid "Completed"
+msgstr "Completado"
+
+#: src/containers/Census/index.tsx:210
+msgid "CPT"
+msgstr "CPT"
+
+#: src/containers/CensusReport/index.tsx:30
+msgid "Created By"
+msgstr "Creado por"
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:23
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:23
+msgid "Current admission"
+msgstr "Admisión actual"
+
+#: src/containers/Home/components/News/PreviewLinks.tsx:95
+msgid "Daily Read"
+msgstr "Lectura Diaria"
+
+#: src/menu.tsx:28
+#: src/menu.tsx:62
+#: src/menu.tsx:70
+#: src/menu.tsx:89
+msgid "Dashboard"
+msgstr "Tablero"
+
+#: src/containers/Census/index.tsx:449
+#: src/containers/CensusReport/index.tsx:21
+#: src/containers/FacilityDetails/Dashboard/DiagnosesWidget.tsx:32
+#: src/containers/FacilityDetails/PatientEncounters/index.tsx:33
+#: src/containers/PatientDetails/Dashboard/DiagnosesWidget.tsx:32
+#: src/containers/PatientDetails/PatientEncounters/index.tsx:119
+#: src/containers/Scribe/index.tsx:233
+msgid "Date"
+msgstr "Fecha"
+
+#: src/containers/PatientList/index.tsx:123
+msgid "Date of last consult"
+msgstr "Fecha de última consulta"
+
+#: src/containers/PatientList/index.tsx:148
+msgid "Days in facility"
+msgstr "Días en la instalación"
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:55
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:55
+msgid "Days in the facility"
+msgstr "Días en la instalación"
+
+#: src/containers/FacilityDetails/Dashboard/DiagnosesWidget.tsx:19
+#: src/containers/PatientDetails/Dashboard/DiagnosesWidget.tsx:19
+#: src/containers/PatientList/index.tsx:157
+msgid "Diagnoses"
+msgstr "Diagnósticos"
+
+#: src/containers/Census/index.tsx:185
+#~ msgid "Diagnosis"
+#~ msgstr "Diagnóstico"
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:122
+#: src/containers/FacilityDetails/Dashboard/DischargeModal.tsx:22
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:122
+#: src/containers/PatientDetails/Dashboard/DischargeModal.tsx:22
+msgid "Discharge"
+msgstr "Alta"
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:63
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:63
+msgid "Discharge date"
+msgstr "Fecha de alta"
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:76
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:76
+msgid "Discharge note"
+msgstr "Nota de alta"
+
+#: src/containers/PatientList/index.tsx:281
+msgid "Discharged"
+msgstr "Descargada"
+
+#: src/containers/Home/components/FacilitySumary/index.tsx:240
+#: src/containers/Home/components/FacilitySumaryProvider/facilityGraphic.tsx:67
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:107
+#: src/containers/Home/components/MonthlySumaryAdmin/index.tsx:36
+msgid "Discharged Patients"
+msgstr "Pacientes Dados de Alta"
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:70
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:70
+msgid "Discharged to"
+msgstr "Dado de alta a"
+
+#: src/containers/PatientList/index.tsx:81
+#: src/containers/Reports/index.tsx:72
+#: src/containers/Scribe/index.tsx:98
+msgid "DOB"
+msgstr "DOB"
+
+#: src/containers/CensusReport/index.tsx:38
+msgid "Document"
+msgstr "Documento"
+
+#: src/containers/Census/index.tsx:112
+#: src/containers/Scribe/index.tsx:75
+msgid "DOS"
+msgstr "DOS"
+
+#: src/containers/Scribe/index.tsx:240
+msgid "Due date"
+msgstr "Fecha de vencimiento"
+
+#: src/containers/Reports/index.tsx:78
+msgid "DX"
+msgstr "DX"
+
+#: src/containers/FacilityList/index.tsx:73
+#: src/containers/Insurances/index.tsx:41
+#: src/containers/PractitionerList/index.tsx:73
+#: src/containers/Prompts/index.tsx:58
+#: src/containers/Prompts/index.tsx:88
+msgid "Edit"
+msgstr "Editar"
+
+#: src/containers/FacilityDetails/Dashboard/CareTeamWidget.tsx:50
+#: src/containers/PatientDetails/Dashboard/CareTeamWidget.tsx:50
+msgid "Edit Care Team"
+msgstr "Editar equipo de atención"
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:112
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:112
+msgid "Edit Current Admission"
+msgstr "Editar admisión actual"
+
+#: src/containers/FacilityDetails/Dashboard/DiagnosesWidget.tsx:55
+#: src/containers/PatientDetails/Dashboard/DiagnosesWidget.tsx:55
+msgid "Edit Diagnoses"
+msgstr "Editar diagnósticos"
+
+#: src/containers/Facilities/EditOrganizationModal.tsx:20
+#~ msgid "Edit Organization"
+#~ msgstr "Editar organización"
+
+#: src/containers/Prompts/index.tsx:103
+msgid "Edit Prompt"
+msgstr "Editar solicitud"
+
+#: src/containers/FacilityList/EditRoomModal.tsx:20
+msgid "Edit Room"
+msgstr "Editar habitación"
+
+#: src/containers/PractitionerList/index.tsx:45
+msgid "Email"
+msgstr "E-mail"
+
+#: src/containers/Home/components/MonthlySumaryProviders/index.tsx:96
+msgid "Encounter Complete"
+msgstr "Encuentro Completo"
+
+#: src/containers/Home/components/MonthlySumaryProviders/index.tsx:23
+msgid "Encounter Sumary"
+msgstr "Resumen del Encuentro"
+
+#: src/containers/PatientDetails/PatientEncounters/index.tsx:77
+#: src/containers/Scribe/index.tsx:128
+msgid "Encounter Type"
+msgstr "Tipo de encuentro"
+
+#: src/containers/FacilityDetails/PatientDetailsTabs/index.tsx:19
+#: src/containers/Home/components/FacilitySumaryProvider/facilityGraphic.tsx:23
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:71
+#: src/containers/PatientDetails/PatientDetailsTabs/index.tsx:19
+#: src/menu.tsx:29
+#: src/menu.tsx:63
+#: src/menu.tsx:75
+#: src/menu.tsx:80
+#: src/menu.tsx:90
+#: src/menu.tsx:103
+msgid "Encounters"
+msgstr "Encuentros"
+
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:160
+msgid "Encounters Summary"
+msgstr "Resumen de Encuentros"
+
+#: src/containers/PatientList/index.tsx:302
+msgid "Enter mrn"
+msgstr "Introducir MRN"
+
+#: src/containers/Prompts/index.tsx:125
+msgid "Enter your prompt here"
+msgstr "Ingrese su mensaje aquí"
+
+#: src/containers/Scribe/ExportButton.tsx:27
+msgid "Export"
+msgstr "Exportar"
+
+#: src/containers/Census/index.tsx:347
+#: src/containers/Census/index.tsx:396
+msgid "Export Date"
+msgstr "Fecha de exportación"
+
+#: src/containers/Census/index.tsx:338
+#: src/containers/Census/index.tsx:387
+msgid "Export Status"
+msgstr "Estado de la exportación"
+
+#: src/containers/Census/index.tsx:588
+#: src/containers/Census/index.tsx:595
+msgid "Export to Excel"
+msgstr "Exportar a Excel"
+
+#: src/containers/FacilityList/index.tsx:16
+#: src/menu.tsx:39
+#: src/menu.tsx:64
+#: src/menu.tsx:91
+msgid "Facilities"
+msgstr "Instalaciones"
+
+#: src/containers/Home/components/FacilitySumary/index.tsx:90
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:42
+msgid "Facilities Summary"
+msgstr "Resumen de Instalaciones"
+
+#: src/containers/Census/index.tsx:122
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:30
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:30
+#: src/containers/PatientList/index.tsx:139
+#: src/containers/Scribe/index.tsx:139
+msgid "Facility"
+msgstr "Instalación"
+
+#: src/containers/Facilities/NewOrganizationModal.tsx:31
+#~ msgid "Facility successfully created"
+#~ msgstr "Instalación creada con éxito"
+
+#: src/containers/Facilities/EditOrganizationModal.tsx:29
+#~ msgid "Facility successfully updated"
+#~ msgstr "Instalación actualizada con éxito"
+
+#: src/containers/Prompts/hooks.ts:36
+msgid "Failed to fetch prompts"
+msgstr "Error al obtener las solicitudes"
+
+#: src/containers/Prompts/hooks.ts:56
+msgid "Failed to fetch types"
+msgstr "Error al obtener los tipos"
+
+#: src/containers/Prompts/hooks.ts:132
+msgid "Failed to remove prompt"
+msgstr "Error al eliminar solicitud"
+
+#: src/containers/Prompts/hooks.ts:110
+msgid "Failed to save prompt"
+msgstr "Error al guardar la solicitud"
+
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:244
+msgid "Feedback to handle"
+msgstr "Comentarios para Manejar"
+
+#: src/containers/Home/components/MonthlySumaryScribe/index.tsx:112
+msgid "Feedback to Handle"
+msgstr "Comentarios para Manejar"
+
+#: src/containers/App/PatientList/index.tsx:49
+#~ msgid "Find patient"
+#~ msgstr "Encontrar paciente"
+
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:267
+msgid "For QA"
+msgstr "Para QA"
+
+#: src/containers/FacilityDetails/PatientDetailsTabs/index.tsx:20
+#: src/containers/PatientDetails/PatientDetailsTabs/index.tsx:20
+msgid "Forms"
+msgstr "Formularios"
+
+#: src/containers/Scribe/StatusHistoryModal/index.tsx:14
+#: src/containers/Scribe/StatusHistoryModal/index.tsx:17
+msgid "History"
+msgstr "Historial"
+
+#: src/containers/FacilityDetails/Dashboard/InsuranceWidget.tsx:19
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:28
+msgid "Insurance"
+msgstr "Seguro"
+
+#: src/containers/FacilityDetails/Dashboard/InsuranceWidget.tsx:38
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:83
+#: src/containers/PatientList/index.tsx:192
+msgid "Insurance Authorization"
+msgstr "Autorización de seguro"
+
+#: src/containers/Insurances/index.tsx:12
+#: src/menu.tsx:45
+msgid "Insurances"
+msgstr "Seguros"
+
+#: src/menu.tsx:135
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+#: src/containers/PatientList/index.tsx:235
+msgid "LTC"
+msgstr "LTC"
+
+#: src/containers/FacilityDetails/Dashboard/InsuranceWidget.tsx:32
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:59
+msgid "MCR/MCD"
+msgstr "MCR/MCD"
+
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:65
+msgid "Medicaid Payer Souce"
+msgstr "Fuente de pagador de Medicaid"
+
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:71
+msgid "Medicare Police Number"
+msgstr "Número de póliza de Medicare"
+
+#: src/containers/Home/components/MonthlyClaim/index.tsx:187
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:186
+msgid "Monthly Claims"
+msgstr "Reclamos Mensuales"
+
+#: src/containers/Home/components/MonthlySumaryScribe/index.tsx:47
+msgid "Monthly Notes"
+msgstr "Notas Mensuales"
+
+#: src/containers/Home/components/MonthlySumaryProviders/index.tsx:21
+msgid "Monthly Sumary"
+msgstr "Resumen Mensual"
+
+#: src/containers/Home/components/MonthlySumaryAdmin/index.tsx:29
+msgid "Monthly Summary"
+msgstr "Resumen Mensual"
+
+#: src/containers/PatientList/index.tsx:71
+#: src/containers/Reports/index.tsx:69
+msgid "MRN"
+msgstr "MRN"
+
+#: src/containers/FacilityDetails/Dashboard/CareTeamWidget.tsx:31
+#: src/containers/FacilityDetails/Dashboard/GeneralInformationWidget.tsx:23
+#: src/containers/FacilityList/index.tsx:25
+#: src/containers/Home/components/FacilitySumary/index.tsx:139
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:47
+#: src/containers/Insurances/index.tsx:21
+#: src/containers/PatientDetails/Dashboard/CareTeamWidget.tsx:31
+#: src/containers/PatientDetails/Dashboard/GeneralInformationWidget.tsx:23
+#: src/containers/PractitionerList/index.tsx:38
+#: src/containers/Reports/index.tsx:66
+msgid "Name"
+msgstr "Nombre"
+
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:290
+#: src/containers/PatientList/index.tsx:273
+#: src/containers/PatientList/index.tsx:286
+msgid "New"
+msgstr "Nuevo"
+
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:100
+#: src/containers/FacilityDetails/Dashboard/NewAdmissionModal.tsx:23
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:100
+#: src/containers/PatientDetails/Dashboard/NewAdmissionModal.tsx:23
+msgid "New admission"
+msgstr "Nueva Admisión"
+
+#: src/containers/Home/components/News/PreviewLinks.tsx:92
+msgid "New Broadcast"
+msgstr "NNueva Transmisión"
+
+#: src/containers/Home/components/MonthlySumaryAdmin/index.tsx:32
+msgid "New Patients"
+msgstr "Nuevos Pacientes"
+
+#: src/containers/Facilities/index.tsx:52
+#~ msgid "No data"
+#~ msgstr "No hay datos"
+
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:221
+#: src/containers/Home/components/MonthlySumaryScribe/index.tsx:86
+msgid "Not Completed"
+msgstr "No Completado"
+
+#: src/containers/Home/components/MonthlySumaryProviders/index.tsx:130
+msgid "Not seen"
+msgstr "No Visto"
+
+#: src/containers/Scribe/NoteEditModal/index.tsx:31
+msgid "Note Edit"
+msgstr "Nota Editar"
+
+#: src/containers/Scribe/NoteEditModal/index.tsx:28
+#~ msgid "Note Editor"
+#~ msgstr ""
+
+#: src/containers/Home/components/Notifications/index.tsx:7
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: src/containers/Census/index.tsx:270
+msgid "Observations"
+msgstr "Observaciones"
+
+#: src/containers/FacilityDetails/PatientDetailsTabs/index.tsx:18
+#: src/containers/PatientDetails/PatientDetailsTabs/index.tsx:18
+msgid "Overview"
+msgstr "Resumen"
+
+#: src/containers/Census/index.tsx:86
+#: src/containers/FacilityDetails/Dashboard/GeneralInformationWidget.tsx:16
+#: src/containers/PatientDetails/Dashboard/GeneralInformationWidget.tsx:16
+#: src/containers/PatientList/index.tsx:55
+#: src/containers/Scribe/index.tsx:86
+msgid "Patient"
+msgstr "Paciente"
+
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:112
+msgid "patients"
+msgstr "pacientes"
+
+#: src/containers/Home/components/FacilitySumary/index.tsx:141
+#: src/containers/PatientList/index.tsx:36
+#: src/menu.tsx:30
+#: src/menu.tsx:65
+#: src/menu.tsx:71
+#: src/menu.tsx:76
+#: src/menu.tsx:81
+#: src/menu.tsx:92
+#: src/menu.tsx:104
+msgid "Patients"
+msgstr "Pacientes"
+
+#: src/containers/FacilityDetails/Dashboard/InsuranceWidget.tsx:26
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:35
+#: src/containers/PatientList/index.tsx:186
+msgid "Payer source"
+msgstr "Fuente del pagador"
+
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:41
+msgid "Payer Source Policy Number"
+msgstr "Número de póliza del pagador"
+
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:49
+#: src/containers/Home/components/MonthlyClaim/index.tsx:298
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:305
+msgid "Pending"
+msgstr "Pendiente"
+
+#: src/containers/Home/components/PendingCensus/index.tsx:7
+msgid "Pending Census"
+msgstr "Censo Pendiente"
+
+#: src/containers/FacilityDetails/PatientEncounters/index.tsx:19
+#: src/containers/PatientDetails/PatientEncounters/index.tsx:57
+msgid "Practitioner"
+msgstr "Profesional"
+
+#: src/components/BaseLayout/Sidebar/SidebarTop/index.tsx:40
+#: src/components/BaseLayout/Sidebar/SidebarTop/index.tsx:50
+#~ msgid "Practitioners"
+#~ msgstr "Profesionales"
+
+#: src/containers/Census/index.tsx:172
+msgid "Problem List"
+msgstr ""
+
+#: src/containers/Scribe/ProcessNoteModal/index.tsx:62
+#: src/containers/Scribe/ProcessNoteModal/index.tsx:65
+msgid "Process note"
+msgstr "Nota de proceso"
+
+#: src/containers/Scribe/NoteEditModal/index.tsx:28
+msgid "Process Note Editor"
+msgstr "Editor de notas de proceso"
+
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:193
+#: src/containers/Home/components/MonthlyClaim/index.tsx:224
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:222
+msgid "Progress"
+msgstr "Progreso"
+
+#: src/containers/Home/components/MonthlySumaryScribe/index.tsx:55
+msgid "PROGRESS"
+msgstr "PROGRESO"
+
+#: src/containers/Prompts/index.tsx:37
+msgid "Prompt"
+msgstr "Prompt"
+
+#: src/containers/Prompts/hooks.ts:74
+msgid "Prompt cannot be empty"
+msgstr "La solicitud no puede estar vacía"
+
+#: src/containers/Prompts/hooks.ts:107
+msgid "Prompt successfully saved"
+msgstr "Solicitud guardada correctamente"
+
+#: src/menu.tsx:51
+msgid "Prompts"
+msgstr "Prompts"
+
+#: src/containers/Census/index.tsx:309
+#: src/containers/Census/index.tsx:360
+#: src/containers/Scribe/index.tsx:109
+msgid "Provider"
+msgstr "Proveedor"
+
+#: src/containers/Home/components/FacilitySumary/index.tsx:140
+msgid "Providers"
+msgstr "Proveedores"
+
+#: src/containers/Scribe/NoteEditModal/index.tsx:28
+#~ msgid "Pulmonary progress note"
+#~ msgstr ""
+
+#: src/containers/Scribe/index.tsx:169
+msgid "QA"
+msgstr "Control de calidad"
+
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:192
+#: src/containers/Home/components/MonthlyClaim/index.tsx:223
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:221
+#: src/containers/Home/components/MonthlySumaryScribe/index.tsx:54
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: src/containers/Home/components/News/PreviewLinks.tsx:125
+msgid "Read More"
+msgstr "Leer Más"
+
+#: src/containers/Home/components/MonthlySumaryAdmin/index.tsx:40
+msgid "Readmissions"
+msgstr "Reingresos"
+
+#: src/containers/Census/index.tsx:572
+#: src/containers/FacilityList/index.tsx:75
+#: src/containers/Insurances/index.tsx:42
+#: src/containers/PractitionerList/index.tsx:79
+#: src/containers/Prompts/index.tsx:61
+#: src/containers/Prompts/index.tsx:91
+msgid "Remove"
+msgstr "Eliminar"
+
+#: src/containers/Census/index.tsx:316
+#~ msgid "Report Type"
+#~ msgstr "Report Type"
+
+#: src/containers/Reports/index.tsx:53
+msgid "Reports"
+msgstr "Informes"
+
+#: src/containers/PractitionerList/index.tsx:52
+msgid "Role"
+msgstr "Rol"
+
+#: src/containers/Census/index.tsx:139
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:36
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:36
+#: src/containers/PatientList/index.tsx:103
+msgid "Room"
+msgstr "Sala"
+
+#: src/containers/Facilities/NewRoomModal.tsx:33
+#~ msgid "Room successfully created"
+#~ msgstr "Sala creada con éxito"
+
+#: src/containers/FacilityList/EditRoomModal.tsx:30
+msgid "Room successfully updated"
+msgstr "Sala actualizada con éxito"
+
+#: src/containers/FacilityList/index.tsx:41
+msgid "Rooms"
+msgstr "Salas"
+
+#: src/containers/Home/components/MonthlySumaryProviders/index.tsx:113
+msgid "Scheduled"
+msgstr "Programado"
+
+#: src/containers/Scribe/index.tsx:44
+msgid "Scribe"
+msgstr "Escriba"
+
+#: src/containers/Scribe/index.tsx:152
+msgid "Scriber"
+msgstr "Escribiente"
+
+#: src/containers/FacilityList/index.tsx:69
+#: src/containers/PractitionerList/index.tsx:69
+msgid "Search by name"
+msgstr "Buscar por nombre"
+
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:47
+msgid "Secondary Payer source"
+msgstr "Fuente del pagador secundario"
+
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:53
+msgid "Secondary Payer Source Policy Number"
+msgstr "Número de póliza del pagador secundario"
+
+#: src/containers/Prompts/index.tsx:111
+msgid "Select Type"
+msgstr "Seleccionar tipo"
+
+#: src/containers/Home/components/News/PreviewLinks.tsx:156
+msgid "Send"
+msgstr "Enviar"
+
+#: src/containers/PatientList/index.tsx:470
+msgid "Send to census"
+msgstr "Enviar al censo"
+
+#: src/menu.tsx:33
+msgid "Setting"
+msgstr "Config"
+
+#: src/containers/PatientList/index.tsx:236
+#~ msgid "Skilled"
+#~ msgstr "Calificado"
+
+#: src/containers/FacilityDetails/Dashboard/CareTeamWidget.tsx:25
+#: src/containers/PatientDetails/Dashboard/CareTeamWidget.tsx:25
+msgid "Speciality"
+msgstr "Especialidad"
+
+#: src/containers/Census/index.tsx:281
+#: src/containers/FacilityDetails/PatientEncounters/index.tsx:25
+#: src/containers/Home/components/FacilitySumaryProvider/index.tsx:191
+#: src/containers/Home/components/MonthlyClaim/index.tsx:222
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:220
+#: src/containers/Home/components/MonthlySumaryScribe/index.tsx:53
+#: src/containers/PatientDetails/PatientEncounters/index.tsx:97
+#: src/containers/PatientList/index.tsx:269
+msgid "Status"
+msgstr "Estado"
+
+#: src/containers/Census/index.tsx:378
+msgid "Status Audit"
+msgstr ""
+
+#: src/containers/Home/components/MonthlyClaimProvider/pieChartForTopEncounters.tsx:107
+msgid "Status Encounters"
+msgstr "Estado de Encuentros"
+
+#: src/containers/Census/index.tsx:327
+msgid "Status PRM"
+msgstr "Estado PRM"
+
+#: src/containers/Home/components/MonthlySumaryScribe/index.tsx:138
+msgid "Submitted for QA"
+msgstr "Enviado para QA"
+
+#: src/containers/App/index.tsx:128
+#~ msgid "Thank you for filling out the questionnaire. Now you can close this page."
+#~ msgstr "Gracias por completar el cuestionario. Ahora puedes cerrar esta página."
+
+#: src/containers/App/index.tsx:127
+#~ msgid "Thank you!"
+#~ msgstr "¡Gracias!"
+
+#: src/containers/Census/index.tsx:238
+msgid "Time"
+msgstr "Hora"
+
+#: src/containers/Home/components/MonthlyClaim/pieChartForTopFacilities.tsx:187
+#: src/containers/Home/components/MonthlyClaimProvider/pieChartForTopFacilities.tsx:104
+msgid "Top Facilities"
+msgstr "Principales Instalaciones"
+
+#: src/containers/Home/components/MonthlyClaim/pieChartForTopInsurances.tsx:203
+msgid "Top Insurances"
+msgstr "Principales Aseguradoras"
+
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:50
+msgid "Total"
+msgstr "Total"
+
+#: src/containers/Home/components/MonthlySumaryAdmin/index.tsx:44
+msgid "Total Active Patients"
+msgstr "Total de Pacientes Activos"
+
+#: src/containers/Home/components/BillingTotal/index.tsx:24
+#: src/containers/Home/components/BillingTotalProvider/index.tsx:24
+#: src/containers/Home/components/FacilitySumaryScriber/index.tsx:68
+msgid "Total Encounters"
+msgstr "Total de Encuentros"
+
+#: src/containers/Home/components/MonthlySumaryAdmin/index.tsx:48
+msgid "Total Facilites"
+msgstr "Total de Instalaciones"
+
+#: src/containers/Home/components/BillingTotal/index.tsx:33
+#: src/containers/Home/components/BillingTotalProvider/index.tsx:32
+msgid "Total Facilities"
+msgstr "Total de instalaciones"
+
+#: src/containers/Home/components/MonthlySumaryAdmin/index.tsx:56
+msgid "Total Insurances"
+msgstr "Total de Aseguradoras"
+
+#: src/containers/Insurances/index.tsx:46
+msgid "Total number of Insurances"
+msgstr "Número total de seguros"
+
+#: src/containers/CensusReport/index.tsx:53
+msgid "Total number of Logs"
+msgstr "Número total de registros"
+
+#: src/containers/Census/index.tsx:602
+msgid "Total number of Patients"
+msgstr "Número total de pacientes"
+
+#: src/containers/Home/components/FacilitySumary/index.tsx:160
+msgid "Total Patients"
+msgstr "Total de Pacientes"
+
+#: src/containers/Home/components/BillingTotal/index.tsx:41
+#: src/containers/Home/components/BillingTotalProvider/index.tsx:40
+#: src/containers/Home/components/MonthlySumaryAdmin/index.tsx:52
+msgid "Total Providers"
+msgstr "Total de Proveedores"
+
+#: src/containers/Home/components/BillingTotal/index.tsx:49
+#: src/containers/Home/components/BillingTotalProvider/index.tsx:48
+msgid "Total Scribers"
+msgstr "Total de Escribientes"
+
+#: src/containers/Census/index.tsx:228
+#: src/containers/FacilityDetails/Dashboard/CurrentAdmissionWidget.tsx:42
+#: src/containers/PatientDetails/Dashboard/CurrentAdmissionWidget.tsx:42
+msgid "Type of care"
+msgstr "Tipo de cuidado"
+
+#: src/containers/PatientList/index.tsx:199
+#: src/containers/Reports/index.tsx:84
+msgid "Type of Care"
+msgstr "Tipo de cuidado"
+
+#: src/containers/Census/index.tsx:318
+#: src/containers/Census/index.tsx:369
+msgid "Type of visit"
+msgstr "Tipo de visita"
+
+#: src/containers/Home/components/MonthlyClaim/index.tsx:275
+#: src/containers/Home/components/MonthlyClaimProvider/index.tsx:279
+msgid "Unable to Claim"
+msgstr "No se Puede Reclamar"
+
+#: src/containers/FacilityDetails/Dashboard/UpdateModal.tsx:23
+#: src/containers/PatientDetails/Dashboard/UpdateModal.tsx:23
+msgid "Update"
+msgstr "Actualizar"
+
+#: src/containers/FacilityDetails/Dashboard/InsuranceWidget.tsx:61
+#: src/containers/PatientDetails/Dashboard/InsuranceWidget.tsx:106
+msgid "Update Insurance"
+msgstr "Actualizar seguro"
+
+#: src/containers/FacilityDetails/Dashboard/GeneralInformationWidget.tsx:64
+#: src/containers/PatientDetails/Dashboard/GeneralInformationWidget.tsx:71
+msgid "Update Patient"
+msgstr "Actualizar paciente"
+
+#: src/containers/Census/index.tsx:573
+#: src/containers/Scribe/index.tsx:301
+msgid "Update status"
+msgstr "Actualizar estado"
+
+#: src/containers/PractitionerList/index.tsx:30
+#: src/menu.tsx:37
+#: src/menu.tsx:66
+#: src/menu.tsx:93
+msgid "Users"
+msgstr "Usuarios"
+
+#: src/containers/Home/components/Notifications/index.tsx:28
+msgid "View"
+msgstr "Ver"
+
+#: src/containers/Home/AdminNew/index.tsx:19
+#: src/containers/Home/Provider/index.tsx:16
+msgid "Welcome"
+msgstr "Bienvenido"
+
+#: src/containers/Home/Admin/index.tsx:10
+msgid "Welcome Administrator"
+msgstr "Bienvenido Administrador"
+
+#: src/containers/Home/Scriber/index.tsx:9
+msgid "Welcome Scriber"
+msgstr "Bienvenido Escriba"
+
+#: src/containers/Home/Census/index.tsx:7
+msgid "Wlcome Census Team"
+msgstr "Bienvenido equipo de Censo"

@@ -1,0 +1,459 @@
+
+.welcome-census-team {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Open Sans", Helvetica;
+  font-weight: 400;
+  color: var(--e-health-dashboard-1-secondary-secondary);
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.text-wrapper {
+  font-family: "Open Sans", Helvetica;
+  font-weight: 400;
+  color: #003049;
+  font-size: 36px;
+  letter-spacing: 0;
+}
+
+/* Estilo para las columnas */
+.column {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.rectangulo1 {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  border-color: var(--e-health-dashboard-1-secondary-light-grey);
+  box-shadow: var(--shadow-xl);
+  gap: 10px;
+}
+.rectangulo3 {
+  width: 100%;
+  height: 100px;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border-color: var(--e-health-dashboard-1-secondary-light-grey);
+  box-shadow: var(--shadow-xl);
+  flex: 1;
+  margin-left: 10px;
+}
+
+.rectangulo2 {
+  width: 290px;
+  height: 400;
+  background-color: white;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  border-color: var(--e-health-dashboard-1-secondary-light-grey);
+  box-shadow: var(--shadow-xl);
+  flex: 1;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.rectangulo4 {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  border-color: var(--e-health-dashboard-1-secondary-light-grey);
+  box-shadow: var(--shadow-xl);
+  flex: 1;
+}
+
+.calendar {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 'auto';
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.title {
+  margin-left: 150px;
+}
+
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.containerBroadcast {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: -60px;
+
+}
+
+.containerBroadcast h5 {
+
+  color: #222222;
+  font: Roboto;
+  font-size: 22px;
+  text-align: left;
+  margin: 0;
+}
+
+
+.containerInvoice {
+  width: 40%;
+  height: 100%;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: -60px;
+}
+
+.containerInvoice h5 {
+
+  color: #222222;
+  font: Roboto;
+  font-size: 22px;
+  text-align: left;
+  margin: 0;
+}
+
+.divCount {
+  background-color: #4899E1;
+  width: 35px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  display: flex;
+}
+
+.monthly-sumary {
+  padding: 10px;
+  width: 40%;
+  position: sticky;
+  top: 0;
+  display: grid;
+  height: 100%;
+}
+
+.monthly-sumary h5 {
+  font-size: 22px;
+  text-align: left;
+  margin: 0;
+}
+
+.encounters-summary {
+  width: 100%;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.encounters-sumary-facility {
+  width: 100%;
+}
+
+.encounters-sumary-facility h6 {
+  text-align: left;
+}
+
+.containerDown {
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.column2 {
+  height: 100%;
+}
+
+.column1 {
+  height: 100%;
+}
+
+.progress-stacked {
+  width: 80%;
+}
+
+.listGroup {
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.listGroup li {
+  height: 30%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.notifications {
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.listGroup-notifications {
+  padding: 10px;
+}
+
+.listGroup-notifications li {
+  height: 30%;
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+.list-notifications {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: none;
+}
+
+.my-progress-bar-danger {
+  background-color: #FFA39E;
+  /* Rojo personalizado */
+}
+
+.my-progress-bar-warning {
+  background-color: #facc15;
+}
+
+.my-progress-bar-success {
+  background-color: #95DE64;
+}
+
+.badge {
+  height: 31px;
+  width: 50px;
+  background-color: #6194FA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100%;
+}
+
+.scroll-container {
+  width: 100%;
+  /* Ancho fijo del contenedor */
+  height: 340px;
+  overflow-y: auto;
+  /* Barra de desplazamiento vertical si el contenido excede la altura */
+  overflow-x: hidden;
+  padding: 10px;
+}
+
+.scroll-container-big-calendar {
+
+  height: 340px;
+  overflow-y: auto;
+  /* Barra de desplazamiento vertical si el contenido excede la altura */
+  overflow-x: hidden;
+  padding: 10px;
+}
+
+.encounters-sumary-scribe {
+  width: 100%;
+}
+
+.encounters-sumary-scribe h6 {
+  font: open Sans;
+  font-size: 14px;
+  color: #676D89;
+}
+
+.encounters-sumary-facility h6 {
+  font: open Sans;
+  font-size: 14px;
+  color: #676D89;
+}
+
+.rbc-btn-group button:focus,
+.rbc-btn-group button.rbc-active {
+  background-color: #6194FA;
+  /* Color de fondo activo */
+  color: black;
+  /* Color del texto activo */
+}
+
+
+/* Estilo para el texto con clase "fw-bold" de Notifications */
+.list-notifications .fw-bold {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16.39px;
+  line-height: 22.31px;
+  color: #003049;
+}
+
+/* Estilo para el texto dentro de "ms-2 me-auto" */
+.list-notifications .ms-2.me-auto {
+  font-family: 'Open Sans', sans-serif;
+  /* Fuente Open Sans */
+  font-size: 12.29px;
+  /* Tamaño del texto */
+  color: #333;
+  /* Color del texto opcional */
+}
+
+@media (max-width: 768px) {
+  .home {
+    flex-direction: column;
+    /* Cambia la dirección a columna */
+    align-items: stretch;
+    /* Asegúrate de que ocupen todo el ancho */
+  }
+
+  .column1 {
+    height: 100%;
+    width: 100%;
+  }
+
+  .rectangulo1 {
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .containerBroadcast {
+    padding: 10px;
+    width: 60%;
+    margin-top: 10px;
+  }
+
+  .containerInvoice {
+    height: 100%;
+    width: 80%;
+    margin-top: 10px;
+  }
+
+  .containerDown {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .rectangulo2 {
+    width: 100%;
+    height: 100%;
+  }
+
+  .scroll-container-big-calendar {
+    margin-top: 15px;
+    height: 100%;
+
+  }
+
+  .rectangulo3 {
+    width: 100%;
+    height: 80%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .home {
+    flex-direction: column;
+    /* Cambia la dirección a columna */
+    align-items: stretch;
+    /* Asegúrate de que ocupen todo el ancho */
+  }
+
+  .rectangulo1 {
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .containerBroadcast {
+    padding: 10px;
+    width: 60%;
+    margin-top: 10px;
+  }
+
+  .containerInvoice {
+
+    width: 80%;
+    margin-top: 10px;
+  }
+
+  .containerDown {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .rectangulo2 {
+    width: 100%;
+    height: 100%;
+  }
+
+  .scroll-container-big-calendar {
+    margin-top: 15px;
+
+
+  }
+
+  .rectangulo3 {
+    width: 100%;
+    height: 100%;
+  }
+}
