@@ -1,30 +1,66 @@
 {
-  "name": "Beda EMR",
-  "short_name": "Beda EMR",
-  "icons": [
-    {
-      "src": "favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#3366ff",
-  "background_color": "#3366ff"
+    "name": "MoxieLink",
+    "short_name": "MoxieLink",
+    "icons": [
+        {
+            "purpose": "maskable",
+            "sizes": "48x48",
+            "src": "maskable_icon_x48.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "sizes": "72x72",
+            "src": "maskable_icon_x72.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "sizes": "96x96",
+            "src": "maskable_icon_x96.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "sizes": "128x128",
+            "src": "maskable_icon_x128.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any maskable",
+            "sizes": "192x192",
+            "src": "maskable_icon_x192.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "maskable",
+            "sizes": "384x384",
+            "src": "maskable_icon_x384.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any maskable",
+            "sizes": "512x512",
+            "src": "maskable_icon_x512.png",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshots/screenshot1_mobile.png",
+            "sizes": "640x480",
+            "type": "image/png"
+        },
+        {
+            "src": "/screenshots/screenshot1_desktop.png",
+            "sizes": "1920x1080",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#3366ff",
+    "background_color": "#3366ff",
+    "display_override": [ "window-controls-overlay" ]
 }

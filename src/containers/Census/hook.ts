@@ -180,7 +180,7 @@ const changeStatusPRMtoReportExported = async (resource: any) => {
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const day = String(today.getDate()).padStart(2, '0');
             const formattedDate = `${year}-${month}-${day}`;
-            console.log(indexStatusPRM);
+
             if (indexStatusPRM == 0) {
                 const body = {
                     statusHistory: [
@@ -213,6 +213,7 @@ const changeStatusPRMtoReportExported = async (resource: any) => {
                         },
                         body: JSON.stringify(body),
                     });
+
                     if (!response.ok) {
                         throw new Error(`Error fetching data: ${response.statusText}`);
                     }
@@ -566,14 +567,13 @@ const addAuditEvent = async (data: any) => {
         throw new Error('Failed to fetch practitioners');
     }
 };
-const getNextLink = (bundle: Bundle): string | undefined =>
-    bundle.link?.find((link) => link.relation === 'next')?.url;
+const getNextLink = (bundle: Bundle): string | undefined => bundle.link?.find((link) => link.relation === 'next')?.url;
 const fetchAllData = async (initialData: { bundle: any; resource: any }[]) => {
     if (initialData.length === 0) {
         throw new Error('initialData is empty');
     }
     let allData = [...initialData];
-    let nextLink = getNextLink(allData[0]?.bundle);
+    let nextLink = allData[0]?.bundle ? getNextLink(allData[0].bundle) : undefined;
     try {
         while (nextLink) {
             const response = await fetch(`${baseURL}${nextLink}`, {
@@ -590,21 +590,19 @@ const fetchAllData = async (initialData: { bundle: any; resource: any }[]) => {
 
             const data = await response.json();
             const filteredResources = extractPrimaryResource('Encounter', data).filter(
-                (resource) => (resource as any)?.status !== EncounterStatus.IN_PROGRESS
+                (resource) => (resource as any)?.status !== EncounterStatus.IN_PROGRESS,
             );
 
             const newValues = filteredResources.map((resource) => ({ resource, bundle: data }));
             allData = [...allData, ...newValues];
             nextLink = getNextLink(data);
         }
-        return allData
-    }
-    catch (error) {
+        return allData;
+    } catch (error) {
         console.error('Error fetching All Data:', error);
         throw new Error('Failed to fetch data');
     }
-
-}
+};
 const extractPrimaryResource = (resourceType: string, bundle: Bundle) => {
     const filteredResources = (bundle.entry ?? [])
         .filter((entry) => {
@@ -615,9 +613,9 @@ const extractPrimaryResource = (resourceType: string, bundle: Bundle) => {
         .map((entry) => entry.resource);
 
     return filteredResources;
-}
+};
 export const resolveDataToExport = async (data: any, statusUserColumn: string, funtionGetStatus: any) => {
-    const allData = await fetchAllData(data)
+    const allData = await fetchAllData(data);
     addAuditEvent(allData);
     const result = allData.map((data: any) => {
         if (statusUserColumn === 'Status PRM') {

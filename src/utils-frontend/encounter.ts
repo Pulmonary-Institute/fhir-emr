@@ -65,15 +65,16 @@ export function getReasonNotSeen(encounter: Encounter) {
         return encounter?.statusHistory?.[0]?.extension?.[0]?.valueString;
     } else return null;
 }
+
 export function getReportType(encounter: Encounter) {
     if (encounter.statusHistory?.length == 2) {
-        if (!encounter?.statusHistory?.[1]?.period?.extension?.[0].valueString) {
+        if (!encounter?.statusHistory?.[1]?.period?.extension?.[0]?.valueString) {
             return 'Pending';
         }
         return encounter?.statusHistory?.[1]?.period?.extension?.[0].valueString;
     } else if (
         encounter.statusHistory?.length == 1 &&
-        encounter?.statusHistory?.[0]?.extension?.[0]?.url == 'https://example.com/extensions/statusPRM'
+        encounter?.statusHistory?.[0]?.period?.extension?.[0]?.url == 'https://example.com/extensions/periodStatusPRM'
     ) {
         if (!encounter?.statusHistory?.[0]?.period?.extension?.[0].valueString) {
             return 'Pending';
@@ -81,6 +82,7 @@ export function getReportType(encounter: Encounter) {
         return encounter?.statusHistory?.[0]?.period?.extension?.[0]?.valueString;
     } else return 'Pending';
 }
+
 export function getProvider(resource: any, bundle: any) {
     const practitioner = resolveReference<Practitioner>(bundle, resource.participant?.[0].individual!)!;
     if (practitioner?.name?.[0]) {
@@ -99,7 +101,7 @@ export function getProvider(resource: any, bundle: any) {
 }
 
 export function getTypeOfVisit(resource: any) {
-    const result = resource?.serviceType?.coding?.[0].display;
+    const result = resource?.serviceType?.coding?.[0]?.display;
     if (!result) {
         return '';
     }
@@ -144,7 +146,7 @@ export function getStatusAudit(encounter: Encounter) {
             (item: any) => item.url == 'https://moxie-link.com/fhir/StructureDefinition/status-audit',
         );
         if (filter.length > 0) {
-            return filter?.[0].valueString;
+            return filter?.[0]?.valueString;
         } else return null;
     } else return null;
 }
@@ -154,7 +156,7 @@ export function getReportTypeAudit(encounter: Encounter) {
             (item: any) => item.url == 'https://moxie-link.com/fhir/StructureDefinition/status-export',
         );
         if (filter.length > 0) {
-            return filter?.[0].valueString;
+            return filter?.[0]?.valueString;
         } else return 'Pending';
     } else return 'Pending';
 }

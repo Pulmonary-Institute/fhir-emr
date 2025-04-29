@@ -3,13 +3,14 @@ const config = {
 
     wearablesAccessConsentCodingSystem: 'https://fhir.emr.beda.software/CodeSystem/consent-subject',
 
-    tier: 'staging',
-    baseURL: 'https://staging-aidbox.moxie-link.com',
+    tier: 'production',
+    baseURL: 'https://production-aidbox.moxie-link.com',
     whisperApiUrl: 'https://whisper.staging.nexushealthproject.com',
     sdcIdeUrl: 'https://sdc.beda.software',
     aiQuestionnaireBuilderUrl: 'https://builder.emr.beda.software',
 
     sdcBackendUrl: null,
+    
     webSentryDSN: null,
     mobileSentryDSN: null,
     jitsiMeetServer: 'video.emr.beda.software/',

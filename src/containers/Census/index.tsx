@@ -4,16 +4,18 @@ import { Button } from 'antd';
 import { Patient, Location, Encounter, Condition, Organization } from 'fhir/r4b';
 import _ from 'lodash';
 import moment from 'moment';
-import { useCallback, useState, useEffect, useRef } from 'react';
+import { useCallback, useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { SortOrder as AntSortOrder } from 'antd/es/table/interface';
 
-
-import { SearchBarColumnType } from '@beda.software/emr/dist/components/SearchBar/types';
+import { SearchBarColumn, SearchBarColumnType } from '@beda.software/emr/dist/components/SearchBar/types';
 import { questionnaireAction, ResourceListPage, exportAction } from '@beda.software/emr/uberComponents';
 import { formatHumanDate, renderHumanName, resolveReference } from '@beda.software/emr/utils';
 import { parseFHIRDateTime } from '@beda.software/fhir-react';
-import { getFacilityFromEncounterAddPatientNotAssigned, getRoomFromEncounterAddPatientNotAssigned } from 'src/utils-frontend/encounter'
+import { 
+    getFacilityFromEncounterAddPatientNotAssigned, 
+    getRoomFromEncounterAddPatientNotAssigned 
+} from 'src/utils-frontend/encounter'
 import { stringFormatDateTime } from 'src/utils-frontend/date';
 import {
     admissionEncounterClassCode,
@@ -31,25 +33,23 @@ import { getPatientDNRCode } from 'src/utils-frontend/patient';
 import { matchCurrentUserRole, Role } from 'src/utils-frontend/role';
 import { getUserRol, exportToExcelPRM, exportToExcelAudit } from './hook';
 
-
-
 // Defining an enum for the sort order values
 enum SortOrder {
     ASCEND = 'ascend',
-    DESCEND = 'descend'
+    DESCEND = 'descend',
 }
 
-
 function sortByFieldParser(field: string, sortOrder: SortOrder) {
-    return sortOrder === SortOrder.ASCEND ? `${field}` : `-${field}`
+    return sortOrder === SortOrder.ASCEND ? `${field}` : `-${field}`;
 }
 
 export function Census() {
     const [rol, setRol] = useState('');
+    const [rolPRM, setRolPRM] = useState<boolean>(false);
+
     const selectedResourceRef = useRef<Encounter | null>(null);
     const [sortField, setSortField] = useState<string>('patient-name');
     const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASCEND);
-
 
     const defaultPractitionerRef = matchCurrentUserRole({
         [Role.Admin]: () => undefined,
@@ -66,31 +66,223 @@ export function Census() {
         [Role.Prm]: () => undefined,
         [Role.Audit]: () => undefined,
     });
+
+    const onHeaderCellClick = useCallback(
+        (field: string) => {
+            return () => {
+                const newOrder =
+                    field === sortField && sortOrder === SortOrder.ASCEND ? SortOrder.DESCEND : SortOrder.ASCEND;
+                setSortField(field);
+                setSortOrder(newOrder);
+            };
+        },
+        [sortField, sortOrder, setSortField, setSortOrder],
+    );
+
     useEffect(() => {
-        loadRole();
-    }, []);
-
-    const onHeaderCellClick = useCallback((field: string) => {
-        return () => {
-            const newOrder = field === sortField && sortOrder === SortOrder.ASCEND ? SortOrder.DESCEND : SortOrder.ASCEND;
-            setSortField(field);
-            setSortOrder(newOrder);
+        const fetchRole = async () => {
+            const role = await getUserRol();
+            setRol(role);
+            setRolPRM(role === 'PRM');
         };
-    }, [sortField, sortOrder, setSortField, setSortOrder]);
-
-
-    const loadRole = async () => {
-        const role = await getUserRol();
-        setRol(role);
-    };
+        fetchRole();
+    }, []);
 
     const storeSelectedResource = (resource: Encounter) => {
         selectedResourceRef.current = resource;
     };
 
+    const searchBarColumns = useMemo(() => {
+        return [
+            {
+                id: 'service-provider',
+                searchParam: 'service-provider',
+                type: SearchBarColumnType.REFERENCE,
+                placeholder: t`Choose the facility`,
+                expression: 'Organization?type=dept',
+                path: 'name',
+                placement: ['modal'],
+            },
+            defaultPractitionerRef === undefined
+                ? {
+                    id: 'participant',
+                    searchParam: 'participant',
+                    type: SearchBarColumnType.REFERENCE,
+                    placeholder: t`Choose the practitioner`,
+                    expression: 'Practitioner?_has:PractitionerRole:practitioner:role=practitioner',
+                    path: `name.given.first() + ' ' + name.family.first()`,
+                    defaultValue: defaultPractitionerRef,
+                    placement: ['modal'],
+                }
+                : {
+                    id: 'participant-only',
+                    searchParam: 'participant',
+                    type: SearchBarColumnType.REFERENCE,
+                    placeholder: t`Choose the practitioner`,
+                    expression: defaultPractitionerRef?.id
+                        ? `Practitioner?_has:PractitionerRole:practitioner:role=practitioner&_id=${defaultPractitionerRef?.id}`
+                        : 'Practitioner?_has:PractitionerRole:practitioner:role=practitioner',
+                    path: `name.given.first() + ' ' + name.family.first()`,
+                    defaultValue: defaultPractitionerRef,
+                    placement: ['modal'],
+                },
+            {
+                id: 'service-type',
+                searchParam: 'service-type',
+                type: SearchBarColumnType.CHOICE,
+                placeholder: t`Choose type of visit`,
+                valueSet: 'https://nexushealthproject.com/ValueSet/visit-type-codes',
+                placement: ['modal'],
+            },
+            {
+                id: 'date',
+                searchParam: 'date',
+                type: SearchBarColumnType.SINGLEDATE,
+                placeholder: t`Date`,
+                defaultValue: moment(),
+            },
+            {
+                id: 'patient-name',
+                searchParam: 'patient',
+                type: SearchBarColumnType.REFERENCE,
+                placeholder: t`Choose patient`,
+                expression: 'Patient',
+                path: `name.given.first() + ' ' + name.family.first()`,
+            },
+            {
+                id: 'patient-birthDate',
+                searchParam: 'patient:Patient.birthdate',
+                type: SearchBarColumnType.SINGLEDATE,
+                placeholder: t`Birth date`,
+            },
+            {
+                id: 'encounter-location',
+                searchParam: 'location',
+                type: SearchBarColumnType.REFERENCE,
+                placeholder: t`Choose room`,
+                expression: 'Location',
+                path: `alias.first()`,
+                placement: ['modal'],
+            },
+            {
+                id: 'status',
+                searchParam: 'status',
+                type: SearchBarColumnType.CHOICE,
+                placeholder: t`Choose Status`,
+                options: [
+                    {
+                        value: {
+                            Coding: {
+                                code: 'planned',
+                                display: 'Scheduled',
+                            },
+                        },
+                    },
+                    {
+                        value: {
+                            Coding: {
+                                code: 'finished',
+                                display: 'Completed',
+                            },
+                        },
+                    },
+                    {
+                        value: {
+                            Coding: {
+                                code: 'cancelled',
+                                display: 'Not seen',
+                            },
+                        },
+                    },
+                    {
+                        value: {
+                            Coding: {
+                                code: 'in-progress',
+                                display: 'Note in Progress',
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                id: 'status-prm',
+                searchParam: 'statusPRM',
+                type: SearchBarColumnType.CHOICE,
+                placeholder: t`Choose status PRM`,
+                options: [
+                    {
+                        value: {
+                            Coding: {
+                                code: 'Claim Sent',
+                                display: 'Claim Sent',
+                            },
+                        },
+                    },
+                    {
+                        value: {
+                            Coding: {
+                                code: 'Claim Approved',
+                                display: 'Claim Approved',
+                            },
+                        },
+                    },
+                    {
+                        value: {
+                            Coding: {
+                                code: 'Claim Rejected',
+                                display: 'Claim Rejected',
+                            },
+                        },
+                    },
+                    {
+                        value: {
+                            Coding: {
+                                code: 'Unable to Claim',
+                                display: 'Unable to Claim',
+                            },
+                        },
+                    },
+                    {
+                        value: {
+                            Coding: {
+                                code: 'Pending Claim',
+                                display: 'Pending Claim',
+                            },
+                        },
+                    },
+                ],
+            },
 
+            rolPRM && {
+                id: 'export-status',
+                searchParam: 'exportStatus',
+                type: SearchBarColumnType.CHOICE,
+                placeholder: t`Choose export status PRM`,
+                options: [
+                    {
+                        value: {
+                            Coding: {
+                                code: 'Pending',
+                                display: 'Pending',
+                            },
+                        },
+                    },
+                    {
+                        value: {
+                            Coding: {
+                                code: 'Exported',
+                                display: 'Exported',
+                            },
+                        },
+                    },
+                ],
+            },
+        ].filter(Boolean) as SearchBarColumn[];
+    }, [rolPRM]);
 
-    return (
+    return rol == '' ? (
+        <></>
+    ) : (
         <ResourceListPage<Encounter>
             headerTitle={t`Census`}
             maxWidth={'100%'}
@@ -110,7 +302,7 @@ export function Census() {
                 _revinclude: ['AuditEvent:entity:Encounter'],
                 'class:not': admissionEncounterClassCode,
                 'part-of:missing': false,
-                _sort: sortByFieldParser(sortField === 'encounter-location' ? 'location' : 'patient-name', sortOrder)
+                _sort: sortByFieldParser(sortField === 'encounter-location' ? 'location' : 'patient-name', sortOrder),
             }}
             getTableColumns={() => [
                 {
@@ -122,7 +314,7 @@ export function Census() {
                     sorter: true,
                     sortDirections: ['ascend', 'descend'],
                     onHeaderCell: () => ({
-                        onClick: onHeaderCellClick('patient-name')
+                        onClick: onHeaderCellClick('patient-name'),
                     }),
 
                     render: (_text: any, { resource, bundle }: { resource: any; bundle: any }) => {
@@ -135,7 +327,6 @@ export function Census() {
                             </Link>
                         );
                     },
-
                 },
                 {
                     title: <Trans>Birth date</Trans>,
@@ -164,7 +355,7 @@ export function Census() {
                     render: (_text: any, { resource, bundle }: { resource: any; bundle: any }) => {
                         const organizationRef = resource.serviceProvider;
                         if (!organizationRef) {
-                            return getFacilityFromEncounterAddPatientNotAssigned(resource.partOf, bundle)
+                            return getFacilityFromEncounterAddPatientNotAssigned(resource.partOf, bundle);
                         }
                         const organization = resolveReference(bundle, organizationRef) as Organization | undefined;
                         if (!organization) {
@@ -180,13 +371,12 @@ export function Census() {
                     sorter: true,
                     sortDirections: [SortOrder.ASCEND, SortOrder.DESCEND],
                     onHeaderCell: () => ({
-                        onClick: onHeaderCellClick('encounter-location')
+                        onClick: onHeaderCellClick('encounter-location'),
                     }),
                     render: (_text: any, { resource, bundle }: { resource: any; bundle: any }) => {
                         const locationRef = resource.location?.[0]?.location;
                         if (!locationRef) {
-                            return getRoomFromEncounterAddPatientNotAssigned(resource.partOf, bundle)
-
+                            return getRoomFromEncounterAddPatientNotAssigned(resource.partOf, bundle);
                         }
                         const location = resolveReference(bundle, locationRef) as Location | undefined;
 
@@ -337,7 +527,7 @@ export function Census() {
                         {
                             title: <Trans>Provider</Trans>,
                             dataIndex: 'provider',
-                            key: 'provider',
+                            key: 'name',
                             width: '10%',
                             render: (_text: any, { resource, bundle }: { resource: any; bundle: any }) => {
                                 return getProvider(resource, bundle);
@@ -365,8 +555,8 @@ export function Census() {
                         },
                         {
                             title: <Trans>Export Status</Trans>,
-                            dataIndex: 'export-status-prm',
-                            key: 'export-status-prm',
+                            dataIndex: 'export-status',
+                            key: 'export-status',
                             width: '10%',
                             render: (_text: any, { resource }: { resource: any }) => {
                                 return getReportType(resource);
@@ -414,8 +604,8 @@ export function Census() {
                         },
                         {
                             title: <Trans>Export Status</Trans>,
-                            dataIndex: 'export-status-prm',
-                            key: 'export-status-prm',
+                            dataIndex: 'prm-export-status',
+                            key: 'prm-export-status',
                             width: '10%',
                             render: (_text: any, { resource }: { resource: any }) => {
                                 return getReportTypeAudit(resource);
@@ -433,172 +623,13 @@ export function Census() {
                     ]
                     : []),
             ]}
-            getFilters={() =>
-                [
-                    {
-                        id: 'service-provider',
-                        searchParam: 'service-provider',
-                        type: SearchBarColumnType.REFERENCE,
-                        placeholder: t`Choose the facility`,
-                        expression: 'Organization?type=dept',
-                        path: 'name',
-                    },
-                    defaultPractitionerRef === undefined
-                        ? {
-                            id: 'participant',
-                            searchParam: 'participant',
-                            type: SearchBarColumnType.REFERENCE,
-                            placeholder: t`Choose the practitioner`,
-                            expression: 'Practitioner?_has:PractitionerRole:practitioner:role=practitioner',
-                            path: `name.given.first() + ' ' + name.family.first()`,
-                            defaultValue: defaultPractitionerRef,
-                        }
-                        : {
-                            id: 'participant-only',
-                            searchParam: 'participant',
-                            type: SearchBarColumnType.REFERENCE,
-                            placeholder: t`Choose the practitioner`,
-                            expression: defaultPractitionerRef?.id
-                                ? `Practitioner?_has:PractitionerRole:practitioner:role=practitioner&_id=${defaultPractitionerRef?.id}`
-                                : 'Practitioner?_has:PractitionerRole:practitioner:role=practitioner',
-                            path: `name.given.first() + ' ' + name.family.first()`,
-                            defaultValue: defaultPractitionerRef,
-                        },
-                    {
-                        id: 'service-type',
-                        searchParam: 'service-type',
-                        type: SearchBarColumnType.CHOICE,
-                        placeholder: t`Choose type of visit`,
-                        valueSet: 'https://nexushealthproject.com/ValueSet/visit-type-codes',
-                    },
-                    {
-                        id: 'date',
-                        searchParam: 'date',
-                        type: SearchBarColumnType.SINGLEDATE,
-                        placeholder: t`Date`,
-                        defaultValue: moment(),
-                    },
-                    {
-                        id: 'patient-name',
-                        searchParam: 'patient',
-                        type: SearchBarColumnType.REFERENCE,
-                        placeholder: t`Choose patient`,
-                        expression: 'Patient',
-                        path: `name.given.first() + ' ' + name.family.first()`,
-                        placement: ['table'],
-                    },
-                    {
-                        id: 'patient-birthDate',
-                        searchParam: 'patient:Patient.birthdate',
-                        type: SearchBarColumnType.SINGLEDATE,
-                        placeholder: t`Birth date`,
-                        placement: ['table'],
-                    },
-                    {
-                        id: 'encounter-location',
-                        searchParam: 'location',
-                        type: SearchBarColumnType.REFERENCE,
-                        placeholder: t`Choose room`,
-                        expression: 'Location',
-                        path: `alias.first()`,
-                        placement: ['table'],
-                    },
-                    {
-                        id: 'status',
-                        searchParam: 'status',
-                        type: SearchBarColumnType.CHOICE,
-                        placeholder: t`Choose Status`,
-                        options: [
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'planned',
-                                        display: 'Scheduled',
-                                    },
-                                },
-                            },
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'finished',
-                                        display: 'Completed',
-                                    },
-                                },
-                            },
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'cancelled',
-                                        display: 'Not seen',
-                                    },
-                                },
-                            },
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'in-progress',
-                                        display: 'Note in Progress',
-                                    },
-                                },
-                            },
-                        ],
 
-                    },
-                    {
-                        id: 'status-prm',
-                        searchParam: 'prm-type',
-                        type: SearchBarColumnType.CHOICE,
-                        placeholder: t`Choose status PRM`,
-                        options: [
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'Claim Sent',
-                                        display: 'Claim Sent',
-                                    },
-                                },
-                            },
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'Claim Approved',
-                                        display: 'Claim Approved',
-                                    },
-                                },
-                            },
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'Claim Rejected',
-                                        display: 'Claim Rejected',
-                                    },
-                                },
-                            },
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'Unable to Claim',
-                                        display: 'Unable to Claim',
-                                    },
-                                },
-                            },
-                            {
-                                value: {
-                                    Coding: {
-                                        code: 'Pending Claim',
-                                        display: 'Pending Claim',
-                                    },
-                                },
-                            },
-                        ],
-                    },
-                ] as any[]
-            }
+            getFilters={() => searchBarColumns}
+
             {...(rol !== 'scriber' &&
                 rol !== 'PRM' &&
                 rol != 'Audit' && {
                 getRecordActions: ({ resource }) => {
-
                     storeSelectedResource(resource);
 
                     return [

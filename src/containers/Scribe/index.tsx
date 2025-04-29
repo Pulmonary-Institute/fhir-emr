@@ -253,7 +253,6 @@ export function Scribe() {
                     searchParam: 'due-date',
                     type: SearchBarColumnType.SINGLEDATE,
                     placeholder: t`Due date`,
-                    placement: ['table'],
                 },
                 {
                     id: 'patient-name',
@@ -262,7 +261,6 @@ export function Scribe() {
                     placeholder: t`Choose patient`,
                     expression: 'Patient',
                     path: `name.given.first() + ' ' + name.family.first()`,
-                    placement: ['table'],
                 },
                 {
                     id: 'requester',
@@ -271,7 +269,6 @@ export function Scribe() {
                     placeholder: t`Choose practitioner`,
                     expression: 'Practitioner?_has:PractitionerRole:practitioner:role=practitioner',
                     path: `name.given.first() + ' ' + name.family.first()`,
-                    placement: ['table'],
                 },
                 {
                     id: 'encounter-service-provider',
@@ -280,7 +277,6 @@ export function Scribe() {
                     placeholder: t`Choose facility`,
                     expression: 'Organization?type=dept',
                     path: `name`,
-                    placement: ['table'],
                 },
                 {
                     id: 'scribe-note-task-owner',
@@ -289,7 +285,6 @@ export function Scribe() {
                     placeholder: t`Choose scriber`,
                     expression: 'Practitioner?_has:PractitionerRole:practitioner:role=scriber',
                     path: `name.given.first() + ' ' + name.family.first()`,
-                    placement: ['table'],
                 },
                 {
                     id: 'qa-note-task-owner',
@@ -298,7 +293,6 @@ export function Scribe() {
                     placeholder: t`Choose qa`,
                     expression: 'Practitioner?_has:PractitionerRole:practitioner:role=qa',
                     path: `name.given.first() + ' ' + name.family.first()`,
-                    placement: ['table'],
                 },
             ]}
             getRecordActions={({ resource, bundle }, { reload }) => {

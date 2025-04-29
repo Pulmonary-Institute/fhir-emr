@@ -7,6 +7,9 @@ import { Patient, Location, Encounter, Condition } from 'fhir/r4b';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+
+
+
 import { SearchBarColumn, SearchBarColumnType } from '../../../dist/components/SearchBar/types';
 import { questionnaireAction, ResourceListPage } from '@beda.software/emr/uberComponents';
 import { formatHumanDate, getYears, renderHumanName, resolveReference } from '@beda.software/emr/utils';
@@ -400,21 +403,18 @@ export function PatientList() {
             placeholder: t`Choose patient`,
             expression: 'Patient',
             path: `name.given.first() + ' ' + name.family.first()`,
-            placement: ['table'],
         },
         {
             id: 'patient-identifier',
             searchParam: 'patient:Patient.identifier',
             type: SearchBarColumnType.STRING,
             placeholder: t`Enter mrn`,
-            placement: ['table'],
         },
         {
             id: 'patient-birthDate',
             searchParam: 'patient:Patient.birthdate',
             type: SearchBarColumnType.SINGLEDATE,
             placeholder: t`Birth date`,
-            placement: ['table'],
         },
         {
             id: 'encounter-location',
@@ -423,7 +423,6 @@ export function PatientList() {
             placeholder: t`Choose room`,
             expression: 'Location',
             path: `alias.first()`,
-            placement: ['table'],
         },
         {
             id: 'payer-source',
@@ -432,7 +431,6 @@ export function PatientList() {
             placeholder: t`Choose payer source`,
             path: 'name',
             expression: 'Organization?type=ins',
-            placement: ['table'],
         },
         {
             id: 'patient-dnr',
@@ -465,7 +463,6 @@ export function PatientList() {
                     },
                 },
             ],
-            placement: ['table'],
         },
         {
             id: 'insurance-authorization',
@@ -506,56 +503,6 @@ export function PatientList() {
                     },
                 },
             ],
-            placement: ['table'],
-        },
-        {
-            id: 'admission-encounter-type',
-            searchParam: 'type',
-            type: SearchBarColumnType.CHOICE,
-            placeholder: t`Choose Insurance Authorization`,
-            options: [
-                {
-                    value: {
-                        Coding: {
-                            code: 'SKILLED',
-                            display: 'Skilled',
-                        },
-                    },
-                },
-                {
-                    value: {
-                        Coding: {
-                            code: 'LTC',
-                            display: 'LTC',
-                        },
-                    },
-                },
-                {
-                    value: {
-                        Coding: {
-                            code: 'HOSPICE',
-                            display: 'Hospice',
-                        },
-                    },
-                },
-                {
-                    value: {
-                        Coding: {
-                            code: 'VETERAN',
-                            display: 'Veteran',
-                        },
-                    },
-                },
-                {
-                    value: {
-                        Coding: {
-                            code: 'N/A',
-                            display: 'N/A',
-                        },
-                    },
-                },
-            ],
-            placement: ['table'],
         },
     ], [invalidateCache]);
 

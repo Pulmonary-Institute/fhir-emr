@@ -1,0 +1,107 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frontend-staging-9b7c1-authRole",
+      "UnauthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-staging-9b7c1-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-staging-9b7c1-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-frontend-staging-9b7c1-deployment",
+      "UnauthRoleName": "amplify-frontend-staging-9b7c1-unauthRole",
+      "StackName": "amplify-frontend-staging-9b7c1",
+      "StackId": "arn:aws:cloudformation:us-east-1:585008083183:stack/amplify-frontend-staging-9b7c1/83769590-1a2e-11f0-96c1-0e080bd860f3",
+      "AmplifyAppId": "d1wz07kwe1do3m"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1wz07kwe1do3m",
+          "type": "manual"
+        }
+      }
+    }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frontend-dev-48d84-authRole",
+      "UnauthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-dev-48d84-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-dev-48d84-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-frontend-dev-48d84-deployment",
+      "UnauthRoleName": "amplify-frontend-dev-48d84-unauthRole",
+      "StackName": "amplify-frontend-dev-48d84",
+      "StackId": "arn:aws:cloudformation:us-east-1:585008083183:stack/amplify-frontend-dev-48d84/e1cfd1b0-1b8c-11f0-b19b-12ee5888ce31",
+      "AmplifyAppId": "d1wz07kwe1do3m"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1wz07kwe1do3m",
+          "type": "manual"
+        }
+      }
+    }
+  },
+  "develop": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frontend-develop-4fc02-authRole",
+      "UnauthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-develop-4fc02-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-develop-4fc02-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-frontend-develop-4fc02-deployment",
+      "UnauthRoleName": "amplify-frontend-develop-4fc02-unauthRole",
+      "StackName": "amplify-frontend-develop-4fc02",
+      "StackId": "arn:aws:cloudformation:us-east-1:585008083183:stack/amplify-frontend-develop-4fc02/e912d9e0-1b91-11f0-a16e-0afffb6739cf",
+      "AmplifyAppId": "d1wz07kwe1do3m"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1wz07kwe1do3m",
+          "type": "manual"
+        }
+      }
+    }
+  },
+  "production": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frontend-production-73c70-authRole",
+      "UnauthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-production-73c70-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-production-73c70-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-frontend-production-73c70-deployment",
+      "UnauthRoleName": "amplify-frontend-production-73c70-unauthRole",
+      "StackName": "amplify-frontend-production-73c70",
+      "StackId": "arn:aws:cloudformation:us-east-1:585008083183:stack/amplify-frontend-production-73c70/dc597ac0-1ba9-11f0-8f71-0e4919b43775",
+      "AmplifyAppId": "d1wz07kwe1do3m"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1wz07kwe1do3m",
+          "type": "manual"
+        }
+      }
+    }
+  },
+  "prodbackup": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frontend-prodbackup-bfdc5-authRole",
+      "UnauthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-prodbackup-bfdc5-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::585008083183:role/amplify-frontend-prodbackup-bfdc5-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-frontend-prodbackup-bfdc5-deployment",
+      "UnauthRoleName": "amplify-frontend-prodbackup-bfdc5-unauthRole",
+      "StackName": "amplify-frontend-prodbackup-bfdc5",
+      "StackId": "arn:aws:cloudformation:us-east-1:585008083183:stack/amplify-frontend-prodbackup-bfdc5/d1c07450-2087-11f0-ab38-0e3a8cfa65d1",
+      "AmplifyAppId": "d1wz07kwe1do3m"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1wz07kwe1do3m",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}
