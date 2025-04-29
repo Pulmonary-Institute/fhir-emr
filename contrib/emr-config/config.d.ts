@@ -6,6 +6,7 @@ declare const config: {
     tier: string;
     baseURL: string;
     sdcIdeUrl: string;
+    whisperApiUrl: string,
     aiQuestionnaireBuilderUrl: string;
 
     sdcBackendUrl: string | null;

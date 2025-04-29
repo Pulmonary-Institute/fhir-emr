@@ -1,146 +1,91 @@
+import { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { t, Trans } from '@lingui/macro';
-import { Button, Empty, notification } from 'antd';
 import { Practitioner } from 'fhir/r4b';
-import { useNavigate } from 'react-router-dom';
+import _ from 'lodash';
+import { inMemorySaveService } from '@beda.software/emr/hooks';
+import { questionnaireAction, ResourceListPage } from '@beda.software/emr/uberComponents';
+import { renderHumanName } from '@beda.software/emr/utils';
+import { SearchBarColumnType } from '@beda.software/emr/dist/components/SearchBar/types';
 
-import { isLoading, isSuccess } from '@beda.software/remote-data';
+import { extractPractitionerRoleByPractitioner, extractEmailByPractitioner } from 'src/utils-frontend/practitioner';
 
-import { PageContainer } from 'src/components/BaseLayout/PageContainer';
-import { ModalTrigger } from 'src/components/ModalTrigger';
-import { QuestionnaireResponseForm } from 'src/components/QuestionnaireResponseForm';
-import { SearchBar } from 'src/components/SearchBar';
-import { useSearchBar } from 'src/components/SearchBar/hooks';
-import { StringTypeColumnFilterValue } from 'src/components/SearchBar/types';
-import { SpinIndicator } from 'src/components/Spinner';
-import { Table } from 'src/components/Table';
-import { questionnaireIdLoader } from 'src/hooks/questionnaire-response-form-data';
+function EmailCell({ practitionerId }: { practitionerId: any }) {
+    const [email, setEmail] = useState(null);
 
-import { usePractitionersList } from './hooks';
-import { getPractitionerListSearchBarColumns } from './searchBarUtils';
+    useEffect(() => {
+        const fetchEmail = async () => {
+            const result = await extractEmailByPractitioner(practitionerId);
+            setEmail(result);
+        };
+        fetchEmail();
+    }, [practitionerId]);
 
-export interface PractitionerListActionsProps {
-    onSuccess: () => void;
+    return email;
 }
 
-function DefaultPractitionerListActions({ onSuccess }: PractitionerListActionsProps) {
+export function PractitionerList() {
     return (
-        <ModalTrigger
-            title={t`Create practitioner`}
-            trigger={
-                <Button icon={<PlusOutlined />} type="primary">
-                    <span>
-                        <Trans>Add new practitioner</Trans>
-                    </span>
-                </Button>
-            }
-        >
-            {({ closeModal }) => (
-                <QuestionnaireResponseForm
-                    questionnaireLoader={questionnaireIdLoader('practitioner-create')}
-                    onCancel={closeModal}
-                    onSuccess={() => {
-                        onSuccess();
-                        closeModal();
-                    }}
-                />
-            )}
-        </ModalTrigger>
-    );
-}
-
-interface PractitionerListProps {
-    PractitionerListActions?: typeof DefaultPractitionerListActions;
-}
-
-export function PractitionerList(props: PractitionerListProps) {
-    const PractitionerListActions = props.PractitionerListActions
-        ? props.PractitionerListActions
-        : DefaultPractitionerListActions;
-
-    const navigate = useNavigate();
-    const { columnsFilterValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
-        columns: getPractitionerListSearchBarColumns(),
-    });
-
-    const { practitionerDataListRD, practitionerListReload, pagination, handleTableChange } = usePractitionersList(
-        columnsFilterValues as StringTypeColumnFilterValue[],
-    );
-
-    return (
-        <PageContainer
-            variant="with-table"
-            title={<Trans>Practitioners</Trans>}
-            headerRightColumn={
-                <PractitionerListActions
-                    onSuccess={() => {
-                        practitionerListReload();
-                        notification.success({
-                            message: t`Practitioner successfully created`,
-                        });
-                    }}
-                />
-            }
-            header={{
-                children: (
-                    <SearchBar
-                        columnsFilterValues={columnsFilterValues}
-                        onChangeColumnFilter={onChangeColumnFilter}
-                        onResetFilters={onResetFilters}
-                    />
-                ),
+        <ResourceListPage<Practitioner>
+            headerTitle={t`Users`}
+            resourceType="Practitioner"
+            searchParams={{
+                _revinclude: 'PractitionerRole:practitioner:Practitioner',
+                _sort: 'name',
             }}
-        >
-            <Table
-                pagination={pagination}
-                onChange={handleTableChange}
-                bordered
-                locale={{
-                    emptyText: (
-                        <>
-                            <Empty description={<Trans>No data</Trans>} image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                        </>
-                    ),
-                }}
-                dataSource={isSuccess(practitionerDataListRD) ? practitionerDataListRD.data : []}
-                columns={[
-                    {
-                        title: <Trans>Name</Trans>,
-                        dataIndex: 'practitionerName',
-                        key: 'practitionerName',
-                        width: '20%',
+            getTableColumns={() => [
+                {
+                    title: <Trans>Name</Trans>,
+                    dataIndex: 'name',
+                    key: 'name',
+                    render: (_text, { resource }) => renderHumanName(resource.name?.[0]),
+                    width: 400,
+                },
+                {
+                    title: <Trans>Email</Trans>,
+                    dataIndex: 'email',
+                    key: 'email',
+                    render: (_text, { resource }) => <EmailCell practitionerId={resource.id} />,
+                    width: 200,
+                },
+                {
+                    title: <Trans>Role</Trans>,
+                    dataIndex: 'role',
+                    key: 'role',
+                    render: (_text, { resource, bundle }) => {
+                        const practitionerRole = extractPractitionerRoleByPractitioner(resource)(bundle);
+                        if (practitionerRole) {
+                            return practitionerRole.code?.[0]?.coding?.[0]?.display ?? 'N/A';
+                        }
                     },
-                    {
-                        title: <Trans>Specialty</Trans>,
-                        dataIndex: 'practitionerRoleList',
-                        key: 'practitionerRoleList',
-                        width: '30%',
-                        render: (specialties: string[]) => specialties.join(', '),
+                    width: 150,
+                },
+            ]}
+            getFilters={() => [
+                {
+                    id: 'name',
+                    searchParam: 'name',
+                    type: SearchBarColumnType.STRING,
+                    placeholder: t`Search by name`,
+                },
+            ]}
+            getRecordActions={() => [
+                questionnaireAction(t`Edit`, 'practitioner-edit'),
+                questionnaireAction(t`Change password`, 'practitioner-change-password', {
+                    qrfProps: {
+                        questionnaireResponseSaveService: inMemorySaveService,
                     },
-                    {
-                        title: <Trans>Actions</Trans>,
-                        dataIndex: 'practitionerResource',
-                        key: 'actions',
-                        width: '5%',
-                        render: (practitioner: Practitioner) => {
-                            return (
-                                <Button
-                                    type="link"
-                                    style={{ padding: 0 }}
-                                    onClick={() =>
-                                        navigate(`/practitioners/${practitioner.id}`, {
-                                            state: { practitioner },
-                                        })
-                                    }
-                                >
-                                    <Trans>Open</Trans>
-                                </Button>
-                            );
-                        },
+                }),
+                questionnaireAction(t`Remove`, 'practitioner-delete'),
+            ]}
+            getHeaderActions={() => [
+                questionnaireAction(t`Add practitioner`, 'practitioner-create', {
+                    icon: <PlusOutlined />,
+                    qrfProps: {
+                        questionnaireResponseSaveService: inMemorySaveService,
                     },
-                ]}
-                loading={isLoading(practitionerDataListRD) && { indicator: SpinIndicator }}
-            />
-        </PageContainer>
+                }),
+            ]}
+        ></ResourceListPage>
     );
 }

@@ -1,0 +1,147 @@
+.welcome-census-team {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Open Sans", Helvetica;
+  font-weight: 400;
+  color: var(--e-health-dashboard-1-secondary-secondary);
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.text-wrapper {
+  font-family: "Open Sans", Helvetica;
+  font-weight: 400;
+  color: #003049;
+  font-size: 36px;
+  letter-spacing: 0;
+}
+
+/* Estilo para las columnas */
+.column {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.rectangulo1 {
+  width: 600px;
+  height: 340px;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: var(--e-health-dashboard-1-secondary-light-grey);
+  box-shadow: var(--shadow-xl);
+}
+.rectangulo2 {
+  width: 290px;
+  height: 400;
+  background-color: white;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: var(--e-health-dashboard-1-secondary-light-grey);
+  box-shadow: var(--shadow-xl);
+  flex: 1;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.rectangulo3 {
+  width: 290px;
+  height: 400;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: var(--e-health-dashboard-1-secondary-light-grey);
+  box-shadow: var(--shadow-xl);
+  flex: 1;
+  margin-left: 10px;
+}
+.rectangulo4 {
+  width: 290px;
+  height: 400;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: var(--e-health-dashboard-1-secondary-light-grey);
+  box-shadow: var(--shadow-xl);
+  flex: 1;
+  margin-left: 10px;
+
+}
+
+.calendar {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 'auto';
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.title {
+  margin-left: 150px;
+}
+
+.home {
+  background-color: aliceblue;
+
+}
+
+.containerBroadcast {
+  display: flex;
+  justify-content: center;
+  /* Centra horizontalmente */
+  align-items: center;
+  /* Centra verticalmente */
+
+}
+
+.right {
+  padding: 10px;
+  position: sticky;
+  top: 0;
+}
+
+.right h1 {
+  color: #222222;
+  font-size: 2rem;
+}
+
+.divCount {
+  background-color: #4899E1;
+  width: 35px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  display: flex;
+}
+.monthlySummary{
+  flex: 1;
+  margin-left: 10px;
+  width: 100px;
+}
+.containerDown{
+  height: 300px;
+  display: flex;
+  justify-content: space-between;
+}

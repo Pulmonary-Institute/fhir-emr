@@ -11,6 +11,7 @@ const require = createRequire(import.meta.url);
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
     server: {
+        host: '0.0.0.0',
         port: command === 'build' ? 5000 : 3000,
     },
     plugins: [
@@ -38,7 +39,10 @@ export default defineConfig(({ command }) => ({
         'process.env': {},
     },
     resolve: {
-        alias: [{ find: 'src', replacement: path.resolve(__dirname, './src/') }],
+        alias: [
+            { find: 'src', replacement: path.resolve(__dirname, './src/') },
+            { find: '@beda.software/emr-config', replacement: path.resolve(__dirname, './contrib/emr-config-local/config.js') },
+        ],
     },
     build: {
         outDir: path.resolve(__dirname, 'build'),

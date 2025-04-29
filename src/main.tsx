@@ -3,52 +3,53 @@ import { I18nProvider } from '@lingui/react';
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import 'src/services/initialize';
-
+import '../../fhir-emr/dist/services/initialize';
 import 'antd/dist/reset.css';
-import 'src/styles/index.scss';
+import '../dist/style.css';
 
-import { PatientDashboardProvider } from 'src/components/Dashboard/contexts';
-import { App } from 'src/containers/App';
-import { dashboard } from 'src/dashboard.config';
-import { dynamicActivate, getCurrentLocale } from 'src/services/i18n';
+import { App } from '../../fhir-emr/dist/containers';
+import { ValueSetExpandProvider } from '../../fhir-emr/dist/contexts';
+import { BottomMenuLayout } from '../dist/components/BaseLayout/Sidebar/SidebarBottom/context';
+import { MenuLayout } from '../dist/components/BaseLayout/Sidebar/SidebarTop/context';
+import { PatientDashboardProvider } from '../dist/components/Dashboard/contexts';
 
-import { ValueSetExpandProvider } from './contexts';
-import { expandEMRValueSet } from './services';
-import * as serviceWorker from './serviceWorker';
-import { ThemeProvider } from './theme/ThemeProvider';
-import { DateTimeFormatContext, defaultDateTimeFormats } from './contexts/date-time-format';
+import { dashboardConfig } from '../src/containers/PatientDetails-frontEnd/Dashboard/config';
+import { bottomMenuLayout, menuLayout } from '../src/menu';
+import { anonymousRoutes, authenticatedRoutes } from '../src/routes';
+import { dynamicActivate, getCurrentLocale } from '../src/services-frontend/i18n';
+import { populateUserInfoSharedState } from '../src/services-frontend/role';
+import { expandEMRValueSet } from '../src/services-frontend/valueset-expand';
+import { ThemeProvider } from '../src/theme-frontend';
 
 const AppWithContext = () => {
-    useEffect(() => {
-        dynamicActivate(getCurrentLocale());
-    }, []);
+  useEffect(() => {
+    dynamicActivate(getCurrentLocale());
+  }, []);
 
-    return (
-        <I18nProvider i18n={i18n}>
-            <DateTimeFormatContext.Provider value={defaultDateTimeFormats}>
-                <PatientDashboardProvider dashboard={dashboard}>
-                    <ValueSetExpandProvider.Provider value={expandEMRValueSet}>
-                        <ThemeProvider>
-                            <App />
-                        </ThemeProvider>
-                    </ValueSetExpandProvider.Provider>
-                </PatientDashboardProvider>
-            </DateTimeFormatContext.Provider>
-        </I18nProvider>
-    );
+  return (
+    <I18nProvider i18n={i18n}>
+      <PatientDashboardProvider dashboard={dashboardConfig}>
+        <ValueSetExpandProvider.Provider value={expandEMRValueSet}>
+          <MenuLayout.Provider value={menuLayout}>
+            <BottomMenuLayout.Provider value={bottomMenuLayout}>
+              <ThemeProvider>
+                <App
+                  authenticatedRoutes={authenticatedRoutes}
+                  anonymousRoutes={anonymousRoutes}
+                  populateUserInfoSharedState={populateUserInfoSharedState}
+                />
+              </ThemeProvider>
+            </BottomMenuLayout.Provider>
+          </MenuLayout.Provider>
+        </ValueSetExpandProvider.Provider>
+      </PatientDashboardProvider>
+    </I18nProvider>
+  );
 };
 
-const container = document.getElementById('root')!;
-const root = createRoot(container);
-
-root.render(
-    <React.StrictMode>
-        <AppWithContext />
-    </React.StrictMode>,
+createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+      <AppWithContext />
+  </React.StrictMode>,
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
