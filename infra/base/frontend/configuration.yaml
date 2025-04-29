@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: NodePort
+  ports:
+    - port: 5000
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    workload: frontend
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      workload: frontend
+  template:
+    metadata:
+      labels:
+        workload: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: fhir-emr
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
