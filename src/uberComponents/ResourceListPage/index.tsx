@@ -139,21 +139,21 @@ export function ResourceListPage<R extends Resource>({
     filterID,
 }: ResourceListPageProps<R>) {
     const allFilters = getFilters?.() ?? [];
-    const [isShowResults, setIsShowResults] = useState(false)
+    const [isShowResults, setIsShowResults] = useState(false);
     const { columnsFilterValues, defaultFiltersValues, onChangeColumnFilter, onResetFilters } = useSearchBar({
         columns: allFilters ?? [],
         options: {
             handleFacilityFilterChange,
             filterID,
-            setIsShowResults
-        }
+            setIsShowResults,
+        },
     });
     const [applyFilterValues, setApplyFilterValues] = useState<ColumnFilterValue[]>(defaultFiltersValues);
 
     const onApplyFilters = () => {
         setApplyFilterValues(columnsFilterValues);
-        setIsShowResults(true)
-    }
+        setIsShowResults(true);
+    };
     const tableFilterValues = useMemo(
         () => applyFilterValues.filter((filter) => isTableFilter(filter)),
         [JSON.stringify(applyFilterValues)],
@@ -172,7 +172,7 @@ export function ResourceListPage<R extends Resource>({
         applyFilterValues,
         searchParams ?? {},
         defaultPageSize ?? undefined,
-        isShowResults
+        isShowResults,
     );
     const initialTableColumns = getTableColumns({ reload });
     const tableColumns = populateTableColumnsWithFiltersAndSorts({
@@ -260,12 +260,12 @@ export function ResourceListPage<R extends Resource>({
                     ...tableColumns,
                     ...(getRecordActions
                         ? [
-                            getRecordActionsColumn({
-                                getRecordActions,
-                                reload,
-                                defaultLaunchContext: defaultLaunchContext ?? [],
-                            }),
-                        ]
+                              getRecordActionsColumn({
+                                  getRecordActions,
+                                  reload,
+                                  defaultLaunchContext: defaultLaunchContext ?? [],
+                              }),
+                          ]
                         : []),
                 ]}
                 loading={isLoading(recordResponse) && { indicator: SpinIndicator }}

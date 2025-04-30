@@ -1,7 +1,9 @@
 import { ControllerFieldState, ControllerRenderProps, FieldValues } from 'react-hook-form';
 import { notification } from 'antd';
 import jsPDF from 'jspdf';
-import { pdfLogo, topbackgroundImg, bottomBackgroundImg } from 'src/images/pdfImage';
+import { pdfLogo } from 'src/images/pdflogo';
+import { topbackgroundImg } from 'src/images/pdftopbg';
+import { bottomBackgroundImg } from 'src/images/pdfbottombg';
 
 export function getFieldErrorMessage(
     field: ControllerRenderProps<FieldValues, any>,

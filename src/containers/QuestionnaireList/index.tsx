@@ -89,6 +89,7 @@ export function QuestionnaireList() {
                         columnsFilterValues={columnsFilterValues}
                         onChangeColumnFilter={onChangeColumnFilter}
                         onResetFilters={onResetFilters}
+                        defaultFiltersValues={[]}
                     />
                 ),
             }}
