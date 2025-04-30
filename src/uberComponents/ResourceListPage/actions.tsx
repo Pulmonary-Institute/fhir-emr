@@ -36,7 +36,7 @@ export interface ExportActionType {
     type: 'export';
     title: React.ReactNode;
     questionnaireId: string;
-    action: (data: RemoteData) => void
+    action: (data: RemoteData) => void;
     icon?: React.ReactNode;
     qrfProps?: Partial<QRFProps>;
 }
@@ -113,9 +113,6 @@ export function RecordQuestionnaireAction<R extends Resource>({
     reload: () => void;
     defaultLaunchContext: ParametersParameter[];
 }) {
-
-
-
     return (
         <ModalTrigger title={action.title} trigger={<S.LinkButton type="link">{action.title}</S.LinkButton>}>
             {({ closeModal }) => (
@@ -126,8 +123,6 @@ export function RecordQuestionnaireAction<R extends Resource>({
                         { name: resource.resourceType, resource: resource as any },
                     ]}
                     onSuccess={() => {
-
-
                         // if (!action.customAction || !action.customAction.handler) {
                         notification.success({
                             message: t`Successfully submitted`,
@@ -156,10 +151,10 @@ interface HeaderQuestionnaireActionProps {
 
 interface HeaderExportAction {
     icon: React.ReactNode;
-    data: RemoteData,
-    title: React.ReactNode
+    data: RemoteData;
+    title: React.ReactNode;
     reload: () => void;
-    action: (data: RemoteData) => void
+    action: (data: RemoteData) => void;
 }
 export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext }: HeaderQuestionnaireActionProps) {
     return (
@@ -197,9 +192,18 @@ export function HeaderQuestionnaireAction({ action, reload, defaultLaunchContext
 }
 
 export function HeaderExportAction({ icon, data, title, action, reload }: HeaderExportAction) {
-    return (<Button style={{ backgroundColor: '#52c41a', color: 'white' }} icon={icon} onClick={() => { action(data); reload() }}>
-        {title}
-    </Button>)
+    return (
+        <Button
+            style={{ backgroundColor: '#52c41a', color: 'white' }}
+            icon={icon}
+            onClick={() => {
+                action(data);
+                reload();
+            }}
+        >
+            {title}
+        </Button>
+    );
 }
 export function BatchQuestionnaireAction<R extends Resource>({
     action,
